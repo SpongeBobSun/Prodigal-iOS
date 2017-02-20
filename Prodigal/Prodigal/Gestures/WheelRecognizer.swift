@@ -8,11 +8,18 @@
 
 import UIKit.UIGestureRecognizerSubclass
 
+protocol WheelRecognizerDelegate: class {
+    func onNext()
+    func onPrevious()
+}
+
+//No target is required in this gesture recognizer
 class WheelRecognizer: UIGestureRecognizer {
     
     var startDeg: Double
     let degPerTick: Double = 72
     var ticked: Bool
+    weak var wheelDelegate: WheelRecognizerDelegate?
     
     override init(target: Any?, action: Selector?) {
         self.startDeg = Double.nan
@@ -36,7 +43,6 @@ class WheelRecognizer: UIGestureRecognizer {
         if ticked {
             state = .ended
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
@@ -54,14 +60,18 @@ class WheelRecognizer: UIGestureRecognizer {
             }
             let ticks = copysign(1.0, deltaDeg) * floor(abs(deltaDeg) / degPerTick)
             if ticks == 1 {
-                NSLog("onNext")
                 ticked = true
                 state = .changed
+                if (self.wheelDelegate != nil) {
+                    self.wheelDelegate?.onNext()
+                }
             }
             if ticks == -1 {
-                NSLog("onPrevious")
                 ticked = true
                 state = .changed
+                if (self.wheelDelegate != nil) {
+                    self.wheelDelegate?.onPrevious()
+                }
             }
         }
         startDeg = currentDeg

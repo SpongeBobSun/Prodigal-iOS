@@ -16,7 +16,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wheelGestureRec = WheelRecognizer(target: self, action: #selector(wheeled(r:)))
+        wheelGestureRec = WheelRecognizer(target: self, action: nil)
+        wheelGestureRec?.wheelDelegate = self
         wheelView.addGestureRecognizer(wheelGestureRec!)
     }
 
@@ -24,8 +25,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
-    func wheeled(r: WheelRecognizer) {
+extension ViewController: WheelRecognizerDelegate {
+    func onPrevious() {
+        NSLog("onPrev")
+    }
+    
+    func onNext() {
+        NSLog("onNext")
     }
 }
 
