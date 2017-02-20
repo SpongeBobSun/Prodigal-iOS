@@ -9,22 +9,35 @@
 import UIKit
 import SnapKit
 
+protocol WheelViewDelegate: class {
+    func onNextTick()
+    func onPreviousTick()
+    func onNext()
+    func onMenu()
+    func onPrev()
+    func onPlay()
+}
+
 @IBDesignable
 class WheelView: UIView {
     
-    var menu: UIButton = UIButton(), prev: UIButton = UIButton(), back: UIButton = UIButton(), play : UIButton = UIButton()
+    var menu: UIButton = UIButton(), prev: UIButton = UIButton(), nextButton: UIButton = UIButton(), play : UIButton = UIButton()
     let buttons: Array<UIButton>
+    weak var delegate: WheelViewDelegate?
+    var wheelGesture: WheelRecognizer?
     
     override init(frame: CGRect) {
-        buttons = [menu, prev, back, play]
+        buttons = [menu, prev, nextButton, play]
         super.init(frame: frame)
         addButtons()
+        makeRoll()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        buttons = [menu, prev, back, play]
+        buttons = [menu, prev, nextButton, play]
         super.init(coder: aDecoder)
         addButtons()
+        makeRoll()
     }
     
     override func layoutSubviews() {
@@ -49,23 +62,74 @@ class WheelView: UIView {
         }
     }
     
+    private func makeRoll() {
+        wheelGesture = WheelRecognizer(target: self, action: nil)
+        wheelGesture?.wheelDelegate = self;
+        self.addGestureRecognizer(wheelGesture!)
+    }
+    
     private func layoutButtons() {
         menu.snp.makeConstraints { (maker) in
             maker.centerX.top.equalTo(self)
         }
         menu.setTitle("menu", for: .normal)
+        menu.addTarget(self, action: #selector(onMenu(_:)), for: .touchUpInside)
+        
         prev.snp.makeConstraints { (maker) in
             maker.centerY.left.equalTo(self)
         }
         prev.setTitle("<", for: .normal)
-        back.snp.makeConstraints { (maker) in
+        prev.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
+        
+        nextButton.snp.makeConstraints { (maker) in
             maker.right.centerY.equalTo(self)
         }
-        back.setTitle(">", for: .normal)
+        nextButton.setTitle(">", for: .normal)
+        nextButton.addTarget(self, action: #selector(onNext(_:)), for: .touchUpInside)
+        
         play.snp.makeConstraints { (maker) in
             maker.bottom.centerX.equalTo(self)
         }
         play.setTitle(">|", for: .normal)
+        play.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
+        
+    }
+    
+    @objc private func onMenu(_ sender: Any) {
+        if self.delegate != nil {
+            self.delegate?.onMenu()
+        }
+    }
+    
+    @objc private func onPlay(_ sender: Any) {
+        if self.delegate != nil {
+            self.delegate?.onPlay()
+        }
+    }
+    
+    @objc private func onNext(_ sender: Any) {
+        if self.delegate != nil {
+            self.delegate?.onNext()
+        }
+    }
+    
+    @objc private func onPrev(_ sender: Any) {
+        if self.delegate != nil {
+            self.delegate?.onPrev()
+        }
+    }
+}
 
+extension WheelView: WheelRecognizerDelegate {
+    func onNextTick() {
+        if self.delegate != nil {
+            self.delegate?.onNextTick()
+        }
+    }
+    
+    func onPreviousTick() {
+        if self.delegate != nil {
+            self.delegate?.onPreviousTick()
+        }
     }
 }

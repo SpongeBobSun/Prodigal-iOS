@@ -25,6 +25,7 @@ class WheelRecognizer: UIGestureRecognizer {
         self.startDeg = Double.nan
         ticked = false
         super.init(target: target, action: action)
+        self.cancelsTouchesInView = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
@@ -76,6 +77,8 @@ class WheelRecognizer: UIGestureRecognizer {
         }
         startDeg = currentDeg
     }
+    
+    
     
     func xyToDegrees(x: Double, y:Double) -> Double {
         var ret = Double.nan

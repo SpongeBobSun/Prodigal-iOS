@@ -12,13 +12,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var wheelView: WheelView!
     
-    var wheelGestureRec: WheelRecognizer? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        wheelGestureRec = WheelRecognizer(target: self, action: nil)
-        wheelGestureRec?.wheelDelegate = self
-        wheelView.addGestureRecognizer(wheelGestureRec!)
+        wheelView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,13 +23,26 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: WheelRecognizerDelegate {
+extension ViewController: WheelViewDelegate {
     func onPreviousTick() {
-        NSLog("onPrev")
+        NSLog("onPrevTick")
     }
     
     func onNextTick() {
+        NSLog("onNextTick")
+    }
+    
+    func onNext() {
         NSLog("onNext")
+    }
+    func onMenu() {
+        NSLog("onMenu")
+    }
+    func onPrev() {
+        NSLog("onPrev")
+    }
+    func onPlay() {
+        NSLog("onPlay")
     }
 }
 
