@@ -10,9 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var wheelView: WheelView!
+    
+    var wheelGestureRec: WheelRecognizer? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        wheelGestureRec = WheelRecognizer(target: self, action: #selector(wheeled(r:)))
+        wheelView.addGestureRecognizer(wheelGestureRec!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +25,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    func wheeled(r: WheelRecognizer) {
+    }
 }
 
