@@ -8,5 +8,5 @@ target 'Prodigal' do
   use_frameworks!
 
   # Pods for Prodigal
-
+    pod 'SnapKit', '~> 3.2.0'
 end

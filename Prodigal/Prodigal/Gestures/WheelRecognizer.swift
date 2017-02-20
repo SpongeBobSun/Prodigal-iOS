@@ -9,8 +9,8 @@
 import UIKit.UIGestureRecognizerSubclass
 
 protocol WheelRecognizerDelegate: class {
-    func onNext()
-    func onPrevious()
+    func onNextTick()
+    func onPreviousTick()
 }
 
 //No target is required in this gesture recognizer
@@ -63,14 +63,14 @@ class WheelRecognizer: UIGestureRecognizer {
                 ticked = true
                 state = .changed
                 if (self.wheelDelegate != nil) {
-                    self.wheelDelegate?.onNext()
+                    self.wheelDelegate?.onNextTick()
                 }
             }
             if ticks == -1 {
                 ticked = true
                 state = .changed
                 if (self.wheelDelegate != nil) {
-                    self.wheelDelegate?.onPrevious()
+                    self.wheelDelegate?.onPreviousTick()
                 }
             }
         }

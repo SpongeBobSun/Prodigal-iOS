@@ -28,11 +28,11 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: WheelRecognizerDelegate {
-    func onPrevious() {
+    func onPreviousTick() {
         NSLog("onPrev")
     }
     
-    func onNext() {
+    func onNextTick() {
         NSLog("onNext")
     }
 }
