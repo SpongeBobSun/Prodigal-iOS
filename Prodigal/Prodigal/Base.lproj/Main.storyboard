@@ -23,17 +23,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QL1-Yu-7h0" customClass="CardView" customModule="Prodigal" customModuleProvider="target">
+                                <rect key="frame" x="25" y="32" width="326" height="285.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="elevation">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIy-fS-kXA" customClass="WheelView" customModule="Prodigal" customModuleProvider="target">
-                                <rect key="frame" x="16" y="333.5" width="343" height="333.5"/>
+                                <rect key="frame" x="32" y="349.5" width="311" height="301.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gIy-fS-kXA" secondAttribute="bottom" id="P9z-3X-L6V"/>
-                            <constraint firstItem="gIy-fS-kXA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="bRh-Hm-qzA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gIy-fS-kXA" secondAttribute="trailing" id="dwb-aq-Krx"/>
-                            <constraint firstItem="gIy-fS-kXA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" id="iVC-Jd-2U0"/>
+                            <constraint firstAttribute="centerYWithinMargins" secondItem="QL1-Yu-7h0" secondAttribute="bottom" constant="16" id="FgQ-X7-Vt0"/>
+                            <constraint firstItem="QL1-Yu-7h0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="32" id="GrS-QR-BWz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QL1-Yu-7h0" secondAttribute="trailing" constant="8" id="Jux-sD-TnL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gIy-fS-kXA" secondAttribute="bottom" constant="16" id="P9z-3X-L6V"/>
+                            <constraint firstItem="gIy-fS-kXA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="bRh-Hm-qzA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gIy-fS-kXA" secondAttribute="trailing" constant="16" id="dwb-aq-Krx"/>
+                            <constraint firstItem="gIy-fS-kXA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" constant="16" id="iVC-Jd-2U0"/>
+                            <constraint firstItem="QL1-Yu-7h0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="9" id="xsF-uo-a4G"/>
                         </constraints>
                     </view>
                     <connections>

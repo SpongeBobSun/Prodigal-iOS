@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class ViewController: UIViewController {
 
@@ -43,6 +44,9 @@ extension ViewController: WheelViewDelegate {
     }
     func onPlay() {
         NSLog("onPlay")
+    }
+    func onSelect() {
+        NSLog("onSelect")
     }
 }
 

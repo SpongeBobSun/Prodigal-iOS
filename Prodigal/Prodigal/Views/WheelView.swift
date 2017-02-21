@@ -16,6 +16,7 @@ protocol WheelViewDelegate: class {
     func onMenu()
     func onPrev()
     func onPlay()
+    func onSelect()
 }
 
 @IBDesignable
@@ -23,8 +24,11 @@ class WheelView: UIView {
     
     var menu: UIButton = UIButton(), prev: UIButton = UIButton(), nextButton: UIButton = UIButton(), play : UIButton = UIButton()
     let buttons: Array<UIButton>
+    var select: UIButton = UIButton()
     weak var delegate: WheelViewDelegate?
     var wheelGesture: WheelRecognizer?
+    
+    var theme = ThemeManager().loadLastTheme()
     
     override init(frame: CGRect) {
         buttons = [menu, prev, nextButton, play]
@@ -49,7 +53,7 @@ class WheelView: UIView {
     override func draw(_ rect: CGRect) {
         let square = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.height, height: rect.size.height)
         let path = UIBezierPath(ovalIn: square)
-        UIColor.lightGray.setFill()
+        theme.wheelColor.setFill()
         path.fill()
     }
     
@@ -60,6 +64,7 @@ class WheelView: UIView {
             })
             addSubview(b)
         }
+        addSubview(select)
     }
     
     private func makeRoll() {
@@ -93,6 +98,15 @@ class WheelView: UIView {
         play.setTitle(">|", for: .normal)
         play.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
         
+        let centerSize = self.bounds.size.height * 0.3
+        select.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
+            maker.width.height.equalTo(centerSize)
+        }
+        select.backgroundColor = UIColor.white
+        select.layer.cornerRadius = centerSize / 2
+        select.layer.masksToBounds = true
+        select.addTarget(self, action: #selector(onSelect(_:)), for: .touchUpInside)
     }
     
     @objc private func onMenu(_ sender: Any) {
@@ -116,6 +130,12 @@ class WheelView: UIView {
     @objc private func onPrev(_ sender: Any) {
         if self.delegate != nil {
             self.delegate?.onPrev()
+        }
+    }
+    
+    @objc private func onSelect(_ sender: Any) {
+        if self.delegate != nil {
+            self.delegate?.onSelect()
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+    "icons": {
+        "next":"next.png",
+        "prev":"prev.png",
+        "play":"play.png",
+        "menu":"menu.png",
+    },
+    "wheel_weight":"1.0",
+    "wheel_color":"#CCCCCC",
+}

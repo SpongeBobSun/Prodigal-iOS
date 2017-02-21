@@ -20,6 +20,12 @@
 		01B0F2341E56F7140081B237 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */; };
 		01B0F2351E56F7140081B237 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2301E56F7140081B237 /* MediaPlayer.framework */; };
 		01B0F2361E56F7140081B237 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2311E56F7140081B237 /* MediaToolbox.framework */; };
+		01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3021E5BF90F001B93C7 /* CardView.swift */; };
+		01CAB30B1E5C0C2D001B93C7 /* ThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */; };
+		01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */; };
+		01CAB3161E5C13C6001B93C7 /* Configs in Resources */ = {isa = PBXBuildFile; fileRef = 01CAB3151E5C13C6001B93C7 /* Configs */; };
+		01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */; };
+		01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3DC811E5C31A500B425F9 /* AppSettings.swift */; };
 		35570E087BF9195A91302EFD /* Pods_Prodigal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AE8643FAB11221327F290B /* Pods_Prodigal.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +45,13 @@
 		01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		01B0F2301E56F7140081B237 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		01B0F2311E56F7140081B237 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
+		01CAB3021E5BF90F001B93C7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
+		01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeConfig.swift; path = Utils/ThemeConfig.swift; sourceTree = "<group>"; };
+		01CAB30F1E5C0EAC001B93C7 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = Utils/ThemeManager.swift; sourceTree = "<group>"; };
+		01CAB3151E5C13C6001B93C7 /* Configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Configs; path = Prodigal/Configs; sourceTree = "<group>"; };
+		01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Hex.swift"; path = "Extensions/UIColor+Hex.swift"; sourceTree = "<group>"; };
+		01D3DC811E5C31A500B425F9 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Utils/AppSettings.swift; sourceTree = "<group>"; };
 		09AE8643FAB11221327F290B /* Pods_Prodigal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Prodigal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44DF25B542E00CA8714ADCAA /* Pods-Prodigal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.debug.xcconfig"; sourceTree = "<group>"; };
 		85143C72199005B173785D1A /* Pods-Prodigal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.release.xcconfig"; sourceTree = "<group>"; };
@@ -64,6 +77,7 @@
 		01B0F2081E56E3840081B237 = {
 			isa = PBXGroup;
 			children = (
+				01CAB3151E5C13C6001B93C7 /* Configs */,
 				01B0F2131E56E3840081B237 /* Prodigal */,
 				01B0F2121E56E3840081B237 /* Products */,
 				6AD679580D4F09BC350D84F4 /* Pods */,
@@ -82,17 +96,96 @@
 		01B0F2131E56E3840081B237 /* Prodigal */ = {
 			isa = PBXGroup;
 			children = (
+				01D3DC7E1E5C2D9A00B425F9 /* Extensions */,
 				01B0F2141E56E3840081B237 /* AppDelegate.swift */,
-				01B0F2161E56E3840081B237 /* ViewController.swift */,
+				01CAB3071E5C0BED001B93C7 /* Controllers */,
+				01CAB3061E5C0BE3001B93C7 /* Support */,
+				01CAB3051E5C0BD2001B93C7 /* Gestures */,
+				01CAB3091E5C0C04001B93C7 /* Utils */,
+				01CAB3041E5C0BBE001B93C7 /* Views */,
+				01CAB30C1E5C0D1C001B93C7 /* Configs */,
+			);
+			path = Prodigal;
+			sourceTree = "<group>";
+		};
+		01CAB3041E5C0BBE001B93C7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				01B0F2181E56E3840081B237 /* Main.storyboard */,
+				01B0F2291E56EFE80081B237 /* WheelView.swift */,
+				01CAB3021E5BF90F001B93C7 /* CardView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		01CAB3051E5C0BD2001B93C7 /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				01B0F22B1E56F0240081B237 /* WheelRecognizer.swift */,
+			);
+			name = Gestures;
+			sourceTree = "<group>";
+		};
+		01CAB3061E5C0BE3001B93C7 /* Support */ = {
+			isa = PBXGroup;
+			children = (
 				01B0F21E1E56E3840081B237 /* Assets.xcassets */,
 				01B0F2201E56E3840081B237 /* LaunchScreen.storyboard */,
 				01B0F2231E56E3840081B237 /* Info.plist */,
 				01B0F21B1E56E3840081B237 /* Prodigal.xcdatamodeld */,
-				01B0F2291E56EFE80081B237 /* WheelView.swift */,
-				01B0F22B1E56F0240081B237 /* WheelRecognizer.swift */,
 			);
-			path = Prodigal;
+			name = Support;
+			sourceTree = "<group>";
+		};
+		01CAB3071E5C0BED001B93C7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				01B0F2161E56E3840081B237 /* ViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		01CAB3091E5C0C04001B93C7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */,
+				01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */,
+				01D3DC811E5C31A500B425F9 /* AppSettings.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		01CAB30C1E5C0D1C001B93C7 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				01CAB30D1E5C0EAC001B93C7 /* config */,
+			);
+			name = Configs;
+			sourceTree = "<group>";
+		};
+		01CAB30D1E5C0EAC001B93C7 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				01CAB30E1E5C0EAC001B93C7 /* default */,
+			);
+			name = config;
+			path = Resources/config;
+			sourceTree = "<group>";
+		};
+		01CAB30E1E5C0EAC001B93C7 /* default */ = {
+			isa = PBXGroup;
+			children = (
+				01CAB30F1E5C0EAC001B93C7 /* config.json */,
+			);
+			path = default;
+			sourceTree = "<group>";
+		};
+		01D3DC7E1E5C2D9A00B425F9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		661FEAC269A9EED3691CCC7B /* Frameworks */ = {
@@ -154,6 +247,11 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = UMW2HP56AU;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -180,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01CAB3161E5C13C6001B93C7 /* Configs in Resources */,
 				01B0F2221E56E3840081B237 /* LaunchScreen.storyboard in Resources */,
 				01B0F21F1E56E3840081B237 /* Assets.xcassets in Resources */,
 				01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */,
@@ -244,8 +343,13 @@
 				01B0F2171E56E3840081B237 /* ViewController.swift in Sources */,
 				01B0F22C1E56F0240081B237 /* WheelRecognizer.swift in Sources */,
 				01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */,
+				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
+				01CAB30B1E5C0C2D001B93C7 /* ThemeConfig.swift in Sources */,
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,
+				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
+				01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */,
+				01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
