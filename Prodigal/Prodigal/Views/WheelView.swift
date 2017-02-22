@@ -27,6 +27,7 @@ class WheelView: UIView {
     var select: UIButton = UIButton()
     weak var delegate: WheelViewDelegate?
     var wheelGesture: WheelRecognizer?
+    var size: CGFloat = CGFloat(0)
     
     var theme = ThemeManager().loadLastTheme()
     
@@ -46,12 +47,25 @@ class WheelView: UIView {
     
     override func layoutSubviews() {
         layoutButtons()
+        size = self.bounds.width > self.bounds.height ? self.bounds.height : self.bounds.width
+        
+        #if TARGET_INTERFACE_BUILDER
+        #else
+        self.snp.makeConstraints { (maker) in
+            maker.width.equalTo(size)
+        }
+        #endif
+        self.layer.cornerRadius = size / 2
+        self.layer.masksToBounds = true
         super.layoutSubviews()
     }
     
 
     override func draw(_ rect: CGRect) {
-        let square = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.height, height: rect.size.height)
+        let size = self.size * CGFloat(theme.weight)
+        let x = (self.size - size) / 2 + rect.origin.x
+        let y = (self.size - size) / 2 + rect.origin.y
+        let square = CGRect(x: x, y: y, width: size, height: size)
         let path = UIBezierPath(ovalIn: square)
         theme.wheelColor.setFill()
         path.fill()
@@ -60,8 +74,10 @@ class WheelView: UIView {
     private func addButtons() {
         for b:UIButton in buttons {
             b.snp.makeConstraints({ (maker) in
-                maker.width.height.equalTo(50)
+                maker.width.height.equalTo(40)
             })
+            b.layer.cornerRadius = 20
+            b.layer.masksToBounds = true
             addSubview(b)
         }
         addSubview(select)
@@ -77,25 +93,37 @@ class WheelView: UIView {
         menu.snp.makeConstraints { (maker) in
             maker.centerX.top.equalTo(self)
         }
-        menu.setTitle("menu", for: .normal)
+        #if TARGET_INTERFACE_BUILDER
+        #else
+        menu.setImage(theme.menuIcon(), for: .normal)
+        #endif
         menu.addTarget(self, action: #selector(onMenu(_:)), for: .touchUpInside)
         
         prev.snp.makeConstraints { (maker) in
             maker.centerY.left.equalTo(self)
         }
-        prev.setTitle("<", for: .normal)
+        #if TARGET_INTERFACE_BUILDER
+        #else
+        prev.setImage(theme.prevIcon(), for: .normal)
+        #endif
         prev.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
         
         nextButton.snp.makeConstraints { (maker) in
             maker.right.centerY.equalTo(self)
         }
-        nextButton.setTitle(">", for: .normal)
+        #if TARGET_INTERFACE_BUILDER
+        #else
+        nextButton.setImage(theme.nextIcon(), for: .normal)
+        #endif
         nextButton.addTarget(self, action: #selector(onNext(_:)), for: .touchUpInside)
         
         play.snp.makeConstraints { (maker) in
             maker.bottom.centerX.equalTo(self)
         }
-        play.setTitle(">|", for: .normal)
+        #if TARGET_INTERFACE_BUILDER
+        #else
+        play.setImage(theme.playIcon(), for: .normal)
+        #endif
         play.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
         
         let centerSize = self.bounds.size.height * 0.3

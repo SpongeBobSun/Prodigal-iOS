@@ -62,7 +62,8 @@ class ThemeManager: NSObject {
     
     func loadConfigNamed(name: String) -> Theme? {
         var ret: Theme? = nil
-        let jsonPath = docPath.appending("/").appending(name).appending("/config.json")
+        let themeFolder = docPath.appending("/").appending(name).appending("/")
+        let jsonPath = themeFolder.appending("config.json")
         let jsonData = fm.contents(atPath: jsonPath)
         if jsonData == nil {
             return ret
@@ -71,6 +72,7 @@ class ThemeManager: NSObject {
         var dict: Dictionary<String, Any>? = nil
         do {
             try dict = JSONSerialization.jsonObject(with: jsonData!, options: .allowFragments) as? Dictionary
+            dict!["path"] = themeFolder
             ret = Theme(fromDict: dict!)
         } catch let error as NSError {
             print(error)

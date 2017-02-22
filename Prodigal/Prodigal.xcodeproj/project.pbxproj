@@ -21,7 +21,7 @@
 		01B0F2351E56F7140081B237 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2301E56F7140081B237 /* MediaPlayer.framework */; };
 		01B0F2361E56F7140081B237 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2311E56F7140081B237 /* MediaToolbox.framework */; };
 		01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3021E5BF90F001B93C7 /* CardView.swift */; };
-		01CAB30B1E5C0C2D001B93C7 /* ThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */; };
+		01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB30A1E5C0C2D001B93C7 /* Theme.swift */; };
 		01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */; };
 		01CAB3161E5C13C6001B93C7 /* Configs in Resources */ = {isa = PBXBuildFile; fileRef = 01CAB3151E5C13C6001B93C7 /* Configs */; };
 		01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */; };
@@ -46,7 +46,7 @@
 		01B0F2301E56F7140081B237 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		01B0F2311E56F7140081B237 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 		01CAB3021E5BF90F001B93C7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
-		01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeConfig.swift; path = Utils/ThemeConfig.swift; sourceTree = "<group>"; };
+		01CAB30A1E5C0C2D001B93C7 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Utils/Theme.swift; sourceTree = "<group>"; };
 		01CAB30F1E5C0EAC001B93C7 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = Utils/ThemeManager.swift; sourceTree = "<group>"; };
 		01CAB3151E5C13C6001B93C7 /* Configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Configs; path = Prodigal/Configs; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		01CAB3091E5C0C04001B93C7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				01CAB30A1E5C0C2D001B93C7 /* ThemeConfig.swift */,
+				01CAB30A1E5C0C2D001B93C7 /* Theme.swift */,
 				01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */,
 				01D3DC811E5C31A500B425F9 /* AppSettings.swift */,
 			);
@@ -344,7 +344,7 @@
 				01B0F22C1E56F0240081B237 /* WheelRecognizer.swift in Sources */,
 				01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
-				01CAB30B1E5C0C2D001B93C7 /* ThemeConfig.swift in Sources */,
+				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
