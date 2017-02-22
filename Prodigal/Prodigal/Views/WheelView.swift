@@ -46,8 +46,8 @@ class WheelView: UIView {
     }
     
     override func layoutSubviews() {
-        layoutButtons()
         size = self.bounds.width > self.bounds.height ? self.bounds.height : self.bounds.width
+        layoutButtons()
         
         #if TARGET_INTERFACE_BUILDER
         #else
@@ -62,22 +62,29 @@ class WheelView: UIView {
     
 
     override func draw(_ rect: CGRect) {
-        let size = self.size * CGFloat(theme.weight)
-        let x = (self.size - size) / 2 + rect.origin.x
-        let y = (self.size - size) / 2 + rect.origin.y
-        let square = CGRect(x: x, y: y, width: size, height: size)
-        let path = UIBezierPath(ovalIn: square)
+        let outer = self.size * CGFloat(theme.outer)
+        var x = (self.size - outer) / 2 + rect.origin.x
+        var y = (self.size - outer) / 2 + rect.origin.y
+        var square = CGRect(x: x, y: y, width: outer, height: outer)
+        let pathOut = UIBezierPath(ovalIn: square)
         theme.wheelColor.setFill()
-        path.fill()
+        pathOut.fill()
+        
+        let inner = self.size * CGFloat(theme.inner)
+        x = (size - inner) / 2 + rect.origin.x
+        y = (size - inner) / 2 + rect.origin.y
+        square = CGRect(x: x, y: y, width: inner, height: inner)
+        
+        let innerLayer = CAShapeLayer()
+        innerLayer.frame = square
+        let pathIn = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: inner, height: inner))
+        innerLayer.path = pathIn.cgPath
+        innerLayer.fillColor = theme.centerColor.cgColor
+        self.layer.insertSublayer(innerLayer, above: self.layer.sublayers?.first)
     }
     
     private func addButtons() {
         for b:UIButton in buttons {
-            b.snp.makeConstraints({ (maker) in
-                maker.width.height.equalTo(40)
-            })
-            b.layer.cornerRadius = 20
-            b.layer.masksToBounds = true
             addSubview(b)
         }
         addSubview(select)
@@ -90,6 +97,18 @@ class WheelView: UIView {
     }
     
     private func layoutButtons() {
+        let btnSize = size * CGFloat(theme.buttonSize)
+        let padding = btnSize * 0.2
+        for b in buttons {
+            b.snp.makeConstraints({ (maker) in
+                maker.width.height.equalTo(btnSize)
+            })
+            b.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding)
+            b.backgroundColor = theme.buttonColor
+            b.layer.cornerRadius = btnSize / 2
+            b.layer.masksToBounds = true
+        }
+        
         menu.snp.makeConstraints { (maker) in
             maker.centerX.top.equalTo(self)
         }
@@ -126,12 +145,12 @@ class WheelView: UIView {
         #endif
         play.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
         
-        let centerSize = self.bounds.size.height * 0.3
+        let centerSize = size * 0.3
         select.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
             maker.width.height.equalTo(centerSize)
         }
-        select.backgroundColor = UIColor.white
+        select.backgroundColor = theme.centerColor
         select.layer.cornerRadius = centerSize / 2
         select.layer.masksToBounds = true
         select.addTarget(self, action: #selector(onSelect(_:)), for: .touchUpInside)

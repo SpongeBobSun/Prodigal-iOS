@@ -16,7 +16,6 @@ extension UIColor {
             let start = hexString.index(hexString.startIndex, offsetBy: 1)
             let hexColor = hexString.substring(from: start)
             
-            
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             
@@ -36,8 +35,10 @@ extension UIColor {
                     self.init(red: r, green: g, blue: b, alpha: 1.0)
                     return
                 }
+            } else {
+                self.init(red: 1, green: 1, blue: 1, alpha: 0.0)
             }
-        }
+        }//TODO - Fix this
         
         return nil
     }
