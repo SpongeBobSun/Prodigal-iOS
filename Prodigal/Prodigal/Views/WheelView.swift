@@ -65,22 +65,23 @@ class WheelView: UIView {
         let outer = self.size * CGFloat(theme.outer)
         var x = (self.size - outer) / 2 + rect.origin.x
         var y = (self.size - outer) / 2 + rect.origin.y
-        var square = CGRect(x: x, y: y, width: outer, height: outer)
+        let square = CGRect(x: x, y: y, width: outer, height: outer)
         let pathOut = UIBezierPath(ovalIn: square)
-        theme.wheelColor.setFill()
-        pathOut.fill()
         
         let inner = self.size * CGFloat(theme.inner)
         x = (size - inner) / 2 + rect.origin.x
         y = (size - inner) / 2 + rect.origin.y
-        square = CGRect(x: x, y: y, width: inner, height: inner)
+        let pathIn = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: inner, height: inner))
         
         let innerLayer = CAShapeLayer()
-        innerLayer.frame = square
-        let pathIn = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: inner, height: inner))
-        innerLayer.path = pathIn.cgPath
-        innerLayer.fillColor = theme.centerColor.cgColor
-        self.layer.insertSublayer(innerLayer, above: self.layer.sublayers?.first)
+        innerLayer.frame = self.bounds
+        let mutePath = pathOut.cgPath.mutableCopy()
+        mutePath?.addPath(pathIn.cgPath)
+        
+        innerLayer.path = mutePath
+        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillColor = theme.wheelColor.cgColor
+        self.layer.insertSublayer(innerLayer, at: 0)
     }
     
     private func addButtons() {
