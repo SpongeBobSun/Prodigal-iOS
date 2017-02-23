@@ -53,6 +53,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cardView" destination="QL1-Yu-7h0" id="sYb-jY-8y6"/>
                         <outlet property="wheelView" destination="gIy-fS-kXA" id="45B-0l-HLu"/>
                     </connections>
                 </viewController>

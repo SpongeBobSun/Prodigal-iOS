@@ -10,13 +10,16 @@ import UIKit
 import SnapKit
 
 protocol WheelViewDelegate: class {
-    func onNextTick()
-    func onPreviousTick()
     func onNext()
     func onMenu()
     func onPrev()
     func onPlay()
     func onSelect()
+}
+
+protocol WheelViewTickDelegate: class {
+    func onNextTick()
+    func onPreviousTick()
 }
 
 @IBDesignable
@@ -26,6 +29,7 @@ class WheelView: UIView {
     let buttons: Array<UIButton>
     var select: UIButton = UIButton()
     weak var delegate: WheelViewDelegate?
+    weak var tickDelegate: WheelViewTickDelegate?
     var wheelGesture: WheelRecognizer?
     var size: CGFloat = CGFloat(0)
     
@@ -191,13 +195,13 @@ class WheelView: UIView {
 extension WheelView: WheelRecognizerDelegate {
     func onNextTick() {
         if self.delegate != nil {
-            self.delegate?.onNextTick()
+            self.tickDelegate?.onNextTick()
         }
     }
     
     func onPreviousTick() {
         if self.delegate != nil {
-            self.delegate?.onPreviousTick()
+            self.tickDelegate?.onPreviousTick()
         }
     }
 }

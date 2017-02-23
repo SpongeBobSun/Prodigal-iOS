@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         ThemeManager().copyToDocuments()
+//        print(MediaLibrary.sharedInstance.fetchAlbums(byArtist: "DMX"))
+//        print(MediaLibrary.sharedInstance.fetchSongs(byAlbum: "2001"))
+//        print(MediaLibrary.sharedInstance.fetchAllArtists())
+        //Debug code
         return true
     }
 

@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Prodigal/Prodigal.xcodeproj">
+      location = "group:/Users/bob.sun/XCodeWorkspace/Prodigal/Prodigal/Prodigal.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Prodigal/Prodigal.xcodeproj">
    </FileRef>
 </Workspace>

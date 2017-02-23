@@ -12,10 +12,20 @@ import MediaPlayer
 class ViewController: UIViewController {
 
     @IBOutlet weak var wheelView: WheelView!
+    @IBOutlet weak var cardView: CardView!
+    
+    var mainMenu: TwoPanelListViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wheelView.delegate = self
+        mainMenu = TwoPanelListViewController()
+        wheelView.tickDelegate = mainMenu
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mainMenu.attachTo(viewController: self, inView: cardView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,13 +35,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: WheelViewDelegate {
-    func onPreviousTick() {
-        NSLog("onPrevTick")
-    }
-    
-    func onNextTick() {
-        NSLog("onNextTick")
-    }
     
     func onNext() {
         NSLog("onNext")
