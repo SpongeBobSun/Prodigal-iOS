@@ -1,5 +1,5 @@
 //
-//  TwoPanelListViewController.swift
+//  ListViewController.swift
 //  Prodigal
 //
 //  Created by bob.sun on 23/02/2017.
@@ -7,23 +7,19 @@
 //
 
 import UIKit
-import Koloda
+import MediaPlayer
 
-class TwoPanelListViewController: TickableViewController {
+class ListViewController: TickableViewController {
     
     var tableView: UITableView!
-    var panelView: PanelView!
-    
-    var items: Array<MenuMeta>!
-    
+    var items: Array<MenuMeta> = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -33,39 +29,37 @@ class TwoPanelListViewController: TickableViewController {
         self.tickableDelegate = self
         vc.addChildViewController(self)
         view.addSubview(self.view)
+        self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(view)
             maker.center.equalTo(view)
         }
-        initMenu()
-        
         tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.isUserInteractionEnabled = false
-        tableView.register(TwoPanelListCell.self, forCellReuseIdentifier: TwoPanelListCell.reuseId)
+        tableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.snp.makeConstraints { (maker) in
-            maker.leading.top.bottom.equalToSuperview()
-            maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
+            maker.leading.top.bottom.trailing.equalToSuperview()
         }
-        tableView.reloadData()
     }
     
-    
-    private func initMenu() {
-        items = Array<MenuMeta>()
-        items.append(MenuMeta(name: NSLocalizedString("Artists", comment: ""), type: MenuMeta.MenuType.Artists))
-        items.append(MenuMeta(name: NSLocalizedString("Albums", comment: ""), type: MenuMeta.MenuType.Albums))
-        items.append(MenuMeta(name: NSLocalizedString("Cover Flow", comment: ""), type: MenuMeta.MenuType.Coverflow))
-        items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: MenuMeta.MenuType.Songs))
-        items.append(MenuMeta(name: NSLocalizedString("Playlists", comment: ""), type: MenuMeta.MenuType.Playlist))
-        items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
-        items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))
-        items.append(MenuMeta(name: NSLocalizedString("Settings", comment: ""), type: MenuMeta.MenuType.Settings))
-        items.append(MenuMeta(name: NSLocalizedString("Now Playing", comment: ""), type: MenuMeta.MenuType.NowPlaying))
-        items.first?.highLight = true
+    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>) {
+        switch type {
+        case .Artists:
+            items.removeAll()
+            data.forEach({ (each) in
+                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.artist)!, type: .Albums).setObject(obj: each))
+            })
+            items.first?.highLight = true
+            break
+        default:
+            break
+        }
+        self.view.isHidden = false
+        tableView.reloadData()
     }
     
     override func hide(completion: () -> Void) {
@@ -75,16 +69,15 @@ class TwoPanelListViewController: TickableViewController {
     override func show() {
         self.view.isHidden = false
     }
-
 }
 
-extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ret = tableView.dequeueReusableCell(withIdentifier: TwoPanelListCell.reuseId) as! TwoPanelListCell!
+        let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell!
         let menu = items[indexPath.row]
         ret?.configure(meta: menu)
         return ret!
@@ -99,18 +92,9 @@ extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
-extension TwoPanelListViewController: TickableViewControllerDelegate {
-    func getTickable() -> UITableView {
-        return tableView
-    }
-    func getData() -> Array<MenuMeta> {
-        return items
-    }
-}
-
-class TwoPanelListCell: UITableViewCell {
+class ListCell: UITableViewCell {
     
-    static let reuseId = "TwoPanelListCellReuseId"
+    static let reuseId = "ListCellReuseId"
     
     let title: UILabel = UILabel()
     
@@ -133,7 +117,7 @@ class TwoPanelListCell: UITableViewCell {
         }
         title.contentMode = .left
     }
-
+    
     func configure(meta: MenuMeta) {
         title.text = meta.itemName
         if meta.highLight {
@@ -144,16 +128,12 @@ class TwoPanelListCell: UITableViewCell {
     }
 }
 
-class PanelView: UIView {
-    var imageView: UIImageView!
-    var stackView: KolodaView!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+extension ListViewController: TickableViewControllerDelegate {
+    func getTickable() -> UITableView {
+        return tableView
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    func getData() -> Array<MenuMeta> {
+        return items
     }
-    
 }

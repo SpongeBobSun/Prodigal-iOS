@@ -14,23 +14,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var wheelView: WheelView!
     @IBOutlet weak var cardView: CardView!
     
+    var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
+    var artistsList: ListViewController!
+    var stack: Array<TickableViewController> = Array<TickableViewController>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wheelView.delegate = self
-        mainMenu = TwoPanelListViewController()
-        wheelView.tickDelegate = mainMenu
+        initChildren()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainMenu.attachTo(viewController: self, inView: cardView)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func initChildren() {
+        mainMenu = TwoPanelListViewController()
+        wheelView.tickDelegate = mainMenu
+        current = mainMenu
+        mainMenu.attachTo(viewController: self, inView: cardView)
+        stack.append(mainMenu)
+        artistsList = ListViewController()
+        artistsList.attachTo(viewController: self, inView: cardView)
     }
 }
 
@@ -40,7 +51,15 @@ extension ViewController: WheelViewDelegate {
         NSLog("onNext")
     }
     func onMenu() {
-        NSLog("onMenu")
+        if stack.count == 1 {
+            return
+        }
+        stack.popLast()?.hide(completion: { 
+            
+        })
+        current = stack.last
+        wheelView.tickDelegate = current
+        current.show()
     }
     func onPrev() {
         NSLog("onPrev")
@@ -49,7 +68,17 @@ extension ViewController: WheelViewDelegate {
         NSLog("onPlay")
     }
     func onSelect() {
-        NSLog("onSelect")
+        let select = current.getSelection()
+        switch select.type! {
+        case .Artists:
+            self.artistsList?.show(withType: .Artists, andData: MediaLibrary.sharedInstance.fetchAllArtists())
+            current = self.artistsList
+            self.wheelView.tickDelegate = self.artistsList
+            break
+        default:
+            break
+        }
+        stack.append(current)
     }
 }
 

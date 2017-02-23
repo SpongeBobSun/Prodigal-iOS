@@ -12,6 +12,7 @@
 		015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */; };
 		015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */; };
 		015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */; };
+		015E4AA31E5ED4DC007A7C3F /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */; };
 		01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F2141E56E3840081B237 /* AppDelegate.swift */; };
 		01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B0F2181E56E3840081B237 /* Main.storyboard */; };
 		01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F21B1E56E3840081B237 /* Prodigal.xcdatamodeld */; };
@@ -39,6 +40,7 @@
 		015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controllers/ViewController.swift; sourceTree = "<group>"; };
 		015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuMeta.swift; path = Models/MenuMeta.swift; sourceTree = "<group>"; };
 		015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TickableViewController.swift; path = Controllers/TickableViewController.swift; sourceTree = "<group>"; };
+		015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controllers/ListViewController.swift; sourceTree = "<group>"; };
 		01B0F2111E56E3840081B237 /* Prodigal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prodigal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0F2141E56E3840081B237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01B0F2191E56E3840081B237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */,
 				015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */,
 				015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */,
+				015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
 				015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */,
+				015E4AA31E5ED4DC007A7C3F /* ListViewController.swift in Sources */,
 				015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */,
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,

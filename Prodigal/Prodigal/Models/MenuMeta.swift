@@ -28,11 +28,18 @@ class MenuMeta: NSObject {
     
     var itemName: String!
     var highLight: Bool = false
-    var type: MenuType!
+    var type: MenuMeta.MenuType!
+    var object: Any?
     
     convenience init(name: String, type: MenuType) {
         self.init()
         self.itemName = name
         self.type = type
+        object = nil
+    }
+    
+    func setObject(obj: Any) -> MenuMeta {
+        object = obj
+        return self
     }
 }

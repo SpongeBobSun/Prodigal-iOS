@@ -13,6 +13,8 @@ protocol TickableViewControllerDelegate: class {
     func getData() -> Array<MenuMeta>
 }
 
+typealias AnimationCompletion = () -> Void
+
 class TickableViewController: UIViewController {
     
     weak var tickableDelegate: TickableViewControllerDelegate!
@@ -29,6 +31,14 @@ class TickableViewController: UIViewController {
     func getSelection() -> MenuMeta {
         return tickableDelegate.getData()[current]
     }
+    
+    func hide(completion: AnimationCompletion) {
+        completion()
+    }
+    
+    func show() {
+        
+    }
 }
 
 extension TickableViewController: WheelViewTickDelegate {
@@ -43,7 +53,7 @@ extension TickableViewController: WheelViewTickDelegate {
         items[current + 1].highLight = true
         tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current + 1, section: 0)], with: .none)
         current += 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .bottom, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
     }
     
     func onPreviousTick() {
@@ -56,7 +66,7 @@ extension TickableViewController: WheelViewTickDelegate {
         items[current - 1].highLight = true
         tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current - 1, section: 0)], with: .none)
         current -= 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .top, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
     }
 
 }
