@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */; };
 		01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F2141E56E3840081B237 /* AppDelegate.swift */; };
 		01B0F2171E56E3840081B237 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F2161E56E3840081B237 /* ViewController.swift */; };
 		01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B0F2181E56E3840081B237 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaLibrary.swift; path = Models/MediaLibrary.swift; sourceTree = "<group>"; };
 		01B0F2111E56E3840081B237 /* Prodigal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prodigal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0F2141E56E3840081B237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01B0F2161E56E3840081B237 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		015E4A951E5D7BFD007A7C3F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		01B0F2081E56E3840081B237 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +106,7 @@
 		01B0F2131E56E3840081B237 /* Prodigal */ = {
 			isa = PBXGroup;
 			children = (
+				015E4A951E5D7BFD007A7C3F /* Models */,
 				01D3DC7E1E5C2D9A00B425F9 /* Extensions */,
 				01B0F2141E56E3840081B237 /* AppDelegate.swift */,
 				01CAB3071E5C0BED001B93C7 /* Controllers */,
@@ -343,6 +354,7 @@
 				01B0F2171E56E3840081B237 /* ViewController.swift in Sources */,
 				01B0F22C1E56F0240081B237 /* WheelRecognizer.swift in Sources */,
 				01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */,
+				015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,

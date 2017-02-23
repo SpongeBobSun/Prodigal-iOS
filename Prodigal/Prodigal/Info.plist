@@ -38,6 +38,8 @@
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Allow me to play music for you</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
