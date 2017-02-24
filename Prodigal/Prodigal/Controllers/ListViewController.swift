@@ -13,6 +13,7 @@ class ListViewController: TickableViewController {
     
     var tableView: UITableView!
     var items: Array<MenuMeta> = []
+    var playList: Array<MPMediaItem>? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class ListViewController: TickableViewController {
     
     func show(withType type: MenuMeta.MenuType, andData data:Array<Any>) {
         self.current = 0
+        self.playList = nil
         switch type {
         case .Artists:
             items.removeAll()
@@ -68,6 +70,7 @@ class ListViewController: TickableViewController {
             data.forEach({ (each) in
                 items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each))
             })
+            playList = data as? Array<MPMediaItem>
             items.first?.highLight = true
             break
         default:

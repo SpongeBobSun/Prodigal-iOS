@@ -8,16 +8,20 @@
 
 import UIKit
 import MediaPlayer
+import AVFoundation
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var wheelView: WheelView!
     @IBOutlet weak var cardView: CardView!
     
+    
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
     var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
+    
+    var player: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,22 @@ class ViewController: UIViewController {
         genresList = ListViewController()
         genresList.attachTo(viewController: self, inView: cardView)
     }
+    
+    func play(item: MPMediaItem, list: Array<MPMediaItem>) {
+        if player != nil && (player?.isPlaying)! {
+            player?.stop()
+        }
+        do {
+            try player = AVAudioPlayer.init(contentsOf: item.assetURL!)
+            player?.volume = 1.0
+            let result: Bool = (player?.prepareToPlay())!
+            if result {
+                player?.play()
+            }
+        } catch let e as Error {
+            print(e)
+        }
+    }
 }
 
 extension ViewController: WheelViewDelegate {
@@ -74,7 +94,13 @@ extension ViewController: WheelViewDelegate {
         NSLog("onPrev")
     }
     func onPlay() {
-        NSLog("onPlay")
+        if player != nil {
+            if (player?.isPlaying)! {
+                player?.pause()
+            } else {
+                player?.play()
+            }
+        }
     }
     func onSelect() {
         let select = current.getSelection()
@@ -113,7 +139,7 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = self.songsList
             break
         case .Song:
-            //TODO Play
+            self.play(item: select.object as! MPMediaItem!, list: (current as! ListViewController).playList ?? [])
             break
         default:
             break

@@ -21,12 +21,12 @@ class Theme: NSObject {
             "play":"play.png",
             "menu":"menu.png",
         ],
-        "wheel_outer":"0.7",
-        "wheel_inner":"0.6",
+        "wheel_outer":"1.0",
+        "wheel_inner":"0.3",
         "wheel_color":"#EEEEEE",
         "button_size":"0.2",
         "center_color": "#FFFFFF",
-        "button_background": "#FFFF00FF",
+        "button_background": "#FFFF0000",
         ]
     
     override convenience init() {

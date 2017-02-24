@@ -148,7 +148,7 @@ class WheelView: UIView {
         #else
         play.setImage(theme.playIcon(), for: .normal)
         #endif
-        play.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
+        play.addTarget(self, action: #selector(onPlay(_:)), for: .touchUpInside)
         
         let centerSize = size * 0.3
         select.snp.makeConstraints { (maker) in

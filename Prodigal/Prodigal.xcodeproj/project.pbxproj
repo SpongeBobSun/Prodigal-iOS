@@ -20,7 +20,6 @@
 		01B0F2221E56E3840081B237 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B0F2201E56E3840081B237 /* LaunchScreen.storyboard */; };
 		01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F2291E56EFE80081B237 /* WheelView.swift */; };
 		01B0F22C1E56F0240081B237 /* WheelRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F22B1E56F0240081B237 /* WheelRecognizer.swift */; };
-		01B0F2321E56F7140081B237 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F22D1E56F7140081B237 /* AudioToolbox.framework */; };
 		01B0F2331E56F7140081B237 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F22E1E56F7140081B237 /* AVFoundation.framework */; };
 		01B0F2341E56F7140081B237 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */; };
 		01B0F2351E56F7140081B237 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2301E56F7140081B237 /* MediaPlayer.framework */; };
@@ -41,6 +40,7 @@
 		015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuMeta.swift; path = Models/MenuMeta.swift; sourceTree = "<group>"; };
 		015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TickableViewController.swift; path = Controllers/TickableViewController.swift; sourceTree = "<group>"; };
 		015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controllers/ListViewController.swift; sourceTree = "<group>"; };
+		015E4AA41E60090F007A7C3F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		01B0F2111E56E3840081B237 /* Prodigal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prodigal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0F2141E56E3840081B237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01B0F2191E56E3840081B237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -72,7 +72,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01B0F2321E56F7140081B237 /* AudioToolbox.framework in Frameworks */,
 				01B0F2331E56F7140081B237 /* AVFoundation.framework in Frameworks */,
 				01B0F2341E56F7140081B237 /* MediaAccessibility.framework in Frameworks */,
 				01B0F2351E56F7140081B237 /* MediaPlayer.framework in Frameworks */,
@@ -214,6 +213,7 @@
 		661FEAC269A9EED3691CCC7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				015E4AA41E60090F007A7C3F /* AVKit.framework */,
 				01B0F22D1E56F7140081B237 /* AudioToolbox.framework */,
 				01B0F22E1E56F7140081B237 /* AVFoundation.framework */,
 				01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */,
