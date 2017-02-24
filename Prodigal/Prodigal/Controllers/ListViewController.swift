@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import Haneke
 
 class ListViewController: TickableViewController {
     
@@ -100,11 +101,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell!
         let menu = items[indexPath.row]
-        var image: UIImage? = nil
-        if self.type == .Albums {
-            image = (menu.object as! MPMediaItemCollection).representativeItem?.artwork?.image(at: CGSize(width:40, height:40))
-        }
-        ret?.configure(meta: menu, image: image)
+        ret?.configure(meta: menu, type: self.type)
         return ret!
     }
     
@@ -151,16 +148,9 @@ class ListCell: UITableViewCell {
         title.contentMode = .left
     }
     
-    func configure(meta: MenuMeta, image: UIImage?) {
+    func configure(meta: MenuMeta, type: MenuMeta.MenuType) {
         title.text = meta.itemName
-        if image == nil {
-            if !icon.isHidden {
-                icon.snp.updateConstraints({ (maker) in
-                    maker.width.equalTo(0)
-                })
-                icon.isHidden = true
-            }
-        } else {
+        if type == .Albums {
             if icon.isHidden {
                 icon.snp.updateConstraints({ (maker) in
                     maker.width.height.equalTo(40)
@@ -168,13 +158,28 @@ class ListCell: UITableViewCell {
                 })
                 icon.isHidden = false
             }
-            icon.image = image
+            loadImage(meta: meta)
+            
+        } else {
+            if !icon.isHidden {
+                icon.snp.updateConstraints({ (maker) in
+                    maker.width.equalTo(0)
+                })
+                icon.isHidden = true
+            }
+            
         }
         if meta.highLight {
             contentView.backgroundColor = UIColor.lightGray
         } else {
             contentView.backgroundColor = UIColor.clear
         }
+    }
+    
+    private func loadImage(meta: MenuMeta) {
+        let album = (meta.object as! MPMediaItemCollection!).representativeItem
+        icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as! HNKCacheFormat!
+        icon.hnk_setImage(album?.artwork?.image(at: CGSize(width: 40, height: 40)), withKey: String(format:"%llu", (album?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"));
     }
 }
 

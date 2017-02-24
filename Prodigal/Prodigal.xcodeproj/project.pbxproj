@@ -41,6 +41,7 @@
 		015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TickableViewController.swift; path = Controllers/TickableViewController.swift; sourceTree = "<group>"; };
 		015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controllers/ListViewController.swift; sourceTree = "<group>"; };
 		015E4AA41E60090F007A7C3F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		015E4AA61E60225C007A7C3F /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "../../../Library/Developer/Xcode/DerivedData/Prodigal-bjfbwmgpljymdjczauqhptusmoll/Build/Products/Debug-iphoneos/HanekeSwift/Haneke.framework"; sourceTree = "<group>"; };
 		01B0F2111E56E3840081B237 /* Prodigal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prodigal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0F2141E56E3840081B237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01B0F2191E56E3840081B237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		661FEAC269A9EED3691CCC7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				015E4AA61E60225C007A7C3F /* Haneke.framework */,
 				015E4AA41E60090F007A7C3F /* AVKit.framework */,
 				01B0F22D1E56F7140081B237 /* AudioToolbox.framework */,
 				01B0F22E1E56F7140081B237 /* AVFoundation.framework */,

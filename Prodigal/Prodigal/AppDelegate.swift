@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import Haneke
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         ThemeManager().copyToDocuments()
+        initCacheForList()
         let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))
         main = mainStoryBoard.instantiateInitialViewController() as! ViewController!
         if window == nil {
@@ -50,6 +51,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
     }
 
+    private func initCacheForList() {
+        var format: HNKCacheFormat? = HNKCache.shared().formats["list_cover"] as! HNKCacheFormat?
+        if format == nil {
+            format = HNKCacheFormat.init(name: "list_cover")
+            format?.size = CGSize(width: 40, height: 40)
+            format?.scaleMode = .aspectFill
+            format?.compressionQuality = 0.75
+            format?.diskCapacity = UInt64(5 * 1024 * 1024)
+            format?.preloadPolicy = .lastSession
+        }
+        HNKCache.shared().registerFormat(format)
+    }
 
 }
 

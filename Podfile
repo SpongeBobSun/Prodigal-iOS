@@ -10,4 +10,5 @@ target 'Prodigal' do
   # Pods for Prodigal
     pod 'SnapKit', '~> 3.2.0'
     pod 'Koloda', '~> 4.0'
+    pod 'Haneke'
 end
