@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
     var player: AVAudioPlayer?
+    var playingIndex: Int = -1
+    var playlist: Array<MPMediaItem> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +59,18 @@ class ViewController: UIViewController {
         genresList.attachTo(viewController: self, inView: cardView)
     }
     
-    func play(item: MPMediaItem, list: Array<MPMediaItem>) {
+    func play(item: MPMediaItem) {
         if player != nil && (player?.isPlaying)! {
             player?.stop()
         }
+        if player != nil {
+            player?.delegate = nil
+            player = nil
+        }
+        playingIndex = playlist.index(of: item)!
         do {
             try player = AVAudioPlayer.init(contentsOf: item.assetURL!)
+            player?.delegate = self
             player?.volume = 1.0
             let result: Bool = (player?.prepareToPlay())!
             if result {
@@ -74,10 +82,24 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if playingIndex == playlist.count - 1 || playingIndex < 0{
+            return
+        }
+        player.stop()
+        play(item: playlist[playingIndex + 1])
+    }
+}
+
 extension ViewController: WheelViewDelegate {
     
     func onNext() {
-        NSLog("onNext")
+        if playingIndex == playlist.count - 1 || playingIndex < 0{
+            return
+        }
+        player?.stop()
+        play(item: playlist[playingIndex + 1])
     }
     func onMenu() {
         if stack.count == 1 {
@@ -91,7 +113,14 @@ extension ViewController: WheelViewDelegate {
         current.show()
     }
     func onPrev() {
-        NSLog("onPrev")
+        if playingIndex == 0 || playingIndex < 0 {
+            if playingIndex == 0 && (player?.isPlaying)! {
+                player?.currentTime = 0     
+            }
+            return
+        }
+        player?.stop()
+        play(item: playlist[playingIndex - 1])
     }
     func onPlay() {
         if player != nil {
@@ -139,7 +168,8 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = self.songsList
             break
         case .Song:
-            self.play(item: select.object as! MPMediaItem!, list: (current as! ListViewController).playList ?? [])
+            self.playlist = (current as! ListViewController).playList ?? []
+            self.play(item: select.object as! MPMediaItem!)
             break
         default:
             break
