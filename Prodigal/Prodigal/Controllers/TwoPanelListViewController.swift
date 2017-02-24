@@ -15,6 +15,7 @@ class TwoPanelListViewController: TickableViewController {
     var panelView: PanelView!
     
     var items: Array<MenuMeta>!
+    var images: Dictionary<MenuMeta.MenuType, UIImage>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,13 @@ class TwoPanelListViewController: TickableViewController {
             maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
         }
         tableView.reloadData()
+        
+        panelView = PanelView()
+        self.view.addSubview(panelView)
+        panelView.snp.makeConstraints { (maker) in
+            maker.leading.equalTo(self.view.snp.centerXWithinMargins)
+            maker.top.bottom.trailing.equalToSuperview()
+        }
     }
     
     
@@ -66,6 +74,15 @@ class TwoPanelListViewController: TickableViewController {
         items.append(MenuMeta(name: NSLocalizedString("Settings", comment: ""), type: MenuMeta.MenuType.Settings))
         items.append(MenuMeta(name: NSLocalizedString("Now Playing", comment: ""), type: MenuMeta.MenuType.NowPlaying))
         items.first?.highLight = true
+        
+        images = [MenuMeta.MenuType.Artists: #imageLiteral(resourceName: "ic_artists"),
+                  MenuMeta.MenuType.Coverflow: #imageLiteral(resourceName: "ic_album_shelf"),
+                  MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
+                  MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
+                  MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),
+                  MenuMeta.MenuType.ShuffleSongs: #imageLiteral(resourceName: "ic_shuffle"),
+                  MenuMeta.MenuType.Playlist: #imageLiteral(resourceName: "ic_playlist"),]
+        
     }
     
     override func hide(completion: () -> Void) {
@@ -74,8 +91,29 @@ class TwoPanelListViewController: TickableViewController {
     
     override func show() {
         self.view.isHidden = false
+        updateRightPanel(index: current)
     }
 
+    func updateRightPanel(index: Int) {
+        let meta = items[index]
+        if meta.type == .Albums {
+            panelView.showStack()
+        } else if meta.type == .NowPlaying {
+            
+        } else {
+            panelView.show(image: images[meta.type]!)
+        }
+    }
+    
+    override func onNextTick() {
+        super.onNextTick()
+        updateRightPanel(index: current)
+    }
+    
+    override func onPreviousTick() {
+        super.onPreviousTick()
+        updateRightPanel(index: current)
+    }
 }
 
 extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -147,13 +185,39 @@ class TwoPanelListCell: UITableViewCell {
 class PanelView: UIView {
     var imageView: UIImageView!
     var stackView: KolodaView!
+    var nowPlaying: UIView!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    convenience init() {
+        self.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.lightGray
+        initViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    private func initViews() {
+        imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        stackView = KolodaView(frame: CGRect.zero)
+        addSubview(imageView)
+        addSubview(stackView)
+        
+        imageView.snp.makeConstraints { (maker) in
+            maker.top.bottom.leading.trailing.equalTo(self)
+        }
+        stackView.snp.makeConstraints { (maker) in
+            maker.top.bottom.leading.trailing.equalTo(self)
+        }
+        stackView.isHidden = true
+    }
+    
+    func showStack() {
+        stackView.isHidden = false
+        imageView.isHidden = true
+    }
+    
+    func show(image: UIImage) {
+        stackView.isHidden = true
+        imageView.isHidden = false
+        imageView.image = image
     }
     
 }

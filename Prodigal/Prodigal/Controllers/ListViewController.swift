@@ -142,7 +142,7 @@ class ListCell: UITableViewCell {
         }
         icon.isHidden = true
         title.snp.makeConstraints { (maker) in
-            maker.leading.equalTo(icon.snp.trailing)
+            maker.leading.equalTo(icon.snp.trailing).offset(5)
             maker.top.bottom.trailing.equalToSuperview()
         }
         title.contentMode = .left
