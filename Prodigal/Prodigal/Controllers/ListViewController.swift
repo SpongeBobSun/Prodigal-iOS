@@ -14,6 +14,7 @@ class ListViewController: TickableViewController {
     var tableView: UITableView!
     var items: Array<MenuMeta> = []
     var playList: Array<MPMediaItem>? = nil
+    var type: MenuMeta.MenuType = .Undefined
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,7 @@ class ListViewController: TickableViewController {
     func show(withType type: MenuMeta.MenuType, andData data:Array<Any>) {
         self.current = 0
         self.playList = nil
+        self.type = type
         switch type {
         case .Artists:
             items.removeAll()
@@ -74,6 +76,7 @@ class ListViewController: TickableViewController {
             items.first?.highLight = true
             break
         default:
+            self.type = .Undefined
             break
         }
         self.view.isHidden = false
@@ -97,7 +100,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell!
         let menu = items[indexPath.row]
-        ret?.configure(meta: menu)
+        var image: UIImage? = nil
+        if self.type == .Albums {
+            image = (menu.object as! MPMediaItemCollection).representativeItem?.artwork?.image(at: CGSize(width:40, height:40))
+        }
+        ret?.configure(meta: menu, image: image)
         return ret!
     }
     
@@ -115,6 +122,7 @@ class ListCell: UITableViewCell {
     static let reuseId = "ListCellReuseId"
     
     let title: UILabel = UILabel()
+    let icon: UIImageView = UIImageView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -128,16 +136,40 @@ class ListCell: UITableViewCell {
     
     private func initViews() {
         self.contentView.addSubview(title)
+        self.contentView.addSubview(icon)
         title.backgroundColor = UIColor.clear
+        
+        icon.snp.makeConstraints { (maker) in
+            maker.width.height.equalTo(0)
+            maker.leading.centerY.equalToSuperview()
+        }
+        icon.isHidden = true
         title.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(self.contentView)
-            maker.center.equalTo(self.contentView)
+            maker.leading.equalTo(icon.snp.trailing)
+            maker.top.bottom.trailing.equalToSuperview()
         }
         title.contentMode = .left
     }
     
-    func configure(meta: MenuMeta) {
+    func configure(meta: MenuMeta, image: UIImage?) {
         title.text = meta.itemName
+        if image == nil {
+            if !icon.isHidden {
+                icon.snp.updateConstraints({ (maker) in
+                    maker.width.equalTo(0)
+                })
+                icon.isHidden = true
+            }
+        } else {
+            if icon.isHidden {
+                icon.snp.updateConstraints({ (maker) in
+                    maker.width.height.equalTo(40)
+                    maker.leading.centerY.equalToSuperview()
+                })
+                icon.isHidden = false
+            }
+            icon.image = image
+        }
         if meta.highLight {
             contentView.backgroundColor = UIColor.lightGray
         } else {

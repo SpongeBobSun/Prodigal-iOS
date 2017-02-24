@@ -115,7 +115,7 @@ extension ViewController: WheelViewDelegate {
     func onPrev() {
         if playingIndex == 0 || playingIndex < 0 {
             if playingIndex == 0 && (player?.isPlaying)! {
-                player?.currentTime = 0     
+                player?.currentTime = 0
             }
             return
         }
@@ -133,7 +133,7 @@ extension ViewController: WheelViewDelegate {
     }
     func onSelect() {
         let select = current.getSelection()
-        switch select.type! {
+        switch select.type {
         case .Artists:
             self.artistsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllArtists())
             current = self.artistsList

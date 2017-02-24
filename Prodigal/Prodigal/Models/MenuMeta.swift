@@ -27,11 +27,12 @@ class MenuMeta: NSObject {
         case RepeatSettings
         case GetSourceCode
         case ContactUs
+        case Undefined
     }
     
     var itemName: String!
     var highLight: Bool = false
-    var type: MenuMeta.MenuType!
+    var type: MenuMeta.MenuType = .Undefined
     var object: Any?
     
     convenience init(name: String, type: MenuType) {
