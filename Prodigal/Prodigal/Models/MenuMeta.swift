@@ -12,8 +12,11 @@ class MenuMeta: NSObject {
     enum MenuType {
         case Artists
         case Albums
-        case Coverflow
         case Songs
+        case Song
+        case Album
+        case Artist
+        case Coverflow
         case Playlist
         case Genres
         case ShuffleSongs

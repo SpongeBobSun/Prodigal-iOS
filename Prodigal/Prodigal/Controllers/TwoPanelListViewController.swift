@@ -56,10 +56,10 @@ class TwoPanelListViewController: TickableViewController {
     
     private func initMenu() {
         items = Array<MenuMeta>()
-        items.append(MenuMeta(name: NSLocalizedString("Artists", comment: ""), type: MenuMeta.MenuType.Artists))
-        items.append(MenuMeta(name: NSLocalizedString("Albums", comment: ""), type: MenuMeta.MenuType.Albums))
+        items.append(MenuMeta(name: NSLocalizedString("Artists", comment: ""), type: .Artists))
+        items.append(MenuMeta(name: NSLocalizedString("Albums", comment: ""), type: .Albums))
         items.append(MenuMeta(name: NSLocalizedString("Cover Flow", comment: ""), type: MenuMeta.MenuType.Coverflow))
-        items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: MenuMeta.MenuType.Songs))
+        items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
         items.append(MenuMeta(name: NSLocalizedString("Playlists", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
         items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))

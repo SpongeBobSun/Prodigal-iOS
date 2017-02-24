@@ -47,11 +47,26 @@ class ListViewController: TickableViewController {
     }
     
     func show(withType type: MenuMeta.MenuType, andData data:Array<Any>) {
+        self.current = 0
         switch type {
         case .Artists:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.artist)!, type: .Albums).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.artist)!, type: .Artist).setObject(obj: each))
+            })
+            items.first?.highLight = true
+            break
+        case .Albums:
+            items.removeAll()
+            data.forEach({ (each) in
+                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.albumTitle)!, type: .Album).setObject(obj: each))
+            })
+            items.first?.highLight = true
+            break
+        case .Songs:
+            items.removeAll()
+            data.forEach({ (each) in
+                items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each))
             })
             items.first?.highLight = true
             break

@@ -40,7 +40,9 @@ class MediaLibrary: NSObject {
         if !authorized {
             return []
         }
-        return MPMediaQuery.albums().collections ?? []
+        let query = MPMediaQuery.albums()
+        query.groupingType = .album
+        return query.collections ?? []
     }
     
     func fetchAllArtists() -> Array<MPMediaItemCollection> {
@@ -57,7 +59,7 @@ class MediaLibrary: NSObject {
         }
         return MPMediaQuery.genres().items ?? []
     }
-    
+    //TODO: By Id
     func fetchAlbums(byArtist artist:String) -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
