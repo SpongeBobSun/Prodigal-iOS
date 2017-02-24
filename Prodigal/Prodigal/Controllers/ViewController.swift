@@ -99,7 +99,7 @@ extension ViewController: WheelViewDelegate {
                 
             })
             let artist = select.object as! MPMediaItemCollection!
-            self.albumsList.show(withType: .Albums, andData: MediaLibrary.sharedInstance.fetchAlbums(byArtist: (artist?.representativeItem?.albumArtist)!))
+            self.albumsList.show(withType: .Albums, andData: MediaLibrary.sharedInstance.fetchAlbums(byArtist: (artist?.representativeItem?.artistPersistentID)!))
             current = albumsList
             self.wheelView.tickDelegate = self.albumsList
             break
@@ -108,9 +108,12 @@ extension ViewController: WheelViewDelegate {
                 
             })
             let album = select.object as! MPMediaItemCollection!
-            self.songsList.show(withType: .Songs, andData: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (album?.representativeItem?.albumTitle)!))
+            self.songsList.show(withType: .Songs, andData: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (album?.representativeItem?.albumPersistentID)!))
             current = songsList
             self.wheelView.tickDelegate = self.songsList
+            break
+        case .Song:
+            //TODO Play
             break
         default:
             break

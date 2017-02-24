@@ -59,34 +59,33 @@ class MediaLibrary: NSObject {
         }
         return MPMediaQuery.genres().items ?? []
     }
-    //TODO: By Id
-    func fetchAlbums(byArtist artist:String) -> Array<MPMediaItemCollection> {
+    
+    func fetchAlbums(byArtist artist: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
         }
-        let filter = MPMediaPropertyPredicate.init(value: artist, forProperty: MPMediaItemPropertyArtist, comparisonType: .contains)
-        
+        let filter = MPMediaPropertyPredicate.init(value: artist, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: .contains)
         let query = MPMediaQuery.albums()
         query.addFilterPredicate(filter)
         let albums = query.collections ?? []
         return albums
     }
     
-    func fetchSongs(byAlbum album:String) -> Array<MPMediaItem> {
+    func fetchSongs(byAlbum album: MPMediaEntityPersistentID) -> Array<MPMediaItem> {
         if !authorized {
             return []
         }
-        let filter = MPMediaPropertyPredicate.init(value: album, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: .equalTo)
+        let filter = MPMediaPropertyPredicate.init(value: album, forProperty: MPMediaItemPropertyAlbumPersistentID, comparisonType: .equalTo)
         let query = MPMediaQuery.songs()
         query.addFilterPredicate(filter)
         return query.items ?? []
     }
     
-    func fetchAlbums(byGenre genre:String) -> Array<MPMediaItemCollection> {
+    func fetchAlbums(byGenre genre: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
         }
-        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenre, comparisonType: .equalTo)
+        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
         
         let query = MPMediaQuery.albums()
         query.addFilterPredicate(filter)
