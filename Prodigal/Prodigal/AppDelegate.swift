@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var main: ViewController!
+    var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         ThemeManager().copyToDocuments()
@@ -31,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        taskId = UIApplication.shared.beginBackgroundTask {
+            return
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -44,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.shared.endBackgroundTask(taskId)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -62,6 +67,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             format?.preloadPolicy = .lastSession
         }
         HNKCache.shared().registerFormat(format)
+        
+        format = HNKCache.shared().formats["stack"] as! HNKCacheFormat?
+        if format == nil {
+            format = HNKCacheFormat.init(name: "stack")
+            format?.size = CGSize(width: 200, height: 200)
+            format?.scaleMode = .aspectFill
+            format?.compressionQuality = 0.75
+            format?.diskCapacity = UInt64(5 * 1024 * 1024)
+            format?.preloadPolicy = .lastSession
+        }
+        HNKCache.shared().registerFormat(format)
+        
     }
 
 }

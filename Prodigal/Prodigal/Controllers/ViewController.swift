@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVFoundation
+import Haneke
 
 class ViewController: UIViewController {
 
@@ -22,23 +23,45 @@ class ViewController: UIViewController {
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
     var player: AVAudioPlayer?
+    var session: AVAudioSession!
     var playingIndex: Int = -1
     var playlist: Array<MPMediaItem> = []
+    
+    // ? ? ?
+    override var canBecomeFirstResponder: Bool { return true }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wheelView.delegate = self
         initChildren()
+        initPlayer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainMenu.updateRightPanel(index: mainMenu.current)
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.endReceivingRemoteControlEvents()
+        self.resignFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func remoteControlReceived(with event: UIEvent?) {
+        print(event?.subtype ?? "")
+//        switch event?.subtype {
+//        case remoteControlPlay:
+//            break
+//        default:
+//            
+//        }
     }
     
     private func initChildren() {
@@ -60,6 +83,16 @@ class ViewController: UIViewController {
         genresList.attachTo(viewController: self, inView: cardView)
     }
     
+    func initPlayer() {
+        session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayback)
+            try session.setActive(true)
+        } catch let e as NSError {
+            print(e)
+        }
+    }
+    
     func play(item: MPMediaItem) {
         if player != nil && (player?.isPlaying)! {
             player?.stop()
@@ -76,6 +109,7 @@ class ViewController: UIViewController {
             let result: Bool = (player?.prepareToPlay())!
             if result {
                 player?.play()
+                InfoCenterHelper.helper.update(withItem: item)
             }
         } catch let e as Error {
             print(e)

@@ -8,6 +8,8 @@
 
 import UIKit
 import Koloda
+import MediaPlayer
+import Haneke
 
 class TwoPanelListViewController: TickableViewController {
     
@@ -15,14 +17,44 @@ class TwoPanelListViewController: TickableViewController {
     var panelView: PanelView!
     
     var items: Array<MenuMeta>!
+    var albums: Array<MPMediaItemCollection>!
     var images: Dictionary<MenuMeta.MenuType, UIImage>!
+    var stackCacheFormat: HNKCacheFormat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initMenu()
+        albums = MediaLibrary.sharedInstance.fetchAllAlbums()
+        stackCacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
+        
+        tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.isUserInteractionEnabled = false
+        tableView.register(TwoPanelListCell.self, forCellReuseIdentifier: TwoPanelListCell.reuseId)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.snp.makeConstraints { (maker) in
+            maker.leading.top.bottom.equalToSuperview()
+            maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
+        }
+
+        panelView = PanelView()
+        self.view.addSubview(panelView)
+        panelView.snp.makeConstraints { (maker) in
+            maker.leading.equalTo(self.view.snp.centerXWithinMargins)
+            maker.top.bottom.trailing.equalToSuperview()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        panelView.layoutIfNeeded()
+        panelView.initViews()
+        panelView.stackView.delegate = self
+        panelView.stackView.dataSource = self
+        panelView.stackView.reloadData()
+        updateRightPanel(index: current)
     }
     
     override func didReceiveMemoryWarning() {
@@ -38,27 +70,8 @@ class TwoPanelListViewController: TickableViewController {
             maker.width.height.equalTo(view)
             maker.center.equalTo(view)
         }
-        initMenu()
         
-        tableView = UITableView()
-        self.view.addSubview(tableView)
-        tableView.isUserInteractionEnabled = false
-        tableView.register(TwoPanelListCell.self, forCellReuseIdentifier: TwoPanelListCell.reuseId)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.snp.makeConstraints { (maker) in
-            maker.leading.top.bottom.equalToSuperview()
-            maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
-        }
         tableView.reloadData()
-        
-        panelView = PanelView()
-        self.view.addSubview(panelView)
-        panelView.snp.makeConstraints { (maker) in
-            maker.leading.equalTo(self.view.snp.centerXWithinMargins)
-            maker.top.bottom.trailing.equalToSuperview()
-        }
     }
     
     
@@ -146,6 +159,33 @@ extension TwoPanelListViewController: TickableViewControllerDelegate {
     }
 }
 
+extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
+    
+    
+    func kolodaNumberOfCards(_ kolodaView: KolodaView) -> Int {
+        return albums.count
+    }
+    
+    func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
+        let size = koloda.frame.width - 32
+        let ret = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        let item = albums[index].representativeItem
+        ret.contentMode = .scaleAspectFill
+        ret.clipsToBounds = true
+        ret.hnk_cacheFormat = stackCacheFormat
+        ret.hnk_setImage(item?.artwork?.image(at: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item?.albumArtistPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
+        return ret
+    }
+    
+    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+        return nil
+    }
+    
+    func koloda(_ koloda: KolodaView, shouldSwipeCardAt index: Int, in direction: SwipeResultDirection) -> Bool {
+        return true
+    }
+}
+
 class TwoPanelListCell: UITableViewCell {
     
     static let reuseId = "TwoPanelListCellReuseId"
@@ -189,24 +229,31 @@ class PanelView: UIView {
     
     convenience init() {
         self.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.lightGray
-        initViews()
     }
     
-    private func initViews() {
+    func initViews() {
+        if imageView != nil {
+            return
+        }
+        self.clipsToBounds = true
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        stackView = KolodaView(frame: CGRect.zero)
-        addSubview(imageView)
+        let size = self.bounds.width - 32
+        let frame = CGRect(x: 0, y: 0, width: size, height: size)
+        stackView = KolodaView(frame: frame)
+        
         addSubview(stackView)
+        stackView.snp.makeConstraints { (maker) in
+            maker.width.height.equalTo(size)
+            maker.center.equalTo(self)
+        }
+        stackView.countOfVisibleCards = 10
+
+        addSubview(imageView)
         
         imageView.snp.makeConstraints { (maker) in
             maker.top.bottom.leading.trailing.equalTo(self)
         }
-        stackView.snp.makeConstraints { (maker) in
-            maker.top.bottom.leading.trailing.equalTo(self)
-        }
-        stackView.isHidden = true
     }
     
     func showStack() {

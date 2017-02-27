@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */; };
 		015E4A9B1E5E9CC5007A7C3F /* TwoPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */; };
 		015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaLibrary.swift; path = Models/MediaLibrary.swift; sourceTree = "<group>"; };
 		015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwoPanelListViewController.swift; path = Controllers/TwoPanelListViewController.swift; sourceTree = "<group>"; };
 		015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controllers/ViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				01CAB30A1E5C0C2D001B93C7 /* Theme.swift */,
 				01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */,
 				01D3DC811E5C31A500B425F9 /* AppSettings.swift */,
+				011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
 				01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */,
+				011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */,
 				01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
