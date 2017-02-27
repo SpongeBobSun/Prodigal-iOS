@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
     var player: AVAudioPlayer?
@@ -104,6 +104,9 @@ class ViewController: UIViewController {
         
         playListView = ListViewController()
         playListView.attachTo(viewController: self, inView: cardView)
+        
+        nowPlaying = NowPlayingViewController()
+        nowPlaying.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
@@ -256,6 +259,17 @@ extension ViewController: WheelViewDelegate {
             wheelView.tickDelegate = playListView
             break
         case .ShuffleSongs:
+            current.hide(completion: { 
+                
+            })
+            nowPlaying.show()
+            current = nowPlaying
+            wheelView.tickDelegate = nowPlaying
+            break
+        case .NowPlaying:
+            nowPlaying.show()
+            current = nowPlaying
+            wheelView.tickDelegate = nowPlaying
             break
         default:
             break

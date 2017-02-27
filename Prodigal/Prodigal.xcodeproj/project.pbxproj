@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
+		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
 		015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */; };
 		015E4A9B1E5E9CC5007A7C3F /* TwoPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */; };
 		015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
+		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
 		015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaLibrary.swift; path = Models/MediaLibrary.swift; sourceTree = "<group>"; };
 		015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwoPanelListViewController.swift; path = Controllers/TwoPanelListViewController.swift; sourceTree = "<group>"; };
 		015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controllers/ViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */,
 				015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */,
 				015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */,
+				011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
+				011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */,
 				015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */,
 				015E4AA31E5ED4DC007A7C3F /* ListViewController.swift in Sources */,
 				015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */,
