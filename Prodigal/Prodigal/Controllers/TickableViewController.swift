@@ -22,6 +22,7 @@ class TickableViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,7 +33,7 @@ class TickableViewController: UIViewController {
         return tickableDelegate.getData()[current]
     }
     
-    func hide(completion: AnimationCompletion) {
+    func hide(completion: @escaping AnimationCompletion) {
         completion()
     }
     

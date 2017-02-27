@@ -47,8 +47,9 @@ class NowPlayingViewController: TickableViewController {
         self.view.backgroundColor = UIColor.lightGray
     }
     
-    override func hide(completion: () -> Void) {
+    override func hide(completion: @escaping () -> Void) {
         self.view.isHidden = true
+        completion()
     }
     
     override func show() {

@@ -96,8 +96,9 @@ class ListViewController: TickableViewController {
         tableView.reloadData()
     }
     
-    override func hide(completion: () -> Void) {
+    override func hide(completion: @escaping () -> Void) {
         self.view.isHidden = true
+        completion()
     }
     
     override func show() {

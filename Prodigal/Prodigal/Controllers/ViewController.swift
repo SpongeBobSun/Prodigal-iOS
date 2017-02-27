@@ -183,12 +183,11 @@ extension ViewController: WheelViewDelegate {
         if stack.count == 1 {
             return
         }
-        stack.popLast()?.hide(completion: { 
-            
+        stack.popLast()?.hide(completion: {
+            self.current = self.stack.last
+            self.wheelView.tickDelegate = self.current
+            self.current.show()
         })
-        current = stack.last
-        wheelView.tickDelegate = current
-        current.show()
     }
     func onPrev() {
         if playingIndex == 0 || playingIndex < 0 {
@@ -213,17 +212,23 @@ extension ViewController: WheelViewDelegate {
         let select = current.getSelection()
         switch select.type {
         case .Artists:
-            self.artistsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllArtists())
+            current.hide {
+                self.artistsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllArtists())
+            }
             current = self.artistsList
             self.wheelView.tickDelegate = self.artistsList
             break
         case .Albums:
-            self.albumsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllAlbums())
+            current.hide {
+                self.albumsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllAlbums())
+            }
             current = self.albumsList
             self.wheelView.tickDelegate = self.albumsList
             break
         case .Songs:
-            self.songsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllSongs())
+            current.hide {
+                self.songsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllSongs())
+            }
             current = self.songsList
             self.wheelView.tickDelegate = self.songsList
             break
@@ -253,7 +258,9 @@ extension ViewController: WheelViewDelegate {
             self.play(item: select.object as! MPMediaItem!)
             break
         case .Genres:
-            self.genresList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllGenres())
+            current.hide {
+                self.genresList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllGenres())
+            }
             current = genresList
             self.wheelView.tickDelegate = self.genresList
             break
@@ -273,14 +280,15 @@ extension ViewController: WheelViewDelegate {
             break
         case .ShuffleSongs:
             current.hide(completion: { 
-                
+                self.nowPlaying.show()
             })
-            nowPlaying.show()
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             break
         case .NowPlaying:
-            nowPlaying.show()
+            current.hide {
+                self.nowPlaying.show()
+            }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             break

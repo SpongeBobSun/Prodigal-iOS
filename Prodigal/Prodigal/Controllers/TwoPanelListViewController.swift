@@ -38,6 +38,7 @@ class TwoPanelListViewController: TickableViewController {
             maker.leading.top.bottom.equalToSuperview()
             maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
         }
+        
 
         panelView = PanelView()
         self.view.addSubview(panelView)
@@ -98,8 +99,22 @@ class TwoPanelListViewController: TickableViewController {
         
     }
     
-    override func hide(completion: () -> Void) {
-        self.view.isHidden = true
+    override func hide(completion: @escaping () -> Void) {
+        
+        let leftCenter = tableView.center
+        let rightCenter = panelView.center
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut , animations: {
+            self.tableView.center = CGPoint(x: 0 - self.tableView.bounds.width / 2, y: leftCenter.y)
+            self.panelView.center = CGPoint(x: self.panelView.bounds.width * 2.5, y: rightCenter.y)
+        }) { (done) in
+            if done {
+                self.view.isHidden = true
+                self.tableView.center = leftCenter
+                self.panelView.center = rightCenter
+                completion()
+            }
+        }
     }
     
     override func show() {
