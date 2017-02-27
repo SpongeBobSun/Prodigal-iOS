@@ -11,4 +11,5 @@ target 'Prodigal' do
     pod 'SnapKit', '~> 3.2.0'
     pod 'Koloda', '~> 4.0'
     pod 'Haneke'
+    pod 'KYCircularProgress'
 end

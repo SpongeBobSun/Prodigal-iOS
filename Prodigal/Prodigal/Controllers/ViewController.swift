@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         }
         switch event!.subtype {
         case .remoteControlPlay:
-            
+            play()
             break
         case .remoteControlStop :
             stop()
@@ -72,6 +72,7 @@ class ViewController: UIViewController {
             }
             break
         case .remoteControlTogglePlayPause:
+            play()
             break
         case .remoteControlNextTrack:
             self.onNext()
@@ -140,6 +141,16 @@ class ViewController: UIViewController {
         } catch let e as Error {
             print(e)
         }
+    }
+    
+    func play() {
+        if playlist.count == 0 {
+           return
+        }
+        if playingIndex == -1 || playingIndex >= playlist.count {
+            playingIndex = 0
+        }
+        play(item: playlist[playingIndex])
     }
     
     func stop() {
@@ -236,7 +247,9 @@ extension ViewController: WheelViewDelegate {
             break
         case .Song:
             self.playlist = (current as! ListViewController).playList ?? []
-            //MARK - TODO: show now playing.
+            nowPlaying.show()
+            current = nowPlaying
+            wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
             break
         case .Genres:

@@ -266,4 +266,8 @@ class PanelView: UIView {
         imageView.image = image
     }
     
+    func showNowPlaying() {
+        
+    }
+    
 }
