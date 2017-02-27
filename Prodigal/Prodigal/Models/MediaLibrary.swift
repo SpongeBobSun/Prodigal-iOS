@@ -53,11 +53,11 @@ class MediaLibrary: NSObject {
         return ret
     }
     
-    func fetchAllGenres() -> Array<MPMediaItem> {
+    func fetchAllGenres() -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
         }
-        return MPMediaQuery.genres().items ?? []
+        return MPMediaQuery.genres().collections ?? []
     }
     
     func fetchAlbums(byArtist artist: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
@@ -91,5 +91,17 @@ class MediaLibrary: NSObject {
         query.addFilterPredicate(filter)
         let albums = query.collections ?? []
         return albums
+    }
+    
+    func fetchArtists(byGenre genre:MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
+        if !authorized {
+            return []
+        }
+        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
+        
+        let query = MPMediaQuery.artists()
+        query.addFilterPredicate(filter)
+        let artists = query.collections ?? []
+        return artists
     }
 }

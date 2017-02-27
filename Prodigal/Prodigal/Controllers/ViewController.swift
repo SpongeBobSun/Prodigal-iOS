@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
     var player: AVAudioPlayer?
@@ -56,12 +56,32 @@ class ViewController: UIViewController {
     
     override func remoteControlReceived(with event: UIEvent?) {
         print(event?.subtype ?? "")
-//        switch event?.subtype {
-//        case remoteControlPlay:
-//            break
-//        default:
-//            
-//        }
+        if event?.type != UIEventType.remoteControl {
+            return
+        }
+        switch event!.subtype {
+        case .remoteControlPlay:
+            
+            break
+        case .remoteControlStop :
+            stop()
+            break
+        case .remoteControlPause:
+            if player != nil && (player?.isPlaying)! {
+                player?.pause()
+            }
+            break
+        case .remoteControlTogglePlayPause:
+            break
+        case .remoteControlNextTrack:
+            self.onNext()
+            break
+        case .remoteControlPreviousTrack:
+            self.onPrev()
+            break
+        default: break
+            
+        }
     }
     
     private func initChildren() {
@@ -81,6 +101,9 @@ class ViewController: UIViewController {
         
         genresList = ListViewController()
         genresList.attachTo(viewController: self, inView: cardView)
+        
+        playListView = ListViewController()
+        playListView.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
@@ -113,6 +136,12 @@ class ViewController: UIViewController {
             }
         } catch let e as Error {
             print(e)
+        }
+    }
+    
+    func stop() {
+        if player != nil && (player?.isPlaying)! {
+            player?.stop()
         }
     }
 }
@@ -204,7 +233,29 @@ extension ViewController: WheelViewDelegate {
             break
         case .Song:
             self.playlist = (current as! ListViewController).playList ?? []
+            //MARK - TODO: show now playing.
             self.play(item: select.object as! MPMediaItem!)
+            break
+        case .Genres:
+            self.genresList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllGenres())
+            current = genresList
+            self.wheelView.tickDelegate = self.genresList
+            break
+        case .Genre:
+            current.hide(completion: { 
+                
+            })
+            let genre = select.object as! MPMediaItemCollection!
+            self.artistsList.show(withType: .Artists, andData: MediaLibrary.sharedInstance.fetchArtists(byGenre: (genre?.representativeItem?.genrePersistentID)!))
+            current = self.artistsList
+            self.wheelView.tickDelegate = artistsList
+            break
+        case .Playlist:
+            playListView.show(withType: .Songs, andData: self.playlist)
+            current = playListView
+            wheelView.tickDelegate = playListView
+            break
+        case .ShuffleSongs:
             break
         default:
             break

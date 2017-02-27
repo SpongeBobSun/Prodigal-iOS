@@ -53,6 +53,11 @@ class ListViewController: TickableViewController {
         self.current = 0
         self.playList = nil
         self.type = type
+        if data.count == 0 {
+            //Mark - show empty view
+            return
+        }
+        
         switch type {
         case .Artists:
             items.removeAll()
@@ -74,6 +79,13 @@ class ListViewController: TickableViewController {
                 items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each))
             })
             playList = data as? Array<MPMediaItem>
+            items.first?.highLight = true
+            break
+        case .Genres:
+            items.removeAll()
+            data.forEach({ (each) in
+                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.genre)!, type: .Genre).setObject(obj: each))
+            })
             items.first?.highLight = true
             break
         default:

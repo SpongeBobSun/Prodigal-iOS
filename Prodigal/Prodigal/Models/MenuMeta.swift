@@ -19,6 +19,7 @@ class MenuMeta: NSObject {
         case Coverflow
         case Playlist
         case Genres
+        case Genre
         case ShuffleSongs
         case Settings
         case NowPlaying
