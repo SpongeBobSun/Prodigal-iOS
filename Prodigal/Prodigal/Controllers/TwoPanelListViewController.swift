@@ -171,7 +171,6 @@ extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
         let ret = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
         let item = albums[index].representativeItem
         ret.contentMode = .scaleAspectFill
-        ret.clipsToBounds = true
         ret.hnk_cacheFormat = stackCacheFormat
         ret.hnk_setImage(item?.artwork?.image(at: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item?.albumArtistPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
         return ret
