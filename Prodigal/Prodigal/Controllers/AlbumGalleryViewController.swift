@@ -15,7 +15,7 @@ class AlbumGalleryViewController: TickableViewController {
 
     var stackLayout: AlbumGalleryLayout!
     var collection: UICollectionView!
-    var albums: Array<MPMediaItemCollection>! = []
+    var albums: Array<MenuMeta>! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +38,7 @@ class AlbumGalleryViewController: TickableViewController {
     }
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
+        self.tickableDelegate = self
         vc.addChildViewController(self)
         view.addSubview(self.view)
         self.view.isHidden = true
@@ -50,7 +51,10 @@ class AlbumGalleryViewController: TickableViewController {
             maker.edges.equalToSuperview()
         }
         if albums.count == 0 {
-            albums = MediaLibrary.sharedInstance.fetchAllAlbums()
+            let data = MediaLibrary.sharedInstance.fetchAllAlbums()
+            data.forEach({ (item) in
+                albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
+            })
         }
         let size = view.bounds.height / 2
         stackLayout.itemSize = CGSize(width: size, height: size)
@@ -100,11 +104,18 @@ extension AlbumGalleryViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collection.dequeueReusableCell(withReuseIdentifier: AlbumCell.reuseId, for: indexPath) as! AlbumCell
         let album = albums[indexPath.row]
-        cell.configure(withImage: (album.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200))) ?? #imageLiteral(resourceName: "ic_album"), cacheId: (album.representativeItem?.albumPersistentID) ?? UInt64(0))
+        cell.configure(withMenu: album)
         return cell
     }
-    
-    
+}
+
+extension AlbumGalleryViewController: TickableViewControllerDelegate {
+    func getTickable() -> UITableView {
+        fatalError("Should not call this function in gallery view controller")
+    }
+    func getData() -> Array<MenuMeta> {
+        return self.albums
+    }
 }
 
 class AlbumCell: UICollectionViewCell {
@@ -137,8 +148,9 @@ class AlbumCell: UICollectionViewCell {
         self.image.contentMode = .scaleAspectFit
     }
     
-    func configure(withImage img:UIImage, cacheId: UInt64) {
-        image.hnk_setImage(img, withKey: String.init(format: "%llu", cacheId))
+    func configure(withMenu menu: MenuMeta) {
+        let album = menu.object as! MPMediaItemCollection!
+        image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
     }
 }
 

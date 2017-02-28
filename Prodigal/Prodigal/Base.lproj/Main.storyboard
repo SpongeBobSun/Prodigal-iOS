@@ -26,7 +26,19 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QL1-Yu-7h0" customClass="CardView" customModule="Prodigal" customModuleProvider="target">
                                 <rect key="frame" x="25" y="32" width="326" height="285.5"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-Wm-Zwp">
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="285.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="fbD-Wm-Zwp" firstAttribute="top" secondItem="QL1-Yu-7h0" secondAttribute="top" id="4QL-c2-s0r"/>
+                                    <constraint firstAttribute="bottom" secondItem="fbD-Wm-Zwp" secondAttribute="bottom" id="de2-vc-ZYW"/>
+                                    <constraint firstAttribute="trailing" secondItem="fbD-Wm-Zwp" secondAttribute="trailing" id="fSp-6P-QI7"/>
+                                    <constraint firstItem="fbD-Wm-Zwp" firstAttribute="leading" secondItem="QL1-Yu-7h0" secondAttribute="leading" id="kpr-ub-0Qa"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="elevation">
                                         <real key="value" value="10"/>
@@ -53,7 +65,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cardView" destination="QL1-Yu-7h0" id="sYb-jY-8y6"/>
+                        <outlet property="cardView" destination="fbD-Wm-Zwp" id="mab-zd-9qy"/>
                         <outlet property="wheelView" destination="gIy-fS-kXA" id="45B-0l-HLu"/>
                     </connections>
                 </viewController>

@@ -14,7 +14,7 @@ import Haneke
 class ViewController: UIViewController {
 
     @IBOutlet weak var wheelView: WheelView!
-    @IBOutlet weak var cardView: CardView!
+    @IBOutlet weak var cardView: UIView!
     
     
     var current: TickableViewController!
