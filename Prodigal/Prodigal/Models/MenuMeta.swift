@@ -16,7 +16,7 @@ class MenuMeta: NSObject {
         case Song
         case Album
         case Artist
-        case Coverflow
+        case CoverGallery
         case Playlist
         case Genres
         case Genre

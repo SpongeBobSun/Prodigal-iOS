@@ -80,7 +80,7 @@ class TwoPanelListViewController: TickableViewController {
         items = Array<MenuMeta>()
         items.append(MenuMeta(name: NSLocalizedString("Artists", comment: ""), type: .Artists))
         items.append(MenuMeta(name: NSLocalizedString("Albums", comment: ""), type: .Albums))
-        items.append(MenuMeta(name: NSLocalizedString("Cover Flow", comment: ""), type: MenuMeta.MenuType.Coverflow))
+        items.append(MenuMeta(name: NSLocalizedString("Cover Flow", comment: ""), type: MenuMeta.MenuType.CoverGallery))
         items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
         items.append(MenuMeta(name: NSLocalizedString("Playlists", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
@@ -90,7 +90,7 @@ class TwoPanelListViewController: TickableViewController {
         items.first?.highLight = true
         
         images = [MenuMeta.MenuType.Artists: #imageLiteral(resourceName: "ic_artists"),
-                  MenuMeta.MenuType.Coverflow: #imageLiteral(resourceName: "ic_album_shelf"),
+                  MenuMeta.MenuType.CoverGallery: #imageLiteral(resourceName: "ic_album_shelf"),
                   MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
                   MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
                   MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),

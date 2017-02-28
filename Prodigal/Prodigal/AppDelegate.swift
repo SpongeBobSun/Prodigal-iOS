@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
+
 import Haneke
 
 @UIApplicationMain
@@ -17,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        Fabric.with([Crashlytics.self])
         ThemeManager().copyToDocuments()
         initCacheForList()
         let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))

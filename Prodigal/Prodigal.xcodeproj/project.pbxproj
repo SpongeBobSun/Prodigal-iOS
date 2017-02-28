@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
+		011BC8961E655329004F94B7 /* AlbumGalleryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 011BC8951E655329004F94B7 /* AlbumGalleryLayout.m */; };
+		011BC8981E65537F004F94B7 /* AlbumGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BC8971E65537F004F94B7 /* AlbumGalleryViewController.swift */; };
 		015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */; };
 		015E4A9B1E5E9CC5007A7C3F /* TwoPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */; };
 		015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */; };
@@ -38,6 +40,10 @@
 /* Begin PBXFileReference section */
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
+		011BC8931E655329004F94B7 /* Prodigal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Prodigal-Bridging-Header.h"; sourceTree = "<group>"; };
+		011BC8941E655329004F94B7 /* AlbumGalleryLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumGalleryLayout.h; path = Vendor/YRCoverFlowLayout/AlbumGalleryLayout.h; sourceTree = "<group>"; };
+		011BC8951E655329004F94B7 /* AlbumGalleryLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumGalleryLayout.m; path = Vendor/YRCoverFlowLayout/AlbumGalleryLayout.m; sourceTree = "<group>"; };
+		011BC8971E65537F004F94B7 /* AlbumGalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlbumGalleryViewController.swift; path = Controllers/AlbumGalleryViewController.swift; sourceTree = "<group>"; };
 		015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaLibrary.swift; path = Models/MediaLibrary.swift; sourceTree = "<group>"; };
 		015E4A9A1E5E9CC5007A7C3F /* TwoPanelListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwoPanelListViewController.swift; path = Controllers/TwoPanelListViewController.swift; sourceTree = "<group>"; };
 		015E4A9C1E5E9CE9007A7C3F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controllers/ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		011BC8921E655265004F94B7 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				011BC8941E655329004F94B7 /* AlbumGalleryLayout.h */,
+				011BC8951E655329004F94B7 /* AlbumGalleryLayout.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
 		015E4A951E5D7BFD007A7C3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +142,7 @@
 				01CAB3051E5C0BD2001B93C7 /* Gestures */,
 				01CAB3091E5C0C04001B93C7 /* Utils */,
 				01CAB3041E5C0BBE001B93C7 /* Views */,
+				011BC8921E655265004F94B7 /* Vendor */,
 				01CAB30C1E5C0D1C001B93C7 /* Configs */,
 			);
 			path = Prodigal;
@@ -153,6 +169,7 @@
 		01CAB3061E5C0BE3001B93C7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				011BC8931E655329004F94B7 /* Prodigal-Bridging-Header.h */,
 				01B0F21E1E56E3840081B237 /* Assets.xcassets */,
 				01B0F2201E56E3840081B237 /* LaunchScreen.storyboard */,
 				01B0F2231E56E3840081B237 /* Info.plist */,
@@ -169,6 +186,7 @@
 				015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */,
 				015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */,
 				011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */,
+				011BC8971E65537F004F94B7 /* AlbumGalleryViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -254,6 +272,7 @@
 				01B0F20F1E56E3840081B237 /* Resources */,
 				7B61B19D00B45FFB8132F15F /* [CP] Embed Pods Frameworks */,
 				F0E31037DF5FEE898148D6CE /* [CP] Copy Pods Resources */,
+				011BC8911E654FCF004F94B7 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -277,6 +296,7 @@
 					01B0F2101E56E3840081B237 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = UMW2HP56AU;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -319,6 +339,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		011BC8911E654FCF004F94B7 /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 8e19b2f9462d4928f267906b4f96d4ac60741643 7054bdc64ead1b41914719b8f3f108e7564e91f89ddca23c03c6790d334acd74";
+		};
 		68BBF80DBCB2C06C23487EB8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,12 +415,14 @@
 				011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */,
 				015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */,
 				015E4AA31E5ED4DC007A7C3F /* ListViewController.swift in Sources */,
+				011BC8981E65537F004F94B7 /* AlbumGalleryViewController.swift in Sources */,
 				015E4A9D1E5E9CE9007A7C3F /* ViewController.swift in Sources */,
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
 				01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */,
 				011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */,
+				011BC8961E655329004F94B7 /* AlbumGalleryLayout.m in Sources */,
 				01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,11 +545,14 @@
 			baseConfigurationReference = 44DF25B542E00CA8714ADCAA /* Pods-Prodigal.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bob.sun.bender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -523,11 +562,13 @@
 			baseConfigurationReference = 85143C72199005B173785D1A /* Pods-Prodigal.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bob.sun.bender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -12,4 +12,6 @@ target 'Prodigal' do
     pod 'Koloda', '~> 4.0'
     pod 'Haneke'
     pod 'KYCircularProgress'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
