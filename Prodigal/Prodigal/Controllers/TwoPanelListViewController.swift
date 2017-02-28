@@ -99,7 +99,7 @@ class TwoPanelListViewController: TickableViewController {
         
     }
     
-    override func hide(completion: @escaping () -> Void) {
+    override func hide(type:AnimType = .push, completion: @escaping () -> Void) {
         
         let leftCenter = tableView.center
         let rightCenter = panelView.center
@@ -117,9 +117,20 @@ class TwoPanelListViewController: TickableViewController {
         }
     }
     
-    override func show() {
+    override func show(type: AnimType) {
+        let leftCenter = tableView.center
+        let rightCenter = panelView.center
+        
+        self.tableView.center = CGPoint(x: 0 - leftCenter.x, y: leftCenter.y)
+        self.panelView.center = CGPoint(x: rightCenter.x * 3, y: rightCenter.y)
+        
         self.view.isHidden = false
-        updateRightPanel(index: current)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut , animations: {
+            self.tableView.center = leftCenter
+            self.panelView.center = rightCenter
+        }) { (done) in
+            self.updateRightPanel(index: self.current)
+        }
     }
 
     func updateRightPanel(index: Int) {

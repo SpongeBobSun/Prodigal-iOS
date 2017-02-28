@@ -49,7 +49,7 @@ class ListViewController: TickableViewController {
         }
     }
     
-    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>) {
+    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true) {
         self.current = 0
         self.playList = nil
         self.type = type
@@ -92,17 +92,73 @@ class ListViewController: TickableViewController {
             self.type = .Undefined
             break
         }
-        self.view.isHidden = false
-        tableView.reloadData()
+        if animate {
+            let center = self.view.center
+            self.view.center = CGPoint(x: center.x * 3, y: center.y)
+            self.view.isHidden = false
+            tableView.reloadData()
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                self.view.center = center
+            }) { (done) in
+            }
+        } else {
+            self.view.isHidden = false
+            tableView.reloadData()
+        }
     }
     
-    override func hide(completion: @escaping () -> Void) {
-        self.view.isHidden = true
-        completion()
+    override func hide(type: AnimType = .push, completion: @escaping AnimationCompletion) {
+        if type == .push {
+            let center = self.view.center
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                self.view.center = CGPoint(x: 0 - center.x, y: center.y)
+            }) { (done) in
+                if done {
+                    self.view.isHidden = true
+                    self.view.center = center
+                    completion()
+                }
+            }
+        } else if type == .pop {
+            let center = self.view.center
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                self.view.center = CGPoint(x: center.x * 3, y: center.y)
+            }) { (done) in
+                if done {
+                    self.view.isHidden = true
+                    self.view.center = center
+                    completion()
+                }
+            }
+        } else {
+            self.view.isHidden = true
+            completion()
+        }
     }
     
-    override func show() {
-        self.view.isHidden = false
+    override func show(type: AnimType) {
+        if type == .push {
+            let center = self.view.center
+            self.view.center = CGPoint(x: center.x * 3, y: center.y)
+            self.view.isHidden = false
+            tableView.reloadData()
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                self.view.center = center
+            }) { (done) in
+            }
+        } else if type == .pop {
+            let center = self.view.center
+            self.view.center = CGPoint(x: 0 - center.x, y: center.y)
+            self.view.isHidden = false
+            tableView.reloadData()
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                self.view.center = center
+            }) { (done) in
+            }
+        } else {
+            self.view.isHidden = false
+            tableView.reloadData()
+        }
     }
 }
 

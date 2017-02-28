@@ -15,6 +15,12 @@ protocol TickableViewControllerDelegate: class {
 
 typealias AnimationCompletion = () -> Void
 
+enum AnimType {
+    case pop
+    case push
+    case none
+}
+
 class TickableViewController: UIViewController {
     
     weak var tickableDelegate: TickableViewControllerDelegate!
@@ -33,11 +39,11 @@ class TickableViewController: UIViewController {
         return tickableDelegate.getData()[current]
     }
     
-    func hide(completion: @escaping AnimationCompletion) {
+    func hide(type: AnimType = .push, completion: @escaping AnimationCompletion) {
         completion()
     }
     
-    func show() {
+    func show(type: AnimType) {
         
     }
 }
