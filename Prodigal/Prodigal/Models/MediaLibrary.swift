@@ -124,4 +124,17 @@ class MediaLibrary: NSObject {
         let artists = query.collections ?? []
         return artists
     }
+    
+    static func shuffle(array: [Any]) -> [Any] {
+        if array.count == 0 {
+            return array
+        }
+        var copy: Array<Any> = []
+        copy.append(contentsOf: array)
+        var ret: Array<Any> = []
+        while (copy.count > 0) {
+            ret.append(copy.remove(at: Int(arc4random_uniform(UInt32(copy.count)))))
+        }
+        return ret
+    }
 }

@@ -124,61 +124,8 @@ class ListViewController: TickableViewController {
         if items.count <= 0 {
             return
         }
-        var menu: MenuMeta? = nil
-        var list: [MPMediaItem] = []
-        
-        if type == .Songs {
-            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-            items.insert((menu?.setObject(obj: playList?.first))!, at: 0)
-            current += 1
-            return
-        }
-        
-        switch type {
-        case .Albums:
-            //FIXIT
-            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-            items.forEach({ (each) in
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
-                }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
-            })
-            if list.count > 0 {
-                self.playList = list
-                menu?.setObject(obj: list.first!)
-            }
-            break
-        case .Artists:
-            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-            items.forEach({ (each) in
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
-                }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
-            })
-            if list.count > 0 {
-                self.playList = list
-                menu?.setObject(obj: list.first!)
-            }
-            break
-        case .Genres:
-            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-            items.forEach({ (each) in
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
-                }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
-            })
-            if list.count > 0 {
-                self.playList = list
-                menu?.setObject(obj: list.first!)
-            }
-            break
-        default:
-            break
-        }
-        if menu == nil {
+        let menu: MenuMeta? = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
+        if type != .Songs && type != .Albums && type != .Artists && type != .Genres {
             return
         }
         items.insert(menu!, at: 0)
@@ -237,6 +184,73 @@ class ListViewController: TickableViewController {
             self.view.isHidden = false
             tableView.reloadData()
         }
+    }
+    
+    override func getSelection() -> MenuMeta {
+        let ret = super.getSelection()
+        if ret.type != .ShuffleCurrent {
+            return ret
+        }
+        var list: [MPMediaItem] = []
+        
+        if type == .Songs {
+            _ = ret.setObject(obj: (playList?.first!))
+            //TODO Shuffle playlist.
+            //playList.shuffle()
+            current += 1
+            return ret
+        }
+        
+        switch type {
+        case .Albums:
+            items.forEach({ (each) in
+                if each.type == .ShuffleCurrent {
+                    return
+                }
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                _ = ret.setObject(obj: (playList?.first!)!)
+            }
+            break
+        case .Artists:
+            items.forEach({ (each) in
+                if each.type == .ShuffleCurrent {
+                    return
+                }
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                _ = ret.setObject(obj: (playList?.first!)!)
+            }
+            break
+        case .Genres:
+            items.forEach({ (each) in
+                if each.type == .ShuffleCurrent {
+                    return
+                }
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                _ = ret.setObject(obj: (playList?.first!)!)
+            }
+            break
+        default:
+            break
+        }
+        return ret
     }
 }
 

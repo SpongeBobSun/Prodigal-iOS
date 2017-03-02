@@ -257,25 +257,21 @@ extension ViewController: WheelViewDelegate {
             break
         case .Song:
             current.hide {
-                
+                self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
             self.playlist = (current as! ListViewController).playList ?? []
-            nowPlaying.show(withSong: select.object as! MPMediaItem!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
             break
         case .ShuffleCurrent:
             current.hide {
-                
+                self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
             self.playlist = (current as! ListViewController).playList ?? []
-            nowPlaying.show(withSong: select.object as! MPMediaItem!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
-            break
-
             break
         case .Genres:
             current.hide {
