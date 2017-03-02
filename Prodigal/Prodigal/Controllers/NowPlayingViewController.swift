@@ -9,11 +9,10 @@
 import UIKit
 import MediaPlayer
 import SnapKit
-import KYCircularProgress
 
 class NowPlayingViewController: TickableViewController {
     
-    var progressView: KYCircularProgress!
+    
     var playingView: NowPlayingView = NowPlayingView()
 
     override func viewDidLoad() {
@@ -44,7 +43,6 @@ class NowPlayingViewController: TickableViewController {
             maker.leading.trailing.bottom.top.equalTo(self.view)
         }
         playingView.layoutIfNeeded()
-        self.view.backgroundColor = UIColor.lightGray
     }
     
     override func hide(type: AnimType = .push, completion: @escaping () -> Void) {
@@ -67,11 +65,16 @@ class NowPlayingViewController: TickableViewController {
         print("prev tick")
     }
     
-    func show(withSong song: MPMediaItem?) {
+    func show(withSong song: MPMediaItem?, type: AnimType = .push) {
+        self.view.isHidden = false
         if song == nil {
             //Mark - TODO: Empty view
+            return
         }
-        
+        playingView.image.image = song?.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+        playingView.title.text = song?.title
+        playingView.artist.text = song?.artist
+        playingView.album.text = song?.albumTitle
     }
     
     private func initViews() {

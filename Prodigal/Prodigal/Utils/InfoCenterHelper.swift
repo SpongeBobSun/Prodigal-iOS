@@ -16,12 +16,17 @@ class InfoCenterHelper: NSObject {
     }()
     
     func update(withItem item: MPMediaItem) {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+        var dict: [String: Any] = [
             MPMediaItemPropertyTitle: item.title ?? "",
             MPMediaItemPropertyArtist: item.artist ?? "",
             MPMediaItemPropertyAlbumTitle: item.albumTitle ?? "",
             MPNowPlayingInfoPropertyPlaybackRate: 1.0
-            
         ]
+        guard let img = item.artwork else {
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = dict
+            return
+        }
+        dict[MPMediaItemPropertyArtwork] = img
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = dict
     }
 }

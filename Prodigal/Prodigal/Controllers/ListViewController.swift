@@ -57,6 +57,7 @@ class ListViewController: TickableViewController {
             //Mark - show empty view
             return
         }
+        var hasShuffle = false
         
         switch type {
         case .Artists:
@@ -65,6 +66,8 @@ class ListViewController: TickableViewController {
                 items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.artist)!, type: .Artist).setObject(obj: each))
             })
             items.first?.highLight = true
+            insertShuffleAll()
+            hasShuffle = true
             break
         case .Albums:
             items.removeAll()
@@ -72,6 +75,8 @@ class ListViewController: TickableViewController {
                 items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.albumTitle)!, type: .Album).setObject(obj: each))
             })
             items.first?.highLight = true
+            insertShuffleAll()
+            hasShuffle = true
             break
         case .Songs:
             items.removeAll()
@@ -80,6 +85,8 @@ class ListViewController: TickableViewController {
             })
             playList = data as? Array<MPMediaItem>
             items.first?.highLight = true
+            insertShuffleAll()
+            hasShuffle = true
             break
         case .Genres:
             items.removeAll()
@@ -97,6 +104,9 @@ class ListViewController: TickableViewController {
             self.view.center = CGPoint(x: center.x * 3, y: center.y)
             self.view.isHidden = false
             tableView.reloadData()
+            if hasShuffle {
+                tableView.scrollToRow(at: IndexPath(row: 1, section:0), at: .top, animated: false)
+            }
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                 self.view.center = center
             }) { (done) in
@@ -104,7 +114,75 @@ class ListViewController: TickableViewController {
         } else {
             self.view.isHidden = false
             tableView.reloadData()
+            if hasShuffle {
+                tableView.scrollToRow(at: IndexPath(row: 1, section:0), at: .top, animated: false)
+            }
         }
+    }
+    
+    private func insertShuffleAll() {
+        if items.count <= 0 {
+            return
+        }
+        var menu: MenuMeta? = nil
+        var list: [MPMediaItem] = []
+        
+        if type == .Songs {
+            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
+            items.insert((menu?.setObject(obj: playList?.first))!, at: 0)
+            current += 1
+            return
+        }
+        
+        switch type {
+        case .Albums:
+            //FIXIT
+            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
+            items.forEach({ (each) in
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = list
+                menu?.setObject(obj: list.first!)
+            }
+            break
+        case .Artists:
+            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
+            items.forEach({ (each) in
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = list
+                menu?.setObject(obj: list.first!)
+            }
+            break
+        case .Genres:
+            menu = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
+            items.forEach({ (each) in
+                guard let collection = each.object as? MPMediaItemCollection! else {
+                    return
+                }
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
+            })
+            if list.count > 0 {
+                self.playList = list
+                menu?.setObject(obj: list.first!)
+            }
+            break
+        default:
+            break
+        }
+        if menu == nil {
+            return
+        }
+        items.insert(menu!, at: 0)
+        current += 1
     }
     
     override func hide(type: AnimType = .push, completion: @escaping AnimationCompletion) {
@@ -219,7 +297,7 @@ class ListCell: UITableViewCell {
     
     func configure(meta: MenuMeta, type: MenuMeta.MenuType) {
         title.text = meta.itemName
-        if type == .Albums {
+        if type == .Albums && meta.type != .ShuffleCurrent {
             if icon.isHidden {
                 icon.snp.updateConstraints({ (maker) in
                     maker.width.height.equalTo(40)

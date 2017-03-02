@@ -256,11 +256,26 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = self.songsList
             break
         case .Song:
+            current.hide {
+                
+            }
             self.playlist = (current as! ListViewController).playList ?? []
-            nowPlaying.show(type: .push)
+            nowPlaying.show(withSong: select.object as! MPMediaItem!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
+            break
+        case .ShuffleCurrent:
+            current.hide {
+                
+            }
+            self.playlist = (current as! ListViewController).playList ?? []
+            nowPlaying.show(withSong: select.object as! MPMediaItem!)
+            current = nowPlaying
+            wheelView.tickDelegate = nowPlaying
+            self.play(item: select.object as! MPMediaItem!)
+            break
+
             break
         case .Genres:
             current.hide {
@@ -292,7 +307,11 @@ extension ViewController: WheelViewDelegate {
             break
         case .NowPlaying:
             current.hide {
-                self.nowPlaying.show(type: .push)
+            }
+            if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
+                self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
+            } else {
+                self.nowPlaying.show(withSong: nil)
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying

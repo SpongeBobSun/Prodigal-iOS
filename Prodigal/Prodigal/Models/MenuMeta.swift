@@ -20,7 +20,10 @@ class MenuMeta: NSObject {
         case Playlist
         case Genres
         case Genre
+        case LocalSongs
+        case LocalSong
         case ShuffleSongs
+        case ShuffleCurrent
         case Settings
         case NowPlaying
         case About

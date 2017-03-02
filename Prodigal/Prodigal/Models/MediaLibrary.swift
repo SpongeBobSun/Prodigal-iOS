@@ -81,6 +81,26 @@ class MediaLibrary: NSObject {
         return query.items ?? []
     }
     
+    func fetchSongs(byArtist artist:MPMediaEntityPersistentID) -> Array<MPMediaItem> {
+        if !authorized {
+            return []
+        }
+        let filter = MPMediaPropertyPredicate.init(value: artist, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: .equalTo)
+        let query = MPMediaQuery.songs()
+        query.addFilterPredicate(filter)
+        return query.items ?? []
+    }
+    
+    func fetchSongs(byGenre genre:MPMediaEntityPersistentID) -> Array<MPMediaItem> {
+        if !authorized {
+            return []
+        }
+        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
+        let query = MPMediaQuery.songs()
+        query.addFilterPredicate(filter)
+        return query.items ?? []
+    }
+    
     func fetchAlbums(byGenre genre: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
