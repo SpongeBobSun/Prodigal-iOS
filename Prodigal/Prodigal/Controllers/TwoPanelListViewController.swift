@@ -20,6 +20,8 @@ class TwoPanelListViewController: TickableViewController {
     var albums: Array<MPMediaItemCollection>!
     var images: Dictionary<MenuMeta.MenuType, UIImage>!
     var stackCacheFormat: HNKCacheFormat!
+    var timer: Timer!
+    var swipeDir = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +58,14 @@ class TwoPanelListViewController: TickableViewController {
         panelView.stackView.dataSource = self
         panelView.stackView.reloadData()
         updateRightPanel(index: current)
+        
+        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(swipe), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+        timer = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,6 +109,15 @@ class TwoPanelListViewController: TickableViewController {
         
     }
     
+    @objc public func swipe() {
+        if panelView.stackView.isHidden {
+            return
+        }
+        let direction = swipeDir ? SwipeResultDirection.left : SwipeResultDirection.right
+        swipeDir = !swipeDir
+        self.panelView.stackView.swipe(direction)
+    }
+    
     override func hide(type:AnimType = .push, completion: @escaping () -> Void) {
         
         let leftCenter = tableView.center
@@ -137,6 +156,7 @@ class TwoPanelListViewController: TickableViewController {
         let meta = items[index]
         if meta.type == .Albums {
             panelView.showStack()
+            return
         } else if meta.type == .NowPlaying {
             
         } else {
