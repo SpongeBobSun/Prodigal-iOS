@@ -56,7 +56,6 @@ class ViewController: UIViewController {
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
-        print(event?.subtype ?? "")
         if event?.type != UIEventType.remoteControl {
             return
         }
@@ -140,6 +139,7 @@ class ViewController: UIViewController {
             let result: Bool = (player?.prepareToPlay())!
             if result {
                 player?.play()
+                nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
             }
         } catch let e as Error {

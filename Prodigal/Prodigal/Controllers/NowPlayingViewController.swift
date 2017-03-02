@@ -14,6 +14,19 @@ class NowPlayingViewController: TickableViewController {
     
     
     var playingView: NowPlayingView = NowPlayingView()
+    private var _song: MPMediaItem!
+    var song: MPMediaItem {
+        set {
+            _song = newValue
+            playingView.image.image = _song.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+            playingView.title.text = _song.title
+            playingView.artist.text = _song.artist
+            playingView.album.text = _song.albumTitle
+        }
+        get {
+            return _song
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,10 +84,7 @@ class NowPlayingViewController: TickableViewController {
             //Mark - TODO: Empty view
             return
         }
-        playingView.image.image = song?.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
-        playingView.title.text = song?.title
-        playingView.artist.text = song?.artist
-        playingView.album.text = song?.albumTitle
+        self.song = song!
     }
     
     private func initViews() {
