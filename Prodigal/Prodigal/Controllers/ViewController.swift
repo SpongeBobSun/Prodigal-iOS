@@ -298,6 +298,10 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: { 
                 self.nowPlaying.show(type: .push)
             })
+            self.playlist = MediaLibrary.shuffle(array: MediaLibrary.sharedInstance.fetchAllSongs()) as! Array<MPMediaItem>
+            if self.playlist.count > 0 {
+                self.play(item: self.playlist[0])
+            }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             break
