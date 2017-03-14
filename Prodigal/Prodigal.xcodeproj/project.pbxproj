@@ -34,6 +34,7 @@
 		01CAB3161E5C13C6001B93C7 /* Configs in Resources */ = {isa = PBXBuildFile; fileRef = 01CAB3151E5C13C6001B93C7 /* Configs */; };
 		01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */; };
 		01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3DC811E5C31A500B425F9 /* AppSettings.swift */; };
+		01E7FE841E768FFB00B505C0 /* PubSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7FE831E768FFB00B505C0 /* PubSub.swift */; };
 		35570E087BF9195A91302EFD /* Pods_Prodigal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AE8643FAB11221327F290B /* Pods_Prodigal.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		01CAB3151E5C13C6001B93C7 /* Configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Configs; path = Prodigal/Configs; sourceTree = "<group>"; };
 		01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Hex.swift"; path = "Extensions/UIColor+Hex.swift"; sourceTree = "<group>"; };
 		01D3DC811E5C31A500B425F9 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Utils/AppSettings.swift; sourceTree = "<group>"; };
+		01E7FE831E768FFB00B505C0 /* PubSub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSub.swift; path = Utils/PubSub.swift; sourceTree = "<group>"; };
 		09AE8643FAB11221327F290B /* Pods_Prodigal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Prodigal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44DF25B542E00CA8714ADCAA /* Pods-Prodigal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.debug.xcconfig"; sourceTree = "<group>"; };
 		85143C72199005B173785D1A /* Pods-Prodigal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */,
 				01D3DC811E5C31A500B425F9 /* AppSettings.swift */,
 				011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */,
+				01E7FE831E768FFB00B505C0 /* PubSub.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */,
 				015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */,
 				015E4A9B1E5E9CC5007A7C3F /* TwoPanelListViewController.swift in Sources */,
+				01E7FE841E768FFB00B505C0 /* PubSub.swift in Sources */,
 				015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
