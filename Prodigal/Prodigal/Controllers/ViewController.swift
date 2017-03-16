@@ -89,6 +89,7 @@ class ViewController: UIViewController {
     
     private func initChildren() {
         mainMenu = TwoPanelListViewController()
+        mainMenu.nowPlayingFetcherDelegate = self
         wheelView.tickDelegate = mainMenu
         current = mainMenu
         mainMenu.attachTo(viewController: self, inView: cardView)
@@ -342,6 +343,15 @@ extension ViewController: WheelViewDelegate {
 extension ViewController: PlayerTickerProtocol {
     func getPlayer() -> AVAudioPlayer? {
         return self.player
+    }
+}
+
+extension ViewController: NowPlayingFetcherDelegate {
+    func getNowPlaying() -> MPMediaItem? {
+        if self.playingIndex >= self.playlist.count || self.playlist.count == 0 {
+            return nil
+        }
+        return self.playlist[self.playingIndex]
     }
 }
 

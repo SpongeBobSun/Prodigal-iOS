@@ -10,8 +10,15 @@ import UIKit
 import Koloda
 import MediaPlayer
 import Haneke
+import MarqueeLabel
+
+protocol NowPlayingFetcherDelegate: class {
+    func getNowPlaying() -> MPMediaItem?
+}
 
 class TwoPanelListViewController: TickableViewController {
+    
+    weak var nowPlayingFetcherDelegate: NowPlayingFetcherDelegate?
     
     var tableView: UITableView!
     var panelView: PanelView!
@@ -48,6 +55,7 @@ class TwoPanelListViewController: TickableViewController {
             maker.leading.equalTo(self.view.snp.centerXWithinMargins)
             maker.top.bottom.trailing.equalToSuperview()
         }
+        panelView.fetcherDelegate = self.nowPlayingFetcherDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,7 +166,7 @@ class TwoPanelListViewController: TickableViewController {
             panelView.showStack()
             return
         } else if meta.type == .NowPlaying {
-            
+            panelView.showNowPlaying()
         } else {
             panelView.show(image: images[meta.type]!)
         }
@@ -270,7 +278,9 @@ class TwoPanelListCell: UITableViewCell {
 class PanelView: UIView {
     var imageView: UIImageView!
     var stackView: KolodaView!
-    var nowPlaying: UIView!
+    var nowPlaying: NowPlayingWidget!
+    
+    var fetcherDelegate: NowPlayingFetcherDelegate?
     
     convenience init() {
         self.init(frame: CGRect.zero)
@@ -300,25 +310,85 @@ class PanelView: UIView {
         imageView.snp.makeConstraints { (maker) in
             maker.top.bottom.leading.trailing.equalTo(self)
         }
+        
+        nowPlaying = NowPlayingWidget()
+        addSubview(nowPlaying)
+        nowPlaying.snp.makeConstraints { (maker) in
+            maker.top.bottom.leading.trailing.equalTo(self)
+        }
     }
     
     func showStack() {
         stackView.isHidden = false
         imageView.isHidden = true
+        nowPlaying.isHidden = true
     }
     
     func show(image: UIImage) {
         stackView.isHidden = true
         imageView.isHidden = false
         imageView.image = image
+        nowPlaying.isHidden = true
     }
     
     func showNowPlaying() {
-        
+        imageView.isHidden = true
+        stackView.isHidden = true
+        nowPlaying.isHidden = false
+        if (fetcherDelegate == nil) {
+            nowPlaying.config(media: nil)
+        } else {
+            nowPlaying.config(media: fetcherDelegate?.getNowPlaying())
+        }
     }
     
 }
 
 class NowPlayingWidget: UIView {
+    let imageView = UIImageView()
+    let title = MarqueeLabel(), album = MarqueeLabel(), artist = MarqueeLabel()
+    
+    convenience init() {
+        self.init(frame: CGRect.zero)
+        addSubview(imageView)
+        addSubview(title)
+        addSubview(album)
+        addSubview(artist)
+        
+        imageView.snp.makeConstraints { (maker) in
+            maker.leading.equalToSuperview().offset(10)
+            maker.trailing.equalToSuperview().offset(-10)
+            maker.top.equalToSuperview().offset(20)
+            maker.bottom.equalTo(self.snp.centerYWithinMargins).offset(16)
+        }
+        
+        title.snp.makeConstraints { (maker) in
+            maker.top.equalTo(imageView.snp.bottomMargin).offset(16)
+            maker.leading.trailing.equalToSuperview().offset(10)
+            maker.height.equalTo(20)
+        }
+        
+        album.snp.makeConstraints { (maker) in
+            maker.top.equalTo(title.snp.bottomMargin).offset(16)
+            maker.leading.trailing.height.equalTo(title)
+        }
+        
+        artist.snp.makeConstraints { (maker) in
+            maker.top.equalTo(album.snp.bottomMargin).offset(16)
+            maker.leading.trailing.height.equalTo(album)
+        }
+        
+    }
+    
+    func config(media: MPMediaItem?) {
+        if media == nil {
+            //TODO
+            return
+        }
+        imageView.image = media!.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+        title.text = media!.title
+        artist.text = media!.artist
+        album.text = media!.albumTitle
+    }
     
 }
