@@ -95,6 +95,14 @@ class NowPlayingViewController: TickableViewController {
             return
         }
         self.song = song!
+        PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
+            let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
+            let progress = Float(current) / Float(duration)
+            DispatchQueue.main.async {
+                self.playingView.progress.setProgress(progress, animated:true)
+                self.playingView.updateLabels(now: current, all: duration)
+            }
+        })
     }
     
     private func initViews() {
