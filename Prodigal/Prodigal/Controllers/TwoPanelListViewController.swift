@@ -286,6 +286,7 @@ class PanelView: UIView {
         let size = self.bounds.width - 32
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         stackView = KolodaView(frame: frame)
+        stackView.isUserInteractionEnabled = false
         
         addSubview(stackView)
         stackView.snp.makeConstraints { (maker) in
@@ -315,5 +316,9 @@ class PanelView: UIView {
     func showNowPlaying() {
         
     }
+    
+}
+
+class NowPlayingWidget: UIView {
     
 }

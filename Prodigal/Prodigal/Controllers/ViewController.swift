@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var session: AVAudioSession!
     var playingIndex: Int = -1
     var playlist: Array<MPMediaItem> = []
+    var ticker: PlayerTicker!
     
     // ? ? ?
     override var canBecomeFirstResponder: Bool { return true }
@@ -36,6 +37,7 @@ class ViewController: UIViewController {
         wheelView.delegate = self
         initChildren()
         initPlayer()
+        initTicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,9 +125,14 @@ class ViewController: UIViewController {
         }
     }
     
+    func initTicker() {
+        ticker = PlayerTicker()
+        ticker.delegate = self
+    }
     func play(item: MPMediaItem) {
         if player != nil && (player?.isPlaying)! {
             player?.stop()
+            ticker.stop()
         }
         if player != nil {
             player?.delegate = nil
@@ -141,6 +148,7 @@ class ViewController: UIViewController {
                 player?.play()
                 nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
+                ticker.start()
             }
         } catch let e as Error {
             print(e)
@@ -160,6 +168,7 @@ class ViewController: UIViewController {
     func stop() {
         if player != nil && (player?.isPlaying)! {
             player?.stop()
+            ticker.stop()
         }
     }
 }
@@ -327,6 +336,12 @@ extension ViewController: WheelViewDelegate {
             break
         }
         stack.append(current)
+    }
+}
+
+extension ViewController: PlayerTickerProtocol {
+    func getPlayer() -> AVAudioPlayer? {
+        return self.player
     }
 }
 

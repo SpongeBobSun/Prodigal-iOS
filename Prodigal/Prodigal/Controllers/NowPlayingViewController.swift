@@ -65,6 +65,13 @@ class NowPlayingViewController: TickableViewController {
     
     override func show(type: AnimType) {
         self.view.isHidden = false
+        PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
+            let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
+            let progress = Float(current) / Float(duration)
+            DispatchQueue.main.async {
+                self.playingView.progress.setProgress(progress, animated:true)
+            }
+        })
     }
     
     override func getSelection() -> MenuMeta {
@@ -100,6 +107,7 @@ class NowPlayingView: UIView {
     
     convenience init() {
         self.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.white
         addSubview(image)
         addSubview(title)
         addSubview(artist)
@@ -115,8 +123,9 @@ class NowPlayingView: UIView {
         
         progress.snp.makeConstraints { (maker) in
             maker.leading.trailing.top.equalTo(progressContainer)
-            maker.height.equalTo(32)
+            maker.height.equalTo(10)
         }
+        progressContainer.backgroundColor = UIColor.clear
         
         image.snp.makeConstraints { (maker) in
             maker.leading.top.equalTo(self).offset(8)
@@ -132,19 +141,15 @@ class NowPlayingView: UIView {
             maker.height.equalTo(30)
             maker.centerY.equalTo(self).offset(-60)
         }
-        title.backgroundColor = UIColor.white
         
         album.snp.makeConstraints { (maker) in
             maker.leading.trailing.height.equalTo(title)
             maker.centerY.equalTo(self).offset(-15)
         }
-        album.backgroundColor = UIColor.white
         
         artist.snp.makeConstraints { (maker) in
             maker.leading.trailing.height.equalTo(album)
             maker.centerY.equalTo(self).offset(30)
         }
-        
-        artist.backgroundColor = UIColor.white
     }
 }

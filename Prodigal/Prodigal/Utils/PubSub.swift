@@ -33,7 +33,7 @@ class PubSub {
         }
     }
     
-    class func subscribe(target: AnyObject, name: String, handler: @escaping((Notification!) -> Void)) {
+    class func subscribe(target: AnyObject, name: String, handler: @escaping((Notification) -> Void)) {
         let key = UInt(bitPattern: ObjectIdentifier(target))
         let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(name), object: nil, queue: OperationQueue(), using: handler)
         queue.sync {
