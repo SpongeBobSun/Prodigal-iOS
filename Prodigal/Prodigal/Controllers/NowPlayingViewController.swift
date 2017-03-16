@@ -61,6 +61,7 @@ class NowPlayingViewController: TickableViewController {
     override func hide(type: AnimType = .push, completion: @escaping () -> Void) {
         self.view.isHidden = true
         completion()
+        PubSub.unsubscribe(target: self, name: PlayerTicker.kTickEvent)
     }
     
     override func show(type: AnimType) {
@@ -70,6 +71,7 @@ class NowPlayingViewController: TickableViewController {
             let progress = Float(current) / Float(duration)
             DispatchQueue.main.async {
                 self.playingView.progress.setProgress(progress, animated:true)
+                self.playingView.updateLabels(now: current, all: duration)
             }
         })
     }
@@ -126,6 +128,22 @@ class NowPlayingView: UIView {
             maker.height.equalTo(10)
         }
         progressContainer.backgroundColor = UIColor.clear
+        progressContainer.addSubview(current)
+        progressContainer.addSubview(total)
+        
+        current.snp.makeConstraints { (maker) in
+            maker.leading.bottom.equalToSuperview()
+            maker.top.equalTo(progress.snp.bottomMargin).offset(5)
+            maker.width.equalTo(100)
+        }
+        
+        total.snp.makeConstraints { (maker) in
+            maker.trailing.bottom.equalToSuperview()
+            maker.top.equalTo(progress.snp.bottomMargin).offset(5)
+            maker.width.equalTo(100)
+        }
+        current.textAlignment = .left
+        total.textAlignment = .right
         
         image.snp.makeConstraints { (maker) in
             maker.leading.top.equalTo(self).offset(8)
@@ -151,5 +169,13 @@ class NowPlayingView: UIView {
             maker.leading.trailing.height.equalTo(album)
             maker.centerY.equalTo(self).offset(30)
         }
+    }
+    
+    func updateLabels(now: TimeInterval, all: TimeInterval) {
+        let (minNow, secNow) = (Int(now / 60), Int(now.truncatingRemainder(dividingBy:60)))
+        let (minAll, secAll) = (Int(all / 60), Int(all.truncatingRemainder(dividingBy:60)))
+        
+        current.text = "\(String(format:"%02d", minNow)):\(String(format:"%02d", secNow))"
+        total.text = "\(String(format:"%02d", minAll)):\(String(format:"%02d", secAll))"
     }
 }
