@@ -128,6 +128,7 @@ class NowPlayingView: UIView {
             maker.leading.trailing.top.equalTo(progressContainer)
             maker.height.equalTo(10)
         }
+        progress.trackTintColor = UIColor.lightGray
         progressContainer.backgroundColor = UIColor.clear
         progressContainer.addSubview(current)
         progressContainer.addSubview(total)
