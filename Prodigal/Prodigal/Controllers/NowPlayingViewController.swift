@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import SnapKit
+import MarqueeLabel
 
 class NowPlayingViewController: TickableViewController {
     
@@ -103,7 +104,7 @@ class NowPlayingViewController: TickableViewController {
 class NowPlayingView: UIView {
     
     let image = UIImageView()
-    let title = UILabel(), artist = UILabel(), album = UILabel(), total = UILabel(), current = UILabel()
+    let title = MarqueeLabel(), artist = MarqueeLabel(), album = MarqueeLabel(), total = UILabel(), current = UILabel()
     let progressContainer = UIView()
     let progress = UIProgressView()
     
@@ -159,16 +160,23 @@ class NowPlayingView: UIView {
             maker.height.equalTo(30)
             maker.centerY.equalTo(self).offset(-60)
         }
+        title.speed = .duration(8)
+        title.fadeLength = 10
         
         album.snp.makeConstraints { (maker) in
             maker.leading.trailing.height.equalTo(title)
             maker.centerY.equalTo(self).offset(-15)
         }
+        album.speed = .duration(8)
+        album.fadeLength = 10
         
         artist.snp.makeConstraints { (maker) in
             maker.leading.trailing.height.equalTo(album)
             maker.centerY.equalTo(self).offset(30)
         }
+        artist.speed = .duration(8)
+        artist.fadeLength = 10
+        
     }
     
     func updateLabels(now: TimeInterval, all: TimeInterval) {

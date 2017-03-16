@@ -15,5 +15,6 @@ POD_DEV_ROOT = '/Users/bob.sun/XCodeWorkspace/PodDev'
     pod 'Haneke'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'MarqueeLabel/Swift'
     # pod 'ComposerKit', :path => "#{POD_DEV_ROOT}/ComposerKit"
 end
