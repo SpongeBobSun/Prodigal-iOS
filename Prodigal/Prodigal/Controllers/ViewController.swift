@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         }
         switch event!.subtype {
         case .remoteControlPlay:
-            play()
+            self.onPlay()
             break
         case .remoteControlStop :
             stop()
@@ -136,6 +136,7 @@ class ViewController: UIViewController {
             player?.stop()
             ticker.stop()
         }
+
         if player != nil {
             player?.delegate = nil
             player = nil
@@ -228,6 +229,7 @@ extension ViewController: WheelViewDelegate {
                 player?.pause()
             } else {
                 player?.play()
+                InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
             }
         }
     }
@@ -340,6 +342,9 @@ extension ViewController: WheelViewDelegate {
             }
             current = gallery
             wheelView.tickDelegate = gallery
+            break
+        case .Settings:
+            
             break
         default:
             break
