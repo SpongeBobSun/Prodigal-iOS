@@ -95,6 +95,12 @@ class ListViewController: TickableViewController {
             })
             items.first?.highLight = true
             break
+        case .Settings:
+            items.removeAll()
+            let `data` = data as! Array<MenuMeta>
+            items.append(contentsOf: data)
+            items.first!.highLight = true
+            break
         default:
             self.type = .Undefined
             break

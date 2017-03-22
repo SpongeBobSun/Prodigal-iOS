@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!
     var gallery: AlbumGalleryViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
@@ -114,6 +114,9 @@ class ViewController: UIViewController {
         
         gallery = AlbumGalleryViewController()
         gallery.attachTo(viewController: self, inView: cardView)
+        
+        settings = ListViewController()
+        settings.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
@@ -344,10 +347,14 @@ extension ViewController: WheelViewDelegate {
             wheelView.tickDelegate = gallery
             break
         case .Settings:
-            
+            current.hide {
+                self.settings.show(withType: .Settings, andData: MenuMeta.settingsMenu(), animate: false)
+            }
+            current = settings
+            wheelView.tickDelegate = settings
             break
         default:
-            break
+            return
         }
         stack.append(current)
     }
