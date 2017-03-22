@@ -121,6 +121,7 @@ class ViewController: UIViewController {
         do {
             try session.setCategory(AVAudioSessionCategoryPlayback)
             try session.setActive(true)
+            NotificationCenter.default.addObserver(self, selector: #selector(onAudioRouteChange), name:NSNotification.Name.AVAudioSessionRouteChange, object: nil)
         } catch let e as NSError {
             print(e)
         }
@@ -170,6 +171,13 @@ class ViewController: UIViewController {
         if player != nil && (player?.isPlaying)! {
             player?.stop()
             ticker.stop()
+        }
+    }
+    
+    @objc
+    func onAudioRouteChange(notification: Notification) {
+        if self.player != nil && self.player!.isPlaying {
+            self.player?.pause()
         }
     }
 }
