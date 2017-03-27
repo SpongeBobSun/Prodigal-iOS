@@ -24,7 +24,7 @@ class ThemeManager: NSObject {
         if fm.fileExists(atPath: docPath) {
             //Debug
             #if DEBUG
-            print(self.fetchAllConfigs())
+            print(self.fetchAllThemes())
             print(self.loadLastTheme())
             #endif
             return
@@ -40,7 +40,7 @@ class ThemeManager: NSObject {
         }
     }
     
-    func fetchAllConfigs() -> Array<String> {
+    func fetchAllThemes() -> Array<String> {
         var ret = [String]()
         do {
             try ret = fm.contentsOfDirectory(atPath: docPath)
@@ -60,7 +60,7 @@ class ThemeManager: NSObject {
         return ret
     }
     
-    func loadConfigNamed(name: String) -> Theme? {
+    func loadThemeNamed(name: String) -> Theme? {
         var ret: Theme? = nil
         let themeFolder = docPath.appending("/").appending(name).appending("/")
         let jsonPath = themeFolder.appending("config.json")
@@ -73,9 +73,16 @@ class ThemeManager: NSObject {
         do {
             try dict = JSONSerialization.jsonObject(with: jsonData!, options: .allowFragments) as? Dictionary
             dict!["path"] = themeFolder
-            ret = Theme(fromDict: dict!)
+            if Theme.validate(dict: dict!) {
+                ret = Theme(fromDict: dict!)
+            }
         } catch let error as NSError {
             print(error)
+        }
+        if ret == nil {
+            ret = Theme.defaultTheme()
+        } else {
+            AppSettings.sharedInstance.setTheme(theme: name)
         }
         return ret
     }
@@ -85,7 +92,7 @@ class ThemeManager: NSObject {
         if name == nil {
             return Theme.defaultTheme()
         }
-        let ret = loadConfigNamed(name: name!)
+        let ret = loadThemeNamed(name: name!)
         if ret != nil {
             return ret!
         }

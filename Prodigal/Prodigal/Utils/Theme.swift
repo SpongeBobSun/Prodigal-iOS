@@ -94,4 +94,47 @@ class Theme: NSObject {
         #endif
         return UIImage(contentsOfFile: icPlay) ?? UIImage(named: "ic_play")!
     }
+    
+    static func validate(dict: Dictionary<String, Any>) -> Bool {
+        guard let icons = dict["icons"] as! Dictionary<String, String>! else {
+            return false
+        }
+        
+        guard (icons["next"] as String!) != nil else {
+            return false
+        }
+        
+        guard (icons["prev"] as String!) != nil else {
+            return false
+        }
+        
+        guard (icons["menu"] as String!) != nil else {
+            return false
+        }
+        
+        guard (icons["play"] as String!) != nil else {
+            return false
+        }
+        guard (dict["wheel_outer"] as! String!) != nil else {
+            return false
+        }
+        guard (dict["wheel_inner"] as! String!) != nil else {
+            return false
+        }
+        guard (dict["button_size"] as! String!) != nil else {
+            return false
+        }
+        
+        guard (UIColor.init(hexString: dict["wheel_color"] as! String)) != nil else {
+            return false
+        }
+        
+        guard (UIColor.init(hexString: dict["center_color"] as! String)) != nil else {
+            return false
+        }
+        guard (UIColor.init(hexString: dict["button_background"] as! String)) != nil else {
+            return false
+        }
+        return true
+    }
 }
