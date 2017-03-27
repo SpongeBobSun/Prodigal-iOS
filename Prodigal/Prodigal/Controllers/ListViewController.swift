@@ -285,7 +285,7 @@ class ListCell: UITableViewCell {
     
     static let reuseId = "ListCellReuseId"
     
-    let title: UILabel = UILabel()
+    let title: UILabel = UILabel(), value: UILabel = UILabel()
     let icon: UIImageView = UIImageView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -301,6 +301,7 @@ class ListCell: UITableViewCell {
     private func initViews() {
         self.contentView.addSubview(title)
         self.contentView.addSubview(icon)
+        self.contentView.addSubview(value)
         title.backgroundColor = UIColor.clear
         
         icon.snp.makeConstraints { (maker) in
@@ -313,29 +314,61 @@ class ListCell: UITableViewCell {
             maker.top.bottom.trailing.equalToSuperview()
         }
         title.contentMode = .left
+        
+        value.snp.makeConstraints { (maker) in
+            maker.trailing.top.bottom.equalToSuperview()
+            maker.width.equalTo(100)
+        }
+        value.contentMode = .right
+        value.text = "SettingsValue"
     }
     
     func configure(meta: MenuMeta, type: MenuMeta.MenuType) {
         title.text = meta.itemName
-        if type == .Albums && meta.type != .ShuffleCurrent {
-            if icon.isHidden {
-                icon.snp.updateConstraints({ (maker) in
-                    maker.width.height.equalTo(40)
-                    maker.leading.centerY.equalToSuperview()
-                })
-                icon.isHidden = false
+        switch type {
+        case .Albums:
+            if meta.type != .ShuffleCurrent {
+                if icon.isHidden {
+                    icon.snp.updateConstraints({ (maker) in
+                        maker.width.height.equalTo(40)
+                        maker.leading.centerY.equalToSuperview()
+                    })
+                    icon.isHidden = false
+                }
+                loadImage(meta: meta)
+                value.isHidden = true
+            } else {
+                if !icon.isHidden {
+                    icon.snp.updateConstraints({ (maker) in
+                        maker.width.equalTo(0)
+                    })
+                    icon.isHidden = true
+                }
+                value.isHidden = true
+
             }
-            loadImage(meta: meta)
-            
-        } else {
+            break
+        case .Settings:
             if !icon.isHidden {
                 icon.snp.updateConstraints({ (maker) in
                     maker.width.equalTo(0)
                 })
                 icon.isHidden = true
             }
-            
+            value.isHidden = !(meta.type == .RepeatSettings || meta.type == .ShuffleSettings)
+            break
+        default:
+            if !icon.isHidden {
+                icon.snp.updateConstraints({ (maker) in
+                    maker.width.equalTo(0)
+                })
+                icon.isHidden = true
+            }
+            value.isHidden = true
+            break
         }
+        
+        
         if meta.highLight {
             contentView.backgroundColor = UIColor.lightGray
         } else {

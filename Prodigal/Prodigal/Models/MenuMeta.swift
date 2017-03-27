@@ -56,9 +56,9 @@ class MenuMeta: NSObject {
     static func settingsMenu() -> Array<MenuMeta> {
         var ret:Array<MenuMeta> = []
         ret.append(MenuMeta(name: NSLocalizedString("Shuffle", comment: ""), type: .ShuffleSettings))
-        ret.append(MenuMeta(name: NSLocalizedString("Repeat", comment: ""), type: .ShuffleSettings))
-        ret.append(MenuMeta(name: NSLocalizedString("Theme", comment: ""), type: .ShuffleSettings))
-        ret.append(MenuMeta(name: NSLocalizedString("About", comment: ""), type: .ShuffleSettings))
+        ret.append(MenuMeta(name: NSLocalizedString("Repeat", comment: ""), type: .RepeatSettings))
+        ret.append(MenuMeta(name: NSLocalizedString("Theme", comment: ""), type: .ThemeSettings))
+        ret.append(MenuMeta(name: NSLocalizedString("About", comment: ""), type: .About))
         
         return ret
     }
