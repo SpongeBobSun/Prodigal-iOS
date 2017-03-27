@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
+		011BC0631E890A1000484BC9 /* ViewController+WheelViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */; };
 		011BC8961E655329004F94B7 /* AlbumGalleryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 011BC8951E655329004F94B7 /* AlbumGalleryLayout.m */; };
 		011BC8981E65537F004F94B7 /* AlbumGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BC8971E65537F004F94B7 /* AlbumGalleryViewController.swift */; };
 		015E4A991E5D7C1E007A7C3F /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
+		011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+WheelViewDelegate.swift"; sourceTree = "<group>"; };
 		011BC8931E655329004F94B7 /* Prodigal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Prodigal-Bridging-Header.h"; sourceTree = "<group>"; };
 		011BC8941E655329004F94B7 /* AlbumGalleryLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumGalleryLayout.h; path = Vendor/YRCoverFlowLayout/AlbumGalleryLayout.h; sourceTree = "<group>"; };
 		011BC8951E655329004F94B7 /* AlbumGalleryLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumGalleryLayout.m; path = Vendor/YRCoverFlowLayout/AlbumGalleryLayout.m; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */,
+				011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
 				01F87CCE1E77C7120005BE9F /* PlayerTicker.swift in Sources */,
+				011BC0631E890A1000484BC9 /* ViewController+WheelViewDelegate.swift in Sources */,
 				01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */,
 				011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */,
 				011BC8961E655329004F94B7 /* AlbumGalleryLayout.m in Sources */,
