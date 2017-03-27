@@ -123,6 +123,7 @@ class AlbumCell: UICollectionViewCell {
     static let reuseId =            "ReuseIdAlbumCollectionCell"
     
     let image = UIImageView(frame:CGRect.zero)
+    let name = UILabel(frame: CGRect.zero)
     
     convenience init() {
         self.init()
@@ -139,18 +140,26 @@ class AlbumCell: UICollectionViewCell {
     }
     
     func initViews() {
-        self.contentView.backgroundColor = UIColor.darkGray
         self.contentView.addSubview(image)
         self.image.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
+            maker.top.left.right.equalToSuperview()
+            maker.bottom.equalToSuperview().offset(-25)
         }
         self.image.hnk_cacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
         self.image.contentMode = .scaleAspectFit
+        
+        self.name.textAlignment = .center
+        self.contentView.addSubview(self.name)
+        self.name.snp.makeConstraints { (maker) in
+            maker.top.equalTo(self.image.snp.bottom).offset(5)
+            maker.left.right.bottom.equalToSuperview()
+        }
     }
     
     func configure(withMenu menu: MenuMeta) {
         let album = menu.object as! MPMediaItemCollection!
         image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
+        name.text = album?.representativeItem?.albumTitle
     }
 }
 
