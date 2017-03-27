@@ -198,6 +198,17 @@ extension ViewController: WheelViewDelegate {
             current = settings
             wheelView.tickDelegate = settings
             break
+        case .ThemeSettings:
+            current.hide {
+                self.themeListView.show(withType: .Themes, andData: ThemeManager().fetchAllThemes(), animate: false)
+            }
+            current  = themeListView
+            wheelView.tickDelegate = themeListView
+            break
+        case .Theme:
+            wheelView.loadTheme(named: select.object as! String!)
+            loadTheme(named: select.object as! String?)
+            return
         default:
             return
         }

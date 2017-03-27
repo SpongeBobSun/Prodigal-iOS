@@ -39,14 +39,14 @@ class WheelView: UIView {
         buttons = [menu, prev, nextButton, play]
         super.init(frame: frame)
         addButtons()
-        makeRoll()
+        letsRoll()
     }
     
     required init?(coder aDecoder: NSCoder) {
         buttons = [menu, prev, nextButton, play]
         super.init(coder: aDecoder)
         addButtons()
-        makeRoll()
+        letsRoll()
     }
     
     override func layoutSubviews() {
@@ -90,12 +90,13 @@ class WheelView: UIView {
     
     private func addButtons() {
         for b:UIButton in buttons {
+            b.tintColor = UIColor.clear
             addSubview(b)
         }
         addSubview(select)
     }
     
-    private func makeRoll() {
+    private func letsRoll() {
         wheelGesture = WheelRecognizer(target: self, action: nil)
         wheelGesture?.wheelDelegate = self;
         self.addGestureRecognizer(wheelGesture!)
@@ -189,6 +190,11 @@ class WheelView: UIView {
         if self.delegate != nil {
             self.delegate?.onSelect()
         }
+    }
+    
+    func loadTheme(named name:String) {
+        self.theme = ThemeManager().loadThemeNamed(name:name) ?? Theme.defaultTheme()
+        setNeedsDisplay()
     }
 }
 

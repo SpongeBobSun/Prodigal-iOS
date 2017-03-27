@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!
     var gallery: AlbumGalleryViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     var playingIndex: Int = -1
     var playlist: Array<MPMediaItem> = []
     var ticker: PlayerTicker!
+    var theme = ThemeManager().loadLastTheme()
     
     // ? ? ?
     override var canBecomeFirstResponder: Bool { return true }
@@ -38,6 +39,9 @@ class ViewController: UIViewController {
         initChildren()
         initPlayer()
         initTicker()
+        
+        self.view.backgroundColor = theme.backgroundColor
+        self.view.setNeedsDisplay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +121,9 @@ class ViewController: UIViewController {
         
         settings = ListViewController()
         settings.attachTo(viewController: self, inView: cardView)
+        
+        themeListView = ListViewController()
+        themeListView.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
@@ -183,6 +190,18 @@ class ViewController: UIViewController {
         if self.player != nil && self.player!.isPlaying {
             self.player?.pause()
         }
+    }
+    
+    func loadTheme(named name: String?) {
+        var theme: Theme!
+        if name == nil {
+            theme = Theme.defaultTheme()
+        } else {
+            theme = ThemeManager().loadThemeNamed(name: name!) ?? Theme.defaultTheme()
+        }
+        self.theme = theme
+        self.view.backgroundColor = theme.backgroundColor
+        self.view.setNeedsDisplay()
     }
 }
 

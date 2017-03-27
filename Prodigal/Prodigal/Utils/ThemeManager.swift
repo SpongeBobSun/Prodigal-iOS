@@ -74,7 +74,7 @@ class ThemeManager: NSObject {
             try dict = JSONSerialization.jsonObject(with: jsonData!, options: .allowFragments) as? Dictionary
             dict!["path"] = themeFolder
             if Theme.validate(dict: dict!) {
-                ret = Theme(fromDict: dict!)
+                ret = Theme(fromDict: dict!, andName: name)
             }
         } catch let error as NSError {
             print(error)

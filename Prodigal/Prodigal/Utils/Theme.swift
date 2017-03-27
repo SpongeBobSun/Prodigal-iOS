@@ -12,7 +12,8 @@ import UIKit
 class Theme: NSObject {
     private var icNext:String, icPrev:String, icPlay:String, icMenu:String;
     var outer:Double, inner: Double, buttonSize: Double
-    var wheelColor:UIColor, centerColor:UIColor, buttonColor:UIColor
+    var wheelColor:UIColor, centerColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor
+    var name: String!
     
     private static var defaultDict :Dictionary<String, Any> = [
         "icons": [
@@ -27,13 +28,14 @@ class Theme: NSObject {
         "button_size":"0.2",
         "center_color": "#FFFFFF",
         "button_background": "#FFFF0000",
+        "background_color" : "#FFFFFF",
         ]
     
     override convenience init() {
-        self.init(fromDict: Dictionary<String, Any>())
+        self.init(fromDict: Dictionary<String, Any>(), andName: "")
     }
     
-    init(fromDict dict: Dictionary<String, Any>) {
+    init(fromDict dict: Dictionary<String, Any>, andName name: String) {
         let icons:Dictionary<String, String> = dict["icons"] as! Dictionary<String, String>
         let path = dict["path"] as! String
         icNext = path.appending(icons["next"]!)
@@ -53,6 +55,8 @@ class Theme: NSObject {
         wheelColor = UIColor.init(hexString: dict["wheel_color"] as! String)!
         centerColor = UIColor.init(hexString: dict["center_color"] as! String)!
         buttonColor = UIColor.init(hexString: dict["button_background"] as! String)!
+        backgroundColor = UIColor.init(hexString: dict["background_color"] as! String)!
+        self.name = name
         super.init()
     }
     
@@ -64,7 +68,7 @@ class Theme: NSObject {
             themePath.append("/Configs/default/")
             defaultDict["path"] = themePath
         }
-        return Theme(fromDict:defaultDict)
+        return Theme(fromDict:defaultDict, andName: "Default")
     }
     
     func nextIcon() -> UIImage {
@@ -133,6 +137,9 @@ class Theme: NSObject {
             return false
         }
         guard (UIColor.init(hexString: dict["button_background"] as! String)) != nil else {
+            return false
+        }
+        guard (UIColor.init(hexString: dict["background_color"] as! String)) != nil else {
             return false
         }
         return true
