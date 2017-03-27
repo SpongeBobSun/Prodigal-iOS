@@ -90,7 +90,6 @@ class WheelView: UIView {
     
     private func addButtons() {
         for b:UIButton in buttons {
-            b.tintColor = UIColor.clear
             addSubview(b)
         }
         addSubview(select)
@@ -121,6 +120,7 @@ class WheelView: UIView {
         #if TARGET_INTERFACE_BUILDER
         #else
         menu.setImage(theme.menuIcon(), for: .normal)
+        menu.setImage(theme.menuIcon(), for: .highlighted)
         #endif
         menu.addTarget(self, action: #selector(onMenu(_:)), for: .touchUpInside)
         
@@ -130,6 +130,7 @@ class WheelView: UIView {
         #if TARGET_INTERFACE_BUILDER
         #else
         prev.setImage(theme.prevIcon(), for: .normal)
+        prev.setImage(theme.prevIcon(), for: .highlighted)
         #endif
         prev.addTarget(self, action: #selector(onPrev(_:)), for: .touchUpInside)
         
@@ -139,6 +140,7 @@ class WheelView: UIView {
         #if TARGET_INTERFACE_BUILDER
         #else
         nextButton.setImage(theme.nextIcon(), for: .normal)
+        nextButton.setImage(theme.nextIcon(), for: .highlighted)
         #endif
         nextButton.addTarget(self, action: #selector(onNext(_:)), for: .touchUpInside)
         
@@ -148,6 +150,7 @@ class WheelView: UIView {
         #if TARGET_INTERFACE_BUILDER
         #else
         play.setImage(theme.playIcon(), for: .normal)
+        play.setImage(theme.playIcon(), for: .highlighted)
         #endif
         play.addTarget(self, action: #selector(onPlay(_:)), for: .touchUpInside)
         
