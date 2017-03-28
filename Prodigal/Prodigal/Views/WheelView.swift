@@ -59,13 +59,28 @@ class WheelView: UIView {
             maker.width.equalTo(size)
         }
         #endif
-        self.layer.cornerRadius = size / 2
+        
         self.layer.masksToBounds = true
         super.layoutSubviews()
     }
     
 
     override func draw(_ rect: CGRect) {
+        switch theme.shape {
+        case .Oval:
+            drawWheel(forOval: rect)
+            break
+        case .Rect:
+            drawWheel(forRect: rect)
+            break
+        case .Polygon:
+            drawWheel(forPolygon: rect)
+            break
+        }
+        
+    }
+    
+    private func drawWheel(forOval rect:CGRect) {
         let outer = self.size * CGFloat(theme.outer)
         var x = (self.size - outer) / 2 + rect.origin.x
         var y = (self.size - outer) / 2 + rect.origin.y
@@ -86,6 +101,53 @@ class WheelView: UIView {
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         self.layer.insertSublayer(innerLayer, at: 0)
+        self.layer.cornerRadius = size / 2
+    }
+    
+    private func drawWheel(forRect rect:CGRect) {
+        let outer = self.size * CGFloat(theme.outer)
+        var x = (self.size - outer) / 2 + rect.origin.x
+        var y = (self.size - outer) / 2 + rect.origin.y
+        let pathOut = UIBezierPath(rect: rect)
+        
+        let inner = self.size * CGFloat(theme.inner)
+        x = (size - inner) / 2 + rect.origin.x
+        y = (size - inner) / 2 + rect.origin.y
+        let pathIn = UIBezierPath(rect: CGRect(x: x, y: y, width: inner, height: inner))
+        
+        let innerLayer = CAShapeLayer()
+        innerLayer.frame = self.bounds
+        let mutePath = pathOut.cgPath.mutableCopy()
+        mutePath?.addPath(pathIn.cgPath)
+        
+        innerLayer.path = mutePath
+        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillColor = theme.wheelColor.cgColor
+        self.layer.insertSublayer(innerLayer, at: 0)
+        self.layer.cornerRadius = 0
+    }
+    
+    private func drawWheel(forPolygon rect:CGRect) {
+        let outer = self.size * CGFloat(theme.outer)
+        var x = (self.size - outer) / 2 + rect.origin.x
+        var y = (self.size - outer) / 2 + rect.origin.y
+        let pathOut = UIBezierPath(polygonIn: rect, sides: theme.sides)
+        
+        let inner = self.size * CGFloat(theme.inner)
+        x = (size - inner) / 2 + rect.origin.x
+        y = (size - inner) / 2 + rect.origin.y
+        let pathIn = UIBezierPath(polygonIn: CGRect(x: x, y: y, width: inner, height: inner), sides: theme.sides)
+        
+        let innerLayer = CAShapeLayer()
+        innerLayer.frame = self.bounds
+        let mutePath = pathOut.cgPath.mutableCopy()
+        mutePath?.addPath(pathIn.cgPath)
+        
+        innerLayer.path = mutePath
+        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillColor = theme.wheelColor.cgColor
+        self.layer.insertSublayer(innerLayer, at: 0)
+        self.layer.cornerRadius = 0
     }
     
     private func addButtons() {
@@ -160,7 +222,6 @@ class WheelView: UIView {
             maker.width.height.equalTo(centerSize)
         }
         select.backgroundColor = theme.centerColor
-        select.layer.cornerRadius = centerSize / 2
         select.layer.masksToBounds = true
         select.addTarget(self, action: #selector(onSelect(_:)), for: .touchUpInside)
     }
@@ -197,7 +258,22 @@ class WheelView: UIView {
     
     func loadTheme(named name:String) {
         self.theme = ThemeManager().loadThemeNamed(name:name) ?? Theme.defaultTheme()
+        if (self.layer.sublayers?.count ?? 0 > 0) {
+            self.layer.sublayers?.first?.removeFromSuperlayer()
+        }
+        switch self.theme.shape {
+        case .Oval:
+            select.layer.cornerRadius = select.bounds.height / 2
+            break
+        case .Rect:
+            select.layer.cornerRadius = 0
+            break
+        case .Polygon:
+            select.layer.cornerRadius = 0
+            break
+        }
         setNeedsDisplay()
+        layoutIfNeeded()
     }
 }
 

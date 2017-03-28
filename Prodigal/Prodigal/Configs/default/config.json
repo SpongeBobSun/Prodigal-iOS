@@ -12,4 +12,5 @@
     "center_color": "#FFFFFF",
     "button_background": "#FFFF0000",
     "background_color": "#FFFFFF",
+    "wheel_shape": "rect",
 }

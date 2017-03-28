@@ -18,6 +18,7 @@
 		015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */; };
 		015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4AA01E5ECE66007A7C3F /* TickableViewController.swift */; };
 		015E4AA31E5ED4DC007A7C3F /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */; };
+		019AEE251E8AAC1200E10047 /* UIBezierPath+Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019AEE241E8AAC1200E10047 /* UIBezierPath+Polygon.swift */; };
 		01B0F2151E56E3840081B237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F2141E56E3840081B237 /* AppDelegate.swift */; };
 		01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B0F2181E56E3840081B237 /* Main.storyboard */; };
 		01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01B0F21B1E56E3840081B237 /* Prodigal.xcdatamodeld */; };
@@ -57,6 +58,7 @@
 		015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controllers/ListViewController.swift; sourceTree = "<group>"; };
 		015E4AA41E60090F007A7C3F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		015E4AA61E60225C007A7C3F /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "../../../Library/Developer/Xcode/DerivedData/Prodigal-bjfbwmgpljymdjczauqhptusmoll/Build/Products/Debug-iphoneos/HanekeSwift/Haneke.framework"; sourceTree = "<group>"; };
+		019AEE241E8AAC1200E10047 /* UIBezierPath+Polygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIBezierPath+Polygon.swift"; path = "Extensions/UIBezierPath+Polygon.swift"; sourceTree = "<group>"; };
 		01B0F2111E56E3840081B237 /* Prodigal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prodigal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0F2141E56E3840081B237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01B0F2191E56E3840081B237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			children = (
 				01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */,
 				011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */,
+				019AEE241E8AAC1200E10047 /* UIBezierPath+Polygon.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */,
 				011BC8961E655329004F94B7 /* AlbumGalleryLayout.m in Sources */,
 				01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */,
+				019AEE251E8AAC1200E10047 /* UIBezierPath+Polygon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

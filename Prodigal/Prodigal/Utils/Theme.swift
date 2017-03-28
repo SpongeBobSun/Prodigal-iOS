@@ -14,6 +14,8 @@ class Theme: NSObject {
     var outer:Double, inner: Double, buttonSize: Double
     var wheelColor:UIColor, centerColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor
     var name: String!
+    var shape: WheelViewShape
+    var sides: Int = 6
     
     private static var defaultDict :Dictionary<String, Any> = [
         "icons": [
@@ -29,6 +31,7 @@ class Theme: NSObject {
         "center_color": "#FFFFFF",
         "button_background": "#FFFF0000",
         "background_color" : "#FFFFFF",
+        "wheel_shape": "rect",
         ]
     
     override convenience init() {
@@ -56,6 +59,22 @@ class Theme: NSObject {
         centerColor = UIColor.init(hexString: dict["center_color"] as! String)!
         buttonColor = UIColor.init(hexString: dict["button_background"] as! String)!
         backgroundColor = UIColor.init(hexString: dict["background_color"] as! String)!
+        switch dict["wheel_shape"] as! String! {
+        case "rect":
+            shape = .Rect
+            break
+        case "oval":
+            shape = .Oval
+            break
+        case "polygon":
+            shape = .Polygon
+            sides = Int(dict["polygon_sides"] as! String!)!
+            break
+        default:
+            shape = .Rect
+            break
+        }
+        
         self.name = name
         super.init()
     }
@@ -99,6 +118,7 @@ class Theme: NSObject {
         return UIImage(contentsOfFile: icPlay) ?? UIImage(named: "ic_play")!
     }
     
+    //TL;DR
     static func validate(dict: Dictionary<String, Any>) -> Bool {
         guard let icons = dict["icons"] as! Dictionary<String, String>! else {
             return false
@@ -142,6 +162,24 @@ class Theme: NSObject {
         guard (UIColor.init(hexString: dict["background_color"] as! String)) != nil else {
             return false
         }
+        guard let shape = dict["wheel_shape"] as! String! else {
+            return false
+        }
+        
+        if shape != "rect" && shape != "oval" && shape != "polygon" {
+            return false
+        }
+        if (shape == "polygon") {
+            guard (dict["polygon_sides"] as! String!) != nil else {
+                return false
+            }
+        }
         return true
     }
+}
+
+enum WheelViewShape {
+    case Oval
+    case Rect
+    case Polygon
 }
