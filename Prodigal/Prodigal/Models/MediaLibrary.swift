@@ -60,6 +60,18 @@ class MediaLibrary: NSObject {
         return MPMediaQuery.genres().collections ?? []
     }
     
+    func fetchSong(byId identifier: MPMediaEntityPersistentID) -> MPMediaItem? {
+        if !authorized {
+            return nil
+        }
+        var ret:MPMediaItem? = nil
+        let filter = MPMediaPropertyPredicate(value: identifier, forProperty: MPMediaItemPropertyPersistentID, comparisonType: .equalTo)
+        let query = MPMediaQuery.songs()
+        query.addFilterPredicate(filter)
+        ret = query.items?.first
+        return ret
+    }
+    
     func fetchAlbums(byArtist artist: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
         if !authorized {
             return []
@@ -125,6 +137,17 @@ class MediaLibrary: NSObject {
         return artists
     }
     
+    func validateList(list: Array<UInt64>) -> Array<MPMediaItem> {
+        var ret: Array<MPMediaItem> = []
+        for each in list {
+            let toAdd = fetchSong(byId: each)
+            if toAdd != nil {
+                ret.append(toAdd!)
+            }
+        }
+        return ret
+    }
+    
     static func shuffle(array: [Any]) -> [Any] {
         if array.count == 0 {
             return array
@@ -137,4 +160,5 @@ class MediaLibrary: NSObject {
         }
         return ret
     }
+    
 }

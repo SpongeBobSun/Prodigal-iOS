@@ -9,6 +9,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import MediaPlayer
 
 import Haneke
 
@@ -30,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         window?.rootViewController = main
         window?.makeKeyAndVisible()
+        if MediaLibrary.sharedInstance.authorized {
+            restoreLastState()
+        }
         return true
     }
 
@@ -58,6 +62,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        let ud = UserDefaults.standard
+        ud.set(main.player?.currentTime, forKey: "last_current_time")
+        ud.set(main.playingIndex, forKey: "last_playing_index")
+        var list: Array<UInt64> = []
+        for each in main.playlist {
+            list.append(each.persistentID)
+        }
+        ud.set(list, forKey: "last_playing_list")
+        ud.synchronize()
+    }
+    
+    private func restoreLastState() {
+        let ud = UserDefaults.standard
+        let lastCurrent = ud.double(forKey: "last_current_time")
+        let lastIndex = ud.integer(forKey: "last_playing_index")
+        guard let lastList = ud.array(forKey: "last_playing_list") else {
+            return
+        }
+        let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as! Array<UInt64>)
+        main.playlist = validateList
+        main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
+        main.player?.currentTime = lastCurrent > validateList[lastIndex].playbackDuration ? 0 : lastCurrent
     }
 
     private func initCacheForList() {

@@ -75,7 +75,6 @@
 		01B0F2311E56F7140081B237 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 		01CAB3021E5BF90F001B93C7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
 		01CAB30A1E5C0C2D001B93C7 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Utils/Theme.swift; sourceTree = "<group>"; };
-		01CAB30F1E5C0EAC001B93C7 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = Utils/ThemeManager.swift; sourceTree = "<group>"; };
 		01CAB3151E5C13C6001B93C7 /* Configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Configs; path = Prodigal/Configs; sourceTree = "<group>"; };
 		01D391C41E7A8D6C0070855D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -154,7 +153,6 @@
 				01CAB3091E5C0C04001B93C7 /* Utils */,
 				01CAB3041E5C0BBE001B93C7 /* Views */,
 				011BC8921E655265004F94B7 /* Vendor */,
-				01CAB30C1E5C0D1C001B93C7 /* Configs */,
 			);
 			path = Prodigal;
 			sourceTree = "<group>";
@@ -213,31 +211,6 @@
 				01F87CCD1E77C7120005BE9F /* PlayerTicker.swift */,
 			);
 			name = Utils;
-			sourceTree = "<group>";
-		};
-		01CAB30C1E5C0D1C001B93C7 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-				01CAB30D1E5C0EAC001B93C7 /* config */,
-			);
-			name = Configs;
-			sourceTree = "<group>";
-		};
-		01CAB30D1E5C0EAC001B93C7 /* config */ = {
-			isa = PBXGroup;
-			children = (
-				01CAB30E1E5C0EAC001B93C7 /* default */,
-			);
-			name = config;
-			path = Resources/config;
-			sourceTree = "<group>";
-		};
-		01CAB30E1E5C0EAC001B93C7 /* default */ = {
-			isa = PBXGroup;
-			children = (
-				01CAB30F1E5C0EAC001B93C7 /* config.json */,
-			);
-			path = default;
 			sourceTree = "<group>";
 		};
 		01D3DC7E1E5C2D9A00B425F9 /* Extensions */ = {

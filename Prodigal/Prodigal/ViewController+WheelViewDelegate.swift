@@ -79,7 +79,10 @@ extension ViewController: WheelViewDelegate {
                 player?.play()
                 InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
             }
+            return
         }
+        self.play()
+        
     }
     func onSelect() {
         let select = current.getSelection()
