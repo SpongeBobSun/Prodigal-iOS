@@ -89,7 +89,7 @@ class WheelRecognizer: UIGestureRecognizer {
             || distanceFromCenter > 0.5) { // ignore center and out of bounds events
             return ret
         } else {
-            ret = atan2(x, y) * 180 / M_PI
+            ret = atan2(x, y) * 180 / Double.pi
         }
         return ret
     }
