@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as! Array<UInt64>)
         main.playlist = validateList
         main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
-        main.player?.currentTime = lastCurrent > validateList[lastIndex].playbackDuration ? 0 : lastCurrent
+        main.resumeTime = lastCurrent
     }
 
     private func initCacheForList() {

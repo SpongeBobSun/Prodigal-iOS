@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     var player: AVAudioPlayer?
     var session: AVAudioSession!
     var playingIndex: Int = -1
+    var resumeTime: Double = -1
     var playlist: Array<MPMediaItem> = []
     var ticker: PlayerTicker!
     var theme = ThemeManager().loadLastTheme()
@@ -158,6 +159,10 @@ class ViewController: UIViewController {
             player?.volume = 1.0
             let result: Bool = (player?.prepareToPlay())!
             if result {
+                if resumeTime > 0 {
+                    player?.currentTime = resumeTime
+                    resumeTime = -1
+                }
                 player?.play()
                 nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
