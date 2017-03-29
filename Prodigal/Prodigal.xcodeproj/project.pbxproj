@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0112CCA91E8B902E000F810D /* UIImage+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112CCA81E8B902E000F810D /* UIImage+Blur.swift */; };
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
 		011BC0631E890A1000484BC9 /* ViewController+WheelViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0112CCA81E8B902E000F810D /* UIImage+Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Blur.swift"; path = "Extensions/UIImage+Blur.swift"; sourceTree = "<group>"; };
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
 		011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+WheelViewDelegate.swift"; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				01D3DC7F1E5C2DBA00B425F9 /* UIColor+Hex.swift */,
 				011BC0621E890A1000484BC9 /* ViewController+WheelViewDelegate.swift */,
 				019AEE241E8AAC1200E10047 /* UIBezierPath+Polygon.swift */,
+				0112CCA81E8B902E000F810D /* UIImage+Blur.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				01B0F22A1E56EFE80081B237 /* WheelView.swift in Sources */,
 				01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */,
 				01B0F21D1E56E3840081B237 /* Prodigal.xcdatamodeld in Sources */,
+				0112CCA91E8B902E000F810D /* UIImage+Blur.swift in Sources */,
 				01F87CCE1E77C7120005BE9F /* PlayerTicker.swift in Sources */,
 				011BC0631E890A1000484BC9 /* ViewController+WheelViewDelegate.swift in Sources */,
 				01D3DC821E5C31A500B425F9 /* AppSettings.swift in Sources */,

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -24,6 +24,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i5U-Es-V7g">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C94-CW-EiS">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QL1-Yu-7h0" customClass="CardView" customModule="Prodigal" customModuleProvider="target">
                                 <rect key="frame" x="25" y="32" width="326" height="285.5"/>
                                 <subviews>
@@ -55,17 +62,27 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="C94-CW-EiS" firstAttribute="bottom" secondItem="i5U-Es-V7g" secondAttribute="bottom" id="AmL-a1-taA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="i5U-Es-V7g" secondAttribute="bottom" id="Eai-hV-frz"/>
                             <constraint firstAttribute="centerYWithinMargins" secondItem="QL1-Yu-7h0" secondAttribute="bottom" constant="16" id="FgQ-X7-Vt0"/>
                             <constraint firstItem="QL1-Yu-7h0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="32" id="GrS-QR-BWz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QL1-Yu-7h0" secondAttribute="trailing" constant="8" id="Jux-sD-TnL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gIy-fS-kXA" secondAttribute="bottom" constant="16" id="P9z-3X-L6V"/>
+                            <constraint firstItem="C94-CW-EiS" firstAttribute="top" secondItem="i5U-Es-V7g" secondAttribute="top" id="VBp-yp-qQM"/>
+                            <constraint firstItem="C94-CW-EiS" firstAttribute="trailing" secondItem="i5U-Es-V7g" secondAttribute="trailing" id="WPF-VT-90S"/>
+                            <constraint firstItem="C94-CW-EiS" firstAttribute="leading" secondItem="i5U-Es-V7g" secondAttribute="leading" id="eZx-Am-dYs"/>
                             <constraint firstItem="gIy-fS-kXA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" constant="16" id="iVC-Jd-2U0"/>
+                            <constraint firstAttribute="trailing" secondItem="i5U-Es-V7g" secondAttribute="trailing" id="j6i-jb-dqw"/>
                             <constraint firstItem="gIy-fS-kXA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="miG-lh-NPE"/>
+                            <constraint firstItem="i5U-Es-V7g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vBu-Jh-Cs2"/>
+                            <constraint firstItem="i5U-Es-V7g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="w6W-ci-qyn"/>
                             <constraint firstItem="QL1-Yu-7h0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="9" id="xsF-uo-a4G"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backgroundMask" destination="C94-CW-EiS" id="4ho-Yl-u3Y"/>
                         <outlet property="cardView" destination="fbD-Wm-Zwp" id="mab-zd-9qy"/>
+                        <outlet property="coverBackground" destination="i5U-Es-V7g" id="NA2-7k-0Fg"/>
                         <outlet property="wheelView" destination="gIy-fS-kXA" id="45B-0l-HLu"/>
                     </connections>
                 </viewController>

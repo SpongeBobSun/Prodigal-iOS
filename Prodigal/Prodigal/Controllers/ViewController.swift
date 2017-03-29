@@ -23,6 +23,9 @@ class ViewController: UIViewController {
     var gallery: AlbumGalleryViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
+    @IBOutlet weak var coverBackground: UIImageView!
+    @IBOutlet weak var backgroundMask: UIView!
+    
     var player: AVAudioPlayer?
     var session: AVAudioSession!
     var playingIndex: Int = -1
@@ -42,6 +45,7 @@ class ViewController: UIViewController {
         initTicker()
         
         self.view.backgroundColor = theme.backgroundColor
+        self.backgroundMask.backgroundColor = theme.backgroundColor
         self.view.setNeedsDisplay()
     }
     
@@ -167,10 +171,15 @@ class ViewController: UIViewController {
                 nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
                 ticker.start()
+                renderCoverBackground(image: item.artwork?.image(at: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "ic_album"))
             }
         } catch let e as Error {
             print(e)
         }
+    }
+    
+    func renderCoverBackground(image: UIImage) {
+        coverBackground.image = UIImage.getBlured(image: image)
     }
     
     func play() {
@@ -206,6 +215,7 @@ class ViewController: UIViewController {
         }
         self.theme = theme
         self.view.backgroundColor = theme.backgroundColor
+        self.backgroundMask.backgroundColor = theme.backgroundColor
         self.view.setNeedsDisplay()
     }
 }
