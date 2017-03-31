@@ -277,6 +277,11 @@ class SeekView: UIView {
     }
     
     func toggle() {
+        if (self.showMode == .Volume) {
+            self.alpha = 0
+        } else {
+            self.alpha = 1
+        }
         self.isHidden = !self.isHidden
         if self.isHidden {
             timer.invalidate()
@@ -325,16 +330,14 @@ class SeekView: UIView {
             volumeSlider.setValue(current + 0.1, animated: false)
             volumeSlider.sendActions(for: .touchUpInside)
         }
-        seekBar.setProgress(volumeSlider.value, animated: false)
     }
     
     private func decreaseVolume() {
         let current = volumeSlider.value
-        if current < 1.0 {
+        if current > 0 {
             volumeSlider.setValue(current - 0.1, animated: false)
             volumeSlider.sendActions(for: .touchUpInside)
         }
-        seekBar.setProgress(volumeSlider.value, animated: false)
     }
     
 }
