@@ -2,9 +2,43 @@
 //  NowPlayingViewController.swift
 //  Prodigal
 //
-//  Created by bob.sun on 27/02/2017.
-//  Copyright © 2017 bob.sun. All rights reserved.
-//
+/**   Copyright 2017 Bob Sun
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *  Created by ___FULLUSERNAME___ on ___DATE___.
+ *
+ *          _
+ *         ( )
+ *          H
+ *          H
+ *         _H_
+ *      .-'-.-'-.
+ *     /         \
+ *    |           |
+ *    |   .-------'._
+ *    |  / /  '.' '. \
+ *    |  \ \ @   @ / /
+ *    |   '---------'
+ *    |    _______|
+ *    |  .'-+-+-+|              I'm going to build my own APP with blackjack and hookers!
+ *    |  '.-+-+-+|
+ *    |    """""" |
+ *    '-.__   __.-'
+ *         """
+ **/
+
+
 
 import UIKit
 import MediaPlayer
@@ -15,6 +49,7 @@ class NowPlayingViewController: TickableViewController {
     
     
     var playingView: NowPlayingView = NowPlayingView()
+    let seekView: SeekView = SeekView()
     private var _song: MPMediaItem!
     var song: MPMediaItem {
         set {
@@ -57,6 +92,11 @@ class NowPlayingViewController: TickableViewController {
             maker.leading.trailing.bottom.top.equalTo(self.view)
         }
         playingView.layoutIfNeeded()
+        
+        self.view.addSubview(seekView)
+        seekView.snp.makeConstraints({ (maker) in
+            maker.leading.trailing.bottom.top.equalToSuperview()
+        })
     }
     
     override func hide(type: AnimType = .push, completion: @escaping () -> Void) {
@@ -82,10 +122,10 @@ class NowPlayingViewController: TickableViewController {
     }
 
     override func onNextTick() {
-        print("next tick")
+        seekView.onIncrease()
     }
     override func onPreviousTick() {
-        print("prev tick")
+        seekView.onDecrease()
     }
     
     func show(withSong song: MPMediaItem?, type: AnimType = .push) {
@@ -194,5 +234,120 @@ class NowPlayingView: UIView {
         
         current.text = "\(String(format:"%02d", minNow)):\(String(format:"%02d", secNow))"
         total.text = "\(String(format:"%02d", minAll)):\(String(format:"%02d", secAll))"
+    }
+}
+
+class SeekView: UIView {
+    enum SeekViewShowMode {
+        case Volume
+        case Seek
+    }
+    let seekBar = UIProgressView()
+    let label = UILabel()
+    let volumeView = MPVolumeView()
+    var showMode: SeekViewShowMode = .Volume
+    var timer: Timer!
+    var lastTicked: TimeInterval = 0
+    
+    convenience init() {
+        self.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.7)
+        self.addSubview(seekBar)
+        self.addSubview(label)
+        self.addSubview(volumeView)
+        
+        label.snp.makeConstraints { (maker) in
+            maker.height.equalTo(30)
+            maker.leading.equalToSuperview().offset(16)
+            maker.trailing.equalToSuperview().offset(-16)
+            maker.bottom.equalTo(self.snp.centerY).offset(-20)
+        }
+        label.textAlignment = .center
+        
+        seekBar.snp.makeConstraints { (maker) in
+            maker.height.equalTo(10)
+            maker.leading.equalToSuperview().offset(16)
+            maker.trailing.equalToSuperview().offset(-16)
+            maker.top.equalTo(self.snp.centerY).offset(20)
+        }
+        volumeView.frame = CGRect.zero
+        self.isHidden = true
+    }
+    
+    func toggle() {
+        self.isHidden = !self.isHidden
+        if self.isHidden {
+            timer.invalidate()
+            timer = nil
+            return
+        }
+        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
+            if (Date().timeIntervalSince1970 - self.lastTicked < 3 || self.lastTicked == 0) {
+                return
+            }
+            DispatchQueue.main.async {
+                self.isHidden = true
+            }
+        })
+        if showMode == .Volume {
+            self.label.text = "Volume"
+        } else {
+            self.label.text = "Seek"
+        }
+        
+    }
+    
+    func onIncrease() {
+        if (self.isHidden) {
+            toggle()
+        }
+        self.lastTicked = Date().timeIntervalSince1970
+        if (showMode == .Volume) {
+            increaseVolume()
+        }
+    }
+    
+    func onDecrease() {
+        if (self.isHidden) {
+            toggle()
+        }
+        self.lastTicked = Date().timeIntervalSince1970
+        if (showMode == .Volume) {
+            decreaseVolume()
+        }
+    }
+    
+    private func increaseVolume() {
+        let current = volumeView.volumeSlider?.value ?? 0
+        if current < 1.0 {
+            volumeView.volumeSlider?.setValue(current + 0.1, animated: false)
+        }
+        seekBar.progress = volumeView.volumeSlider?.value ?? 0
+    }
+    
+    private func decreaseVolume() {
+        let current = volumeView.volumeSlider?.value ?? 0
+        if current < 1.0 {
+            volumeView.volumeSlider?.setValue(current - 0.1, animated: false)
+        }
+        seekBar.progress = volumeView.volumeSlider?.value ?? 0
+    }
+    
+}
+
+extension MPVolumeView {
+    var volumeSlider: UISlider? {
+        self.showsRouteButton = false
+        self.showsVolumeSlider = false
+        self.isHidden = true
+        for subview in subviews {
+            guard let slider = subview as? UISlider else {
+                continue
+            }
+            slider.isContinuous = false
+            slider.value = AVAudioSession.sharedInstance().outputVolume
+            return slider
+        }
+        return nil
     }
 }
