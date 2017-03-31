@@ -245,6 +245,7 @@ class SeekView: UIView {
     let seekBar = UIProgressView()
     let label = UILabel()
     let volumeView = MPVolumeView()
+    var volumeSlider: UISlider!
     var showMode: SeekViewShowMode = .Volume
     var timer: Timer!
     var lastTicked: TimeInterval = 0
@@ -271,6 +272,7 @@ class SeekView: UIView {
             maker.top.equalTo(self.snp.centerY).offset(20)
         }
         volumeView.frame = CGRect.zero
+        volumeSlider = volumeView.volumeSlider
         self.isHidden = true
     }
     
@@ -318,19 +320,21 @@ class SeekView: UIView {
     }
     
     private func increaseVolume() {
-        let current = volumeView.volumeSlider?.value ?? 0
+        let current = volumeSlider.value
         if current < 1.0 {
-            volumeView.volumeSlider?.setValue(current + 0.1, animated: false)
+            volumeSlider.setValue(current + 0.1, animated: false)
+            volumeSlider.sendActions(for: .touchUpInside)
         }
-        seekBar.progress = volumeView.volumeSlider?.value ?? 0
+        seekBar.setProgress(volumeSlider.value, animated: false)
     }
     
     private func decreaseVolume() {
-        let current = volumeView.volumeSlider?.value ?? 0
+        let current = volumeSlider.value
         if current < 1.0 {
-            volumeView.volumeSlider?.setValue(current - 0.1, animated: false)
+            volumeSlider.setValue(current - 0.1, animated: false)
+            volumeSlider.sendActions(for: .touchUpInside)
         }
-        seekBar.progress = volumeView.volumeSlider?.value ?? 0
+        seekBar.setProgress(volumeSlider.value, animated: false)
     }
     
 }
