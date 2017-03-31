@@ -322,7 +322,8 @@ class WheelView: UIView {
             select.layer.cornerRadius = 0
             break
         }
-        select.backgroundColor = theme.shape == .Polygon ? UIColor.clear : theme.centerColor
+        
+        select.backgroundColor = UIColor.clear
         setNeedsDisplay()
         layoutIfNeeded()
     }

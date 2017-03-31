@@ -9,7 +9,6 @@
     "wheel_inner":"0.3",
     "wheel_color":"#EEEEEE",
     "button_size":"0.2",
-    "center_color": "#FFFFFF",
     "button_background": "#FFFF0000",
     "background_color": "#FFFFFF",
     "wheel_shape": "rect",

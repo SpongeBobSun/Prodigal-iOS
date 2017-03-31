@@ -45,7 +45,7 @@ import UIKit
 class Theme: NSObject {
     private var icNext:String, icPrev:String, icPlay:String, icMenu:String;
     var outer:Double, inner: Double, buttonSize: Double
-    var wheelColor:UIColor, centerColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor
+    var wheelColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor
     var name: String!
     var shape: WheelViewShape
     var sides: Int = 6
@@ -61,7 +61,6 @@ class Theme: NSObject {
         "wheel_inner":"0.3",
         "wheel_color":"#EEEEEE",
         "button_size":"0.2",
-        "center_color": "#FFFFFF",
         "button_background": "#FFFF0000",
         "background_color" : "#FFFFFF",
         "wheel_shape": "rect",
@@ -89,7 +88,6 @@ class Theme: NSObject {
         buttonSize = Double(dict["button_size"] as! String)!
         
         wheelColor = UIColor.init(hexString: dict["wheel_color"] as! String)!
-        centerColor = UIColor.init(hexString: dict["center_color"] as! String)!
         buttonColor = UIColor.init(hexString: dict["button_background"] as! String)!
         backgroundColor = UIColor.init(hexString: dict["background_color"] as! String)!
         switch dict["wheel_shape"] as! String! {
@@ -153,6 +151,7 @@ class Theme: NSObject {
     
     //TL;DR
     static func validate(dict: Dictionary<String, Any>) -> Bool {
+        //TODO: Drop center color option in theme.
         guard let icons = dict["icons"] as! Dictionary<String, String>! else {
             return false
         }
@@ -186,9 +185,6 @@ class Theme: NSObject {
             return false
         }
         
-        guard (UIColor.init(hexString: dict["center_color"] as! String)) != nil else {
-            return false
-        }
         guard (UIColor.init(hexString: dict["button_background"] as! String)) != nil else {
             return false
         }

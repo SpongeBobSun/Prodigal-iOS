@@ -63,7 +63,7 @@ class ThemeManager: NSObject {
             return
         }
         
-        let resPath = Bundle.init(for: type(of: self)).path(forResource: "Themes", ofType: nil)
+        let resPath = Bundle.init(for: type(of: self)).path(forResource: "Configs", ofType: nil)
         let resUrl = NSURL.fileURL(withPath: resPath!, isDirectory: true)
         let docUrl = NSURL.fileURL(withPath: docPath, isDirectory: true)
         do {
