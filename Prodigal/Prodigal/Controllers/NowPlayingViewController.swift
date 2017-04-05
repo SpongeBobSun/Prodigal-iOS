@@ -51,6 +51,7 @@ class NowPlayingViewController: TickableViewController {
     var playingView: NowPlayingView = NowPlayingView()
     let seekView: SeekView = SeekView()
     private var _song: MPMediaItem!
+    private var currentSelectionType: MenuMeta.MenuType! = .NowPlayingPopSeek
     var song: MPMediaItem {
         set {
             _song = newValue
@@ -118,7 +119,15 @@ class NowPlayingViewController: TickableViewController {
     }
     
     override func getSelection() -> MenuMeta {
-        return MenuMeta()
+        if seekView.showMode != .Seek {
+            return MenuMeta(name: "", type: .NowPlayingPopSeek)
+        }
+        if seekView.isHidden {
+            return MenuMeta(name: "", type: .NowPlayingPopSeek)
+        } else {
+            seekView.toggle()
+            return MenuMeta(name: "", type: .NowPlayingDoSeek).setObject(obj: Double(seekView.seekBar.progress))
+        }
     }
 
     override func onNextTick() {
@@ -146,6 +155,11 @@ class NowPlayingViewController: TickableViewController {
     }
     
     private func initViews() {
+    }
+    
+    func popSeek() {
+        seekView.showMode = .Seek
+        seekView.toggle()
     }
 }
 
@@ -311,6 +325,10 @@ class SeekView: UIView {
         self.lastTicked = Date().timeIntervalSince1970
         if (showMode == .Volume) {
             increaseVolume()
+        } else {
+            if seekBar.progress < 1.0 {
+                seekBar.setProgress(seekBar.progress + 0.1, animated: true)
+            }
         }
     }
     
@@ -321,6 +339,10 @@ class SeekView: UIView {
         self.lastTicked = Date().timeIntervalSince1970
         if (showMode == .Volume) {
             decreaseVolume()
+        } else {
+            if seekBar.progress > 0 {
+                seekBar.setProgress(seekBar.progress - 0.1, animated: true)
+            }
         }
     }
     

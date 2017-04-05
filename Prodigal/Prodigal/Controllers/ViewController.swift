@@ -172,6 +172,7 @@ class ViewController: UIViewController {
                 InfoCenterHelper.helper.update(withItem: item)
                 ticker.start()
                 renderCoverBackground(image: item.artwork?.image(at: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "ic_album"))
+                mainMenu.updateRightPanel(index: mainMenu.current)
             }
         } catch let e as Error {
             print(e)

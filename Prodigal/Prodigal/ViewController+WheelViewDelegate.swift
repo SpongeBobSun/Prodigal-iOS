@@ -130,6 +130,7 @@ extension ViewController: WheelViewDelegate {
             current.hide {
                 self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
+            self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
@@ -139,6 +140,7 @@ extension ViewController: WheelViewDelegate {
             current.hide {
                 self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
+            self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
@@ -186,6 +188,15 @@ extension ViewController: WheelViewDelegate {
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
+            break
+        case .NowPlayingPopSeek:
+            if current != nowPlaying {
+                break
+            }
+            nowPlaying.popSeek()
+            break
+        case .NowPlayingDoSeek:
+            self.player?.currentTime = Double(self.player?.duration ?? 0) * (select.object! as! Double)
             break
         case .CoverGallery:
             current.hide {

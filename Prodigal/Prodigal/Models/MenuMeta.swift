@@ -26,6 +26,8 @@ class MenuMeta: NSObject {
         case ShuffleCurrent
         case Settings
         case NowPlaying
+        case NowPlayingPopSeek
+        case NowPlayingDoSeek
         case About
         case ShuffleSettings
         case RepeatSettings
