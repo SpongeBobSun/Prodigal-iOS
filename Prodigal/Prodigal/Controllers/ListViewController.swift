@@ -16,10 +16,10 @@ class ListViewController: TickableViewController {
     var items: Array<MenuMeta> = []
     var playList: Array<MPMediaItem>? = nil
     var type: MenuMeta.MenuType = .Undefined
+    let emptyView = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -47,6 +47,13 @@ class ListViewController: TickableViewController {
         tableView.snp.makeConstraints { (maker) in
             maker.leading.top.bottom.trailing.equalToSuperview()
         }
+        self.view.addSubview(emptyView)
+        emptyView.isHidden = true
+        emptyView.image = #imageLiteral(resourceName: "ic_empty")
+        emptyView.snp.makeConstraints { (maker) in
+            maker.width.height.equalTo(150)
+            maker.center.equalToSuperview()
+        }
     }
     
     func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true) {
@@ -55,8 +62,11 @@ class ListViewController: TickableViewController {
         self.type = type
         if data.count == 0 {
             //Mark - show empty view
+            self.view.isHidden = false
+            self.emptyView.isHidden = false
             return
         }
+        self.emptyView.isHidden = true
         var hasShuffle = false
         
         switch type {
@@ -184,6 +194,11 @@ class ListViewController: TickableViewController {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                 self.view.center = center
             }) { (done) in
+                if self.getData().count == 0 {
+                    self.emptyView.isHidden = false
+                } else {
+                    self.emptyView.isHidden = true
+                }
             }
         } else if type == .pop {
             let center = self.view.center
@@ -193,11 +208,17 @@ class ListViewController: TickableViewController {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                 self.view.center = center
             }) { (done) in
+                if self.getData().count == 0 {
+                    self.emptyView.isHidden = false
+                } else {
+                    self.emptyView.isHidden = true
+                }
             }
         } else {
             self.view.isHidden = false
             tableView.reloadData()
         }
+        
     }
     
     override func getSelection() -> MenuMeta {
