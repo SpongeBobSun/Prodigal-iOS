@@ -125,6 +125,7 @@ class NowPlayingViewController: TickableViewController {
         if seekView.isHidden {
             return MenuMeta(name: "", type: .NowPlayingPopSeek)
         } else {
+            seekView.showMode = .Volume
             seekView.toggle()
             return MenuMeta(name: "", type: .NowPlayingDoSeek).setObject(obj: Double(seekView.seekBar.progress))
         }
@@ -307,6 +308,7 @@ class SeekView: UIView {
                 return
             }
             DispatchQueue.main.async {
+                self.showMode = .Volume
                 self.isHidden = true
             }
         })
