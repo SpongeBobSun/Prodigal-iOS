@@ -62,14 +62,24 @@ extension ViewController: WheelViewDelegate {
         self.current.show(type: .pop)
     }
     func onPrev() {
+        var index = playingIndex
         if playingIndex == 0 || playingIndex < 0 {
             if playingIndex == 0 && (player?.isPlaying)! {
                 player?.currentTime = 0
             }
-            return
+            if playlist.count == 0 {
+                return
+            }
+            index = 0
+        } else {
+            if (player?.isPlaying)! && Int((player?.currentTime)!) > 5 {
+                index = playingIndex
+            } else {
+                index = playingIndex - 1
+            }
         }
         player?.stop()
-        play(item: playlist[playingIndex - 1])
+        play(item: playlist[index])
     }
     func onPlay() {
         if player != nil {
