@@ -88,7 +88,6 @@ class WheelView: UIView {
         #if TARGET_INTERFACE_BUILDER
         #else
         self.snp.makeConstraints { (maker) in
-            //Plus ten for shadow
             maker.width.equalTo(size)
         }
         #endif
@@ -133,10 +132,6 @@ class WheelView: UIView {
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         
-        innerLayer.shadowOffset = CGSize(width: 0, height: 3)
-        innerLayer.shadowColor = theme.wheelColor.cgColor
-        innerLayer.shadowRadius = 3
-        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
     }
@@ -160,11 +155,6 @@ class WheelView: UIView {
         innerLayer.path = mutePath
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
-        
-        innerLayer.shadowOffset = CGSize(width: 0, height: 3)
-        innerLayer.shadowColor = theme.wheelColor.cgColor
-        innerLayer.shadowRadius = 3
-        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
@@ -190,11 +180,6 @@ class WheelView: UIView {
         innerLayer.path = mutePath
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
-        
-        innerLayer.shadowOffset = CGSize(width: 0, height: 3)
-        innerLayer.shadowColor = theme.wheelColor.cgColor
-        innerLayer.shadowRadius = 3
-        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
@@ -325,7 +310,6 @@ class WheelView: UIView {
         
         select.backgroundColor = UIColor.clear
         setNeedsDisplay()
-        layoutIfNeeded()
     }
 }
 
