@@ -215,8 +215,7 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = artistsList
             break
         case .Playlist:
-            //TODO: Handle local file here.
-            playListView.show(withType: .Songs, andData: self.playlist)
+            playListView.show(withType: (source == .iTunes ? .Songs : .LocalSongs), andData: (source == .iTunes ? self.playlist : self.fileList))
             current = playListView
             wheelView.tickDelegate = playListView
             break
