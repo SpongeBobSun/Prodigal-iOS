@@ -10,6 +10,7 @@ import UIKit
 import MediaPlayer
 import AVFoundation
 import Haneke
+import Crashlytics
 
 class ViewController: UIViewController {
 
@@ -145,8 +146,9 @@ class ViewController: UIViewController {
             try session.setCategory(AVAudioSessionCategoryPlayback)
             try session.setActive(true)
             NotificationCenter.default.addObserver(self, selector: #selector(onAudioRouteChange), name:NSNotification.Name.AVAudioSessionRouteChange, object: nil)
-        } catch let e as NSError {
+        } catch let e {
             print(e)
+            Crashlytics.sharedInstance().recordError(e)
         }
     }
     
@@ -182,8 +184,9 @@ class ViewController: UIViewController {
                 renderCoverBackground(image: item.artwork?.image(at: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "ic_album"))
                 mainMenu.updateRightPanel(index: mainMenu.current)
             }
-        } catch let e as Error {
+        } catch let e {
             print(e)
+            Crashlytics.sharedInstance().recordError(e)
         }
     }
     
@@ -216,8 +219,9 @@ class ViewController: UIViewController {
                 renderCoverBackground(image: #imageLiteral(resourceName: "ic_album"))
                 mainMenu.updateRightPanel(index: mainMenu.current)
             }
-        } catch let e as Error {
+        } catch let e {
             print(e)
+            Crashlytics.sharedInstance().recordError(e)
         }
     }
     
@@ -256,6 +260,12 @@ class ViewController: UIViewController {
     func onAudioRouteChange(notification: Notification) {
         if self.player != nil && self.player!.isPlaying {
             self.player?.pause()
+        }
+        do {
+            try session.setActive(false)
+        } catch let e {
+            print(e)
+            Crashlytics.sharedInstance().recordError(e)
         }
     }
     
