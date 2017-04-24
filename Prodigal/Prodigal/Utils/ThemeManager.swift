@@ -55,11 +55,6 @@ class ThemeManager: NSObject {
     func copyToDocuments() {
         
         if fm.fileExists(atPath: docPath) {
-            //Debug
-            #if DEBUG
-            print(self.fetchAllThemes())
-            print(self.loadLastTheme())
-            #endif
             return
         }
         
