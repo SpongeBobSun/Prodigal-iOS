@@ -276,17 +276,44 @@ class ViewController: UIViewController {
 extension ViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if source == .iTunes {
-            if playingIndex == playlist.count - 1 || playingIndex < 0{
+            if playingIndex < 0{
                 return
             }
             player.stop()
-            play(item: playlist[playingIndex + 1])
+            
+            var item: MPMediaItem? = nil
+            if (AppSettings.sharedInstance.getRepeat() == .One) {
+                item = playlist[playingIndex]
+            } else if playingIndex == playlist.count - 1 {
+                if AppSettings.sharedInstance.getRepeat() == .All && playlist.count > 1 {
+                    item = playlist[0]
+                } else {
+                    return
+                }
+            } else {
+                item = playlist[playingIndex + 1]
+            }
+            play(item: item!)
         } else {
             if playingIndex == fileList.count - 1 || playingIndex < 0 {
                 return
             }
             player.stop()
-            play(item: fileList[playingIndex + 1])
+            
+            var item: MediaItem? = nil
+            if (AppSettings.sharedInstance.getRepeat() == .One) {
+                item = fileList[playingIndex]
+            } else if playingIndex == playlist.count - 1 {
+                if AppSettings.sharedInstance.getRepeat() == .All && fileList.count > 1 {
+                    item = fileList[0]
+                } else {
+                    return
+                }
+            } else {
+                item = fileList[playingIndex + 1]
+            }
+
+            play(item: item!)
         }
     }
 }

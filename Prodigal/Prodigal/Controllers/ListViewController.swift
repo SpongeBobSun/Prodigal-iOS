@@ -5,6 +5,42 @@
 //  Created by bob.sun on 23/02/2017.
 //  Copyright © 2017 bob.sun. All rights reserved.
 //
+/**   Copyright 2017 Bob Sun
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *  Created by bob.sun on 23/02/2017.
+ *
+ *          _
+ *         ( )
+ *          H
+ *          H
+ *         _H_
+ *      .-'-.-'-.
+ *     /         \
+ *    |           |
+ *    |   .-------'._
+ *    |  / /  '.' '. \
+ *    |  \ \ @   @ / /
+ *    |   '---------'
+ *    |    _______|
+ *    |  .'-+-+-+|              I'm going to build my own APP with blackjack and hookers!
+ *    |  '.-+-+-+|
+ *    |    """""" |
+ *    '-.__   __.-'
+ *         """
+ **/
+
 
 import UIKit
 import MediaPlayer
@@ -117,6 +153,9 @@ class ListViewController: TickableViewController {
             let `data` = data as! Array<MenuMeta>
             items.append(contentsOf: data)
             items.first!.highLight = true
+            PubSub.subOnMainThread(target: self, name: AppSettings.EventSettingsChanged, handler: { (notification) in
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)], with: .none)
+            })
             break
         case .Themes :
             items.removeAll()
@@ -164,6 +203,9 @@ class ListViewController: TickableViewController {
     }
     
     override func hide(type: AnimType = .push, completion: @escaping AnimationCompletion) {
+        if self.type == .Settings {
+            PubSub.unsubscribe(target: self, name: AppSettings.EventSettingsChanged)
+        }
         if type == .push {
             let center = self.view.center
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
@@ -355,7 +397,7 @@ class ListCell: UITableViewCell {
             maker.trailing.top.bottom.equalToSuperview()
             maker.width.equalTo(100)
         }
-        value.contentMode = .right
+        value.textAlignment = .right
         value.text = "SettingsValue"
     }
     
@@ -409,6 +451,30 @@ class ListCell: UITableViewCell {
             contentView.backgroundColor = UIColor.lightGray
         } else {
             contentView.backgroundColor = UIColor.clear
+        }
+        
+        if meta.type == .RepeatSettings {
+            switch AppSettings.sharedInstance.getRepeat() {
+            case .All:
+                value.text = NSLocalizedString("ALL", comment: "")
+                break
+            case .None:
+                value.text = NSLocalizedString("NONE", comment: "")
+                break
+            case .One:
+                value.text = NSLocalizedString("ONE", comment: "")
+                break
+            }
+        }
+        if (meta.type == .ShuffleSettings) {
+            switch AppSettings.sharedInstance.getShuffle() {
+            case .Yes:
+                value.text = NSLocalizedString("YES", comment: "")
+                break
+            case .No:
+                value.text = NSLocalizedString("NO", comment: "")
+                break
+            }
         }
     }
     

@@ -273,6 +273,12 @@ extension ViewController: WheelViewDelegate {
             current = settings
             wheelView.tickDelegate = settings
             break
+        case .RepeatSettings:
+            AppSettings.sharedInstance.rollRepeat()
+            return
+        case .ShuffleSettings:
+            AppSettings.sharedInstance.rollShuffle()
+            return
         case .ThemeSettings:
             current.hide {
                 self.themeListView.show(withType: .Themes, andData: ThemeManager().fetchAllThemes(), animate: false)
