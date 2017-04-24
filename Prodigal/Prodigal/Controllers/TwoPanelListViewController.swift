@@ -146,7 +146,7 @@ class TwoPanelListViewController: TickableViewController {
                   MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
                   MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
                   MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),
-                  MenuMeta.MenuType.LocalSongs: #imageLiteral(resourceName: "ic_genre"),
+                  MenuMeta.MenuType.LocalSongs: #imageLiteral(resourceName: "ic_local"),
                   MenuMeta.MenuType.ShuffleSongs: #imageLiteral(resourceName: "ic_shuffle"),
                   MenuMeta.MenuType.Playlist: #imageLiteral(resourceName: "ic_playlist"),]
         
