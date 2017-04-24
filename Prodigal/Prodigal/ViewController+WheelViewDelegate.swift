@@ -163,6 +163,7 @@ extension ViewController: WheelViewDelegate {
             self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
+            self.checkShuffle(highlight: select.object)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
@@ -214,6 +215,7 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = artistsList
             break
         case .Playlist:
+            //TODO: Handle local file here.
             playListView.show(withType: .Songs, andData: self.playlist)
             current = playListView
             wheelView.tickDelegate = playListView
@@ -294,6 +296,16 @@ extension ViewController: WheelViewDelegate {
             return
         }
         stack.append(current)
+    }
+    
+    fileprivate func checkShuffle(highlight: Any) {
+        if AppSettings.sharedInstance.getShuffle() == .Yes {
+            if source == .iTunes {
+                self.playlist = MediaLibrary.shuffle(array: self.playlist, highlight: highlight) as! [MPMediaItem]
+            } else {
+                self.fileList = MediaLibrary.shuffle(array: self.fileList, highlight: highlight) as! [MediaItem]
+            }
+        }
     }
 }
 

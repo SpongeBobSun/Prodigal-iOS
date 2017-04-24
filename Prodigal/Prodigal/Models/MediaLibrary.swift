@@ -214,4 +214,21 @@ class MediaLibrary: NSObject {
         return ret
     }
     
+    static func shuffle(array: [Any], highlight:Any) -> [Any] {
+        var ret = shuffle(array: array)
+        var idx = 0
+        if highlight is MPMediaItem {
+            idx = ret.index(where: {($0 as! MPMediaItem).persistentID == (highlight as! MPMediaItem).persistentID}) ?? -1
+        } else if highlight is MediaItem {
+            idx = ret.index(where: {($0 as! MediaItem).fileName == (highlight as! MediaItem).fileName}) ?? -1
+        }
+        if idx >= 0 {
+            ret.remove(at: idx)
+            ret.insert(highlight, at: 0)
+        } else {
+            ret.insert(highlight, at: 0)
+        }
+        return ret
+    }
+    
 }
