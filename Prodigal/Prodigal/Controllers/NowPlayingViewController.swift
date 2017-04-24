@@ -51,10 +51,13 @@ class NowPlayingViewController: TickableViewController {
     var playingView: NowPlayingView = NowPlayingView()
     let seekView: SeekView = SeekView()
     private var _song: MPMediaItem!
+    private var _file: MediaItem!
+    private var source: MediaItem.MediaSource = .iTunes
     private var currentSelectionType: MenuMeta.MenuType! = .NowPlayingPopSeek
     var song: MPMediaItem {
         set {
             _song = newValue
+            source = .iTunes
             playingView.image.image = _song.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
             playingView.title.text = _song.title
             playingView.artist.text = _song.artist
@@ -62,6 +65,20 @@ class NowPlayingViewController: TickableViewController {
         }
         get {
             return _song
+        }
+    }
+    
+    var file: MediaItem {
+        set {
+            _file = newValue
+            source = .Local
+            playingView.image.image = #imageLiteral(resourceName: "ic_album")
+            playingView.title.text = _file.name
+            playingView.artist.text = ""
+            playingView.album.text = ""
+        }
+        get {
+            return _file
         }
     }
 
@@ -145,6 +162,23 @@ class NowPlayingViewController: TickableViewController {
             return
         }
         self.song = song!
+        PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
+            let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
+            let progress = Float(current) / Float(duration)
+            DispatchQueue.main.async {
+                self.playingView.progress.setProgress(progress, animated:true)
+                self.playingView.updateLabels(now: current, all: duration)
+            }
+        })
+    }
+    
+    func show(withFile file:MediaItem?, type: AnimType = .push) {
+        self.view.isHidden = false
+        if file == nil {
+            //Mark - TODO: Empty view
+            return
+        }
+        self.file = file!
         PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
             let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
             let progress = Float(current) / Float(duration)

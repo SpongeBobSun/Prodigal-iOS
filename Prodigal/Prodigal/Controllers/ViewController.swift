@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!, localListView: ListViewController!
     var gallery: AlbumGalleryViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
@@ -31,8 +31,12 @@ class ViewController: UIViewController {
     var playingIndex: Int = -1
     var resumeTime: Double = -1
     var playlist: Array<MPMediaItem> = []
+    var fileList: Array<MediaItem> = []
     var ticker: PlayerTicker!
     var theme = ThemeManager().loadLastTheme()
+    
+    var source: MediaItem.MediaSource = .iTunes
+    
     
     // ? ? ?
     override var canBecomeFirstResponder: Bool { return true }
@@ -63,6 +67,7 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        (UIApplication.shared.delegate as! AppDelegate).saveState()
         // Dispose of any resources that can be recreated.
     }
     
@@ -129,6 +134,9 @@ class ViewController: UIViewController {
         
         themeListView = ListViewController()
         themeListView.attachTo(viewController: self, inView: cardView)
+        
+        localListView = ListViewController()
+        localListView.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
@@ -179,18 +187,62 @@ class ViewController: UIViewController {
         }
     }
     
+    func play(item: MediaItem) {
+        if player != nil && (player?.isPlaying)! {
+            player?.stop()
+            ticker.stop()
+        }
+        
+        if player != nil {
+            player?.delegate = nil
+            player = nil
+        }
+        
+        playingIndex = fileList.index(of: item) ?? -1
+        do {
+            try player = AVAudioPlayer.init(contentsOf: item.getFile())
+            player?.delegate = self
+            player?.volume = 1.0
+            let result: Bool = (player?.prepareToPlay())!
+            if result {
+                if resumeTime > 0 {
+                    player?.currentTime = resumeTime
+                    resumeTime = -1
+                }
+                player?.play()
+                nowPlaying.file = item
+                InfoCenterHelper.helper.update(withFile: item)
+                ticker.start()
+                renderCoverBackground(image: #imageLiteral(resourceName: "ic_album"))
+                mainMenu.updateRightPanel(index: mainMenu.current)
+            }
+        } catch let e as Error {
+            print(e)
+        }
+    }
+    
     func renderCoverBackground(image: UIImage) {
         coverBackground.image = UIImage.getBlured(image: image)
     }
     
     func play() {
-        if playlist.count == 0 {
-           return
+        if source == .iTunes {
+            if playlist.count == 0 {
+                return
+            }
+            if playingIndex == -1 || playingIndex >= playlist.count {
+                playingIndex = 0
+            }
+            play(item: playlist[playingIndex])
+        } else {
+            if fileList.count == 0 {
+                return
+            }
+            if playingIndex == -1 || playingIndex >= fileList.count {
+                playingIndex = 0
+            }
+        
         }
-        if playingIndex == -1 || playingIndex >= playlist.count {
-            playingIndex = 0
-        }
-        play(item: playlist[playingIndex])
     }
     
     func stop() {
@@ -223,11 +275,19 @@ class ViewController: UIViewController {
 
 extension ViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if playingIndex == playlist.count - 1 || playingIndex < 0{
-            return
+        if source == .iTunes {
+            if playingIndex == playlist.count - 1 || playingIndex < 0{
+                return
+            }
+            player.stop()
+            play(item: playlist[playingIndex + 1])
+        } else {
+            if playingIndex == fileList.count - 1 || playingIndex < 0 {
+                return
+            }
+            player.stop()
+            play(item: fileList[playingIndex + 1])
         }
-        player.stop()
-        play(item: playlist[playingIndex + 1])
     }
 }
 
@@ -238,11 +298,18 @@ extension ViewController: PlayerTickerProtocol {
 }
 
 extension ViewController: NowPlayingFetcherDelegate {
-    func getNowPlaying() -> MPMediaItem? {
-        if self.playingIndex >= self.playlist.count || self.playlist.count == 0 {
-            return nil
+    func getNowPlaying() -> Any? {
+        if source == .iTunes {
+            if self.playingIndex >= self.playlist.count || self.playlist.count == 0 || self.playingIndex == -1 {
+                return nil
+            }
+            return self.playlist[self.playingIndex]
+        } else {
+            if self.playingIndex >= self.fileList.count || self.fileList.count == 0 || self.playingIndex == -1 {
+                return nil
+            }
+            return self.fileList[self.playingIndex]
         }
-        return self.playlist[self.playingIndex]
     }
 }
 

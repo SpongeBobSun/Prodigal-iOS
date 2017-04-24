@@ -170,6 +170,26 @@ class MediaLibrary: NSObject {
         return artists
     }
     
+    func fetchLocalFiles() -> Array<MediaItem> {
+        let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let fm = FileManager.default
+        var ret: Array<MediaItem> = []
+        var files: Array<String> = []
+        do {
+            files = try fm.contentsOfDirectory(atPath: docPath)
+        } catch let err {
+            print(err)
+        }
+        
+        for each in files {
+            if each.hasSuffix(".mp3") || each.hasSuffix(".m4a") || each.hasSuffix("wav") {
+                ret.append(MediaItem(name: each, fileName: docPath + "/" + each))
+            }
+        }
+        
+        return ret
+    }
+    
     func validateList(list: Array<UInt64>) -> Array<MPMediaItem> {
         var ret: Array<MPMediaItem> = []
         for each in list {

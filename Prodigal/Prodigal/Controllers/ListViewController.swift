@@ -91,7 +91,7 @@ class ListViewController: TickableViewController {
         case .Songs:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each).setObject(obj: each))
             })
             playList = data as? Array<MPMediaItem>
             items.first?.highLight = true
@@ -102,6 +102,13 @@ class ListViewController: TickableViewController {
             items.removeAll()
             data.forEach({ (each) in
                 items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.genre)!, type: .Genre).setObject(obj: each))
+            })
+            items.first?.highLight = true
+            break
+        case .LocalSongs:
+            items.removeAll()
+            data.forEach({ (each) in
+                items.append(MenuMeta(name: (each as! MediaItem).name, type: .LocalSong).setObject(obj: each))
             })
             items.first?.highLight = true
             break
@@ -149,7 +156,7 @@ class ListViewController: TickableViewController {
             return
         }
         let menu: MenuMeta? = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-        if type != .Songs && type != .Albums && type != .Artists && type != .Genres {
+        if type != .Songs && type != .Albums && type != .Artists && type != .Genres && type != .LocalSongs {
             return
         }
         items.insert(menu!, at: 0)

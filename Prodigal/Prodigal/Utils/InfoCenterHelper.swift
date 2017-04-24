@@ -15,20 +15,42 @@ class InfoCenterHelper: NSObject {
         return ret
     }()
     
+    static fileprivate var iTunesDict: [String: Any] = [
+        MPMediaItemPropertyTitle: "",
+        MPMediaItemPropertyArtist: "",
+        MPMediaItemPropertyAlbumTitle: "",
+        MPNowPlayingInfoPropertyPlaybackRate: 1.0,
+        MPMediaItemPropertyPlaybackDuration: 0,
+        MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
+    ]
+    
     func update(withItem item: MPMediaItem, elapsed: TimeInterval = 0) {
-        var dict: [String: Any] = [
-            MPMediaItemPropertyTitle: item.title ?? "",
-            MPMediaItemPropertyArtist: item.artist ?? "",
-            MPMediaItemPropertyAlbumTitle: item.albumTitle ?? "",
-            MPNowPlayingInfoPropertyPlaybackRate: 1.0,
-            MPMediaItemPropertyPlaybackDuration: item.playbackDuration,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: elapsed,
-        ]
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyTitle] = item.title ?? ""
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyArtist] = item.artist ?? ""
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyAlbumTitle] = item.albumTitle ?? ""
+        InfoCenterHelper.iTunesDict[MPNowPlayingInfoPropertyPlaybackRate] = 1.0
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
+        InfoCenterHelper.iTunesDict[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsed
+
         guard let img = item.artwork else {
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = dict
+            InfoCenterHelper.iTunesDict.removeValue(forKey: MPMediaItemPropertyArtwork)
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = InfoCenterHelper.iTunesDict
             return
         }
-        dict[MPMediaItemPropertyArtwork] = img
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyArtwork] = img
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = InfoCenterHelper.iTunesDict
+    }
+    
+    func update(withFile file: MediaItem, elapsed: TimeInterval = 0) {
+        let dict: [String: Any] = [
+            MPMediaItemPropertyTitle: file.name,
+            MPMediaItemPropertyArtist: "",
+            MPMediaItemPropertyAlbumTitle: "",
+            MPNowPlayingInfoPropertyPlaybackRate: 1.0,
+//            MPMediaItemPropertyPlaybackDuration: item.playbackDuration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: elapsed,
+            ]
         MPNowPlayingInfoCenter.default().nowPlayingInfo = dict
+
     }
 }

@@ -67,6 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if MediaLibrary.sharedInstance.authorized {
             restoreLastState()
         }
+        
+        //DebugCode
+        #if DEBUG
+        MediaLibrary.sharedInstance.fetchLocalFiles()
+        #endif
         return true
     }
 
@@ -93,15 +98,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
+        saveState()
+    }
+    
+    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+        saveState()
+    }
+    
+    func saveState() {
         let ud = UserDefaults.standard
         ud.set(main.player?.currentTime, forKey: "last_current_time")
         ud.set(main.playingIndex, forKey: "last_playing_index")
+        ud.set(main.source.rawValue, forKey:"last_media_source")
+        
         var list: Array<UInt64> = []
         for each in main.playlist {
             list.append(each.persistentID)
         }
+        
         ud.set(list, forKey: "last_playing_list")
         ud.synchronize()
     }
@@ -114,9 +128,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as! Array<UInt64>)
-        main.playlist = validateList
-        main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
-        main.resumeTime = lastCurrent
+        main.source = MediaItem.MediaSource(rawValue: ud.integer(forKey: "last_media_source")) ?? .iTunes
+        if main.source == .iTunes {
+            //Only restor itunes media for now.
+            main.playlist = validateList
+            main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
+            main.resumeTime = lastCurrent
+        } else {
+            main.fileList = []
+            main.playingIndex = -1
+            main.resumeTime = 0
+        }
     }
 
     private func initCacheForList() {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010732101EA9ED120005F664 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0107320F1EA9ED120005F664 /* MediaItem.swift */; };
 		0112CCA91E8B902E000F810D /* UIImage+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112CCA81E8B902E000F810D /* UIImage+Blur.swift */; };
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0107320F1EA9ED120005F664 /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaItem.swift; path = Models/MediaItem.swift; sourceTree = "<group>"; };
 		0112CCA81E8B902E000F810D /* UIImage+Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Blur.swift"; path = "Extensions/UIImage+Blur.swift"; sourceTree = "<group>"; };
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */,
 				015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */,
+				0107320F1EA9ED120005F664 /* MediaItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				01E7FE841E768FFB00B505C0 /* PubSub.swift in Sources */,
 				015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
+				010732101EA9ED120005F664 /* MediaItem.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
 				011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */,
 				015E4AA11E5ECE66007A7C3F /* TickableViewController.swift in Sources */,

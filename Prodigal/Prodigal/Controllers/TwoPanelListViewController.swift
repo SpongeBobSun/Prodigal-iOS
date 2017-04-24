@@ -46,7 +46,7 @@ import Haneke
 import MarqueeLabel
 
 protocol NowPlayingFetcherDelegate: class {
-    func getNowPlaying() -> MPMediaItem?
+    func getNowPlaying() -> Any?
 }
 
 class TwoPanelListViewController: TickableViewController {
@@ -135,6 +135,7 @@ class TwoPanelListViewController: TickableViewController {
         items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
         items.append(MenuMeta(name: NSLocalizedString("Playlists", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
+        items.append(MenuMeta(name: NSLocalizedString("Local Files", comment: ""), type: MenuMeta.MenuType.LocalSongs))
         items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))
         items.append(MenuMeta(name: NSLocalizedString("Settings", comment: ""), type: MenuMeta.MenuType.Settings))
         items.append(MenuMeta(name: NSLocalizedString("Now Playing", comment: ""), type: MenuMeta.MenuType.NowPlaying))
@@ -145,6 +146,7 @@ class TwoPanelListViewController: TickableViewController {
                   MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
                   MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
                   MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),
+                  MenuMeta.MenuType.LocalSongs: #imageLiteral(resourceName: "ic_genre"),
                   MenuMeta.MenuType.ShuffleSongs: #imageLiteral(resourceName: "ic_shuffle"),
                   MenuMeta.MenuType.Playlist: #imageLiteral(resourceName: "ic_playlist"),]
         
@@ -371,7 +373,13 @@ class PanelView: UIView {
         if (fetcherDelegate == nil) {
             nowPlaying.config(media: nil)
         } else {
-            nowPlaying.config(media: fetcherDelegate?.getNowPlaying())
+            var item = fetcherDelegate?.getNowPlaying()
+            if item is MPMediaItem {
+                nowPlaying.config(media:item as! MPMediaItem?)
+            }
+            if item is MediaItem {
+                
+            }
         }
     }
     
@@ -424,6 +432,18 @@ class NowPlayingWidget: UIView {
         title.text = media!.title
         artist.text = media!.artist
         album.text = media!.albumTitle
+    }
+    
+    func config(file: MediaItem?) {
+        imageView.image = #imageLiteral(resourceName: "ic_album")
+        if file == nil {
+            title.text = NSLocalizedString("Nothing", comment: "")
+            artist.text = NSLocalizedString("Nobody", comment: "")
+            return
+        }
+        artist.text = ""
+        album.text = ""
+        title.text = file?.name
     }
     
 }

@@ -44,11 +44,17 @@ import MediaPlayer
 extension ViewController: WheelViewDelegate {
     
     func onNext() {
-        if playingIndex == playlist.count - 1 || playingIndex < 0{
+        let total = source == .iTunes ? playlist.count - 1 : fileList.count - 1
+        if playingIndex == total || playingIndex < 0 {
             return
         }
         player?.stop()
-        play(item: playlist[playingIndex + 1])
+        if (source == .iTunes) {
+            play(item: playlist[playingIndex + 1])
+        } else {
+            play(item: fileList[playingIndex + 1])
+        }
+        
     }
     func onMenu() {
         if stack.count == 1 {
@@ -62,12 +68,18 @@ extension ViewController: WheelViewDelegate {
         self.current.show(type: .pop)
     }
     func onPrev() {
+        if (player == nil) {
+            self.play()
+            return
+        }
         var index = playingIndex
+        let total = source == .iTunes ? playlist.count - 1 : fileList.count - 1
+
         if playingIndex == 0 || playingIndex < 0 {
             if playingIndex == 0 && (player?.isPlaying)! {
                 player?.currentTime = 0
             }
-            if playlist.count == 0 {
+            if total == 0 {
                 return
             }
             index = 0
@@ -79,7 +91,11 @@ extension ViewController: WheelViewDelegate {
             }
         }
         player?.stop()
-        play(item: playlist[index])
+        if (source == .iTunes) {
+            play(item: playlist[index])
+        } else {
+            play(item: fileList[index])
+        }
     }
     func onPlay() {
         if player != nil {
@@ -87,7 +103,11 @@ extension ViewController: WheelViewDelegate {
                 player?.pause()
             } else {
                 player?.play()
-                InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
+                if (source == .iTunes) {
+                    InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
+                } else {
+                    InfoCenterHelper.helper.update(withFile: fileList[playingIndex], elapsed: player?.currentTime ?? 0)
+                }
             }
             return
         }
@@ -140,16 +160,37 @@ extension ViewController: WheelViewDelegate {
             current.hide {
                 self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
+            self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MPMediaItem!)
             break
+            
+        case .LocalSongs:
+            current.hide {
+                self.localListView.show(withType: .LocalSongs, andData: MediaLibrary.sharedInstance.fetchLocalFiles())
+            }
+            current = localListView
+            self.wheelView.tickDelegate = localListView
+            break
+        case .LocalSong:
+            current.hide {
+                self.nowPlaying.show(withFile: select.object as! MediaItem!)
+            }
+            current = nowPlaying
+            wheelView.tickDelegate = nowPlaying
+            self.source = .Local
+            self.resumeTime = 0
+            self.fileList = MediaLibrary.sharedInstance.fetchLocalFiles()
+            self.play(item: select.object as! MediaItem!)
+            break
         case .ShuffleCurrent:
             current.hide {
                 self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
             }
+            self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
@@ -181,7 +222,9 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 self.nowPlaying.show(type: .push)
             })
+            self.source = .iTunes
             self.playlist = MediaLibrary.shuffle(array: MediaLibrary.sharedInstance.fetchAllSongs()) as! Array<MPMediaItem>
+            self.resumeTime = 0;
             if self.playlist.count > 0 {
                 self.play(item: self.playlist[0])
             }
@@ -191,10 +234,18 @@ extension ViewController: WheelViewDelegate {
         case .NowPlaying:
             current.hide {
             }
-            if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
-                self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
+            if source == .iTunes {
+                if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
+                    self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
+                } else {
+                    self.nowPlaying.show(withSong: nil)
+                }
             } else {
-                self.nowPlaying.show(withSong: nil)
+                if self.playingIndex <= self.fileList.count && self.fileList.count > 0 {
+                    self.nowPlaying.show(withFile: self.fileList[self.playingIndex])
+                } else {
+                    self.nowPlaying.show(withSong: nil)
+                }
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
