@@ -76,6 +76,12 @@ class AboutView: UIView {
         }
         scrollView.scrollRectToVisible(CGRect.init(x: 0, y: to, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height), animated: true)
     }
+    @IBAction func sendMail(_ sender: Any) {
+        let url = URL(string: "mailto:bobsun@outlook.com")
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    }
+    @IBAction func goGitHub(_ sender: Any) {
+    }
 }
 
 extension AboutView: WheelViewTickDelegate {

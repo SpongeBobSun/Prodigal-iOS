@@ -83,6 +83,9 @@
                                         <constraint firstAttribute="height" constant="30" id="pVR-bR-zot"/>
                                     </constraints>
                                     <state key="normal" title="Contact"/>
+                                    <connections>
+                                        <action selector="sendMail:" destination="iN0-l3-epB" eventType="touchUpInside" id="otM-k1-tq5"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mvf-bX-JUb">
                                     <rect key="frame" x="0.0" y="260" width="270" height="30"/>
@@ -91,6 +94,9 @@
                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="eSD-Nw-JhT"/>
                                     </constraints>
                                     <state key="normal" title="Get source Code"/>
+                                    <connections>
+                                        <action selector="goGitHub:" destination="iN0-l3-epB" eventType="touchUpInside" id="f2t-k4-a6L"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
