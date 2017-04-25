@@ -10,6 +10,7 @@ import UIKit
 
 @IBDesignable
 class CardView: UIView {
+    
     @IBInspectable
     var elevation: CGFloat = 0
     var cornerRadius: CGFloat = 0
@@ -31,7 +32,8 @@ class CardView: UIView {
     
     private func initLayer() {
         self.layer.shadowColor = UIColor.gray.cgColor;
-        self.layer.shadowOffset = CGSize(width: 0, height: self.elevation)
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 0.8;
         self.layer.cornerRadius = self.cornerRadius;
         self.layer.masksToBounds = false;

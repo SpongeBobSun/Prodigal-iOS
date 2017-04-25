@@ -132,6 +132,10 @@ class WheelView: UIView {
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         
+        innerLayer.shadowOffset = CGSize(width: 0, height: 0)
+        innerLayer.shadowColor = UIColor.lightGray.cgColor
+        innerLayer.shadowRadius = 4
+        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
     }
@@ -155,6 +159,11 @@ class WheelView: UIView {
         innerLayer.path = mutePath
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
+        
+        innerLayer.shadowOffset = CGSize(width: 0, height: 0)
+        innerLayer.shadowColor = UIColor.lightGray.cgColor
+        innerLayer.shadowRadius = 4
+        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
@@ -180,6 +189,11 @@ class WheelView: UIView {
         innerLayer.path = mutePath
         innerLayer.fillRule = kCAFillRuleEvenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
+        
+        innerLayer.shadowOffset = CGSize(width: 0, height: 0)
+        innerLayer.shadowColor = UIColor.lightGray.cgColor
+        innerLayer.shadowRadius = 4
+        innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
