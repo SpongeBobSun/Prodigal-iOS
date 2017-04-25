@@ -81,6 +81,8 @@ class AboutView: UIView {
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     @IBAction func goGitHub(_ sender: Any) {
+        let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS")
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
 }
 
