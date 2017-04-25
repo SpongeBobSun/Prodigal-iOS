@@ -296,7 +296,7 @@ extension ViewController: WheelViewDelegate {
                 self.aboutView.show(withType: .About, andData: [], animate: true)
             }
             current = aboutView
-            wheelView.tickDelegate = aboutView
+            wheelView.tickDelegate = aboutView.aboutView
             break
         default:
             return

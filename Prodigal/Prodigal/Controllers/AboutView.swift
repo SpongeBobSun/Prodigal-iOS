@@ -45,13 +45,46 @@ import UIKit
 class AboutView: UIView {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var buttonContact: UIButton!
+    @IBOutlet weak var icons8Text: UITextView!
     
+    @IBOutlet weak var buttonSource: UIButton!
     static func viewFromNib() -> AboutView {
         let bundle = Bundle.init(for: self)
         return bundle.loadNibNamed("AboutView", owner: self, options: nil)?.first as! AboutView!
     }
     override func awakeFromNib() {
         super.awakeFromNib()
+        icons8Text.isEditable = false
+        icons8Text.dataDetectorTypes = .link
+    }
+    
+    func scrollDown() {
+        let current = scrollView.contentOffset.y
+        let height = scrollView.contentSize.height - scrollView.bounds.size.height
+        var to = current + 30
+        if to >= height  {
+            to = height
+        }
+        scrollView.scrollRectToVisible(CGRect.init(x: 0, y: to, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height), animated: true)
+    }
+    func scrollUp() {
+        let current = scrollView.contentOffset.y
+        var to = current - 30
+        if to < 0 {
+            to = 0
+        }
+        scrollView.scrollRectToVisible(CGRect.init(x: 0, y: to, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height), animated: true)
+    }
+}
+
+extension AboutView: WheelViewTickDelegate {
+    func onNextTick() {
+        scrollDown()
+    }
+    
+    func onPreviousTick() {
+        scrollUp()
     }
 }
 
