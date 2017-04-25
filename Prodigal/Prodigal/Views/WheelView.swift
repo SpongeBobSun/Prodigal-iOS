@@ -322,6 +322,10 @@ class WheelView: UIView {
             break
         }
         
+        for b in buttons {
+            b.backgroundColor = theme.buttonColor
+        }
+        
         select.backgroundColor = UIColor.clear
         setNeedsDisplay()
     }
