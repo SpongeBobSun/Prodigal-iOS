@@ -291,6 +291,13 @@ extension ViewController: WheelViewDelegate {
             wheelView.loadTheme(named: select.object as! String!)
             loadTheme(named: select.object as! String?)
             return
+        case .About:
+            current.hide {
+                self.aboutView.show(withType: .About, andData: [], animate: true)
+            }
+            current = aboutView
+            wheelView.tickDelegate = aboutView
+            break
         default:
             return
         }

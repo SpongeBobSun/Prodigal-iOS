@@ -88,7 +88,7 @@ class TickableViewController: UIViewController {
 extension TickableViewController: WheelViewTickDelegate {
     func onNextTick() {
         let items = tickableDelegate.getData()
-        if current >= items.count - 1{
+        if current >= items.count - 1 {
             return
         }
         let tableView = tickableDelegate.getTickable()

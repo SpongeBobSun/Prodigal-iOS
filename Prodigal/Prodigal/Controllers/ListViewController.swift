@@ -53,6 +53,8 @@ class ListViewController: TickableViewController {
     var playList: Array<MPMediaItem>? = nil
     var type: MenuMeta.MenuType = .Undefined
     let emptyView = UIImageView()
+    
+    let aboutView = AboutView.viewFromNib()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,13 +92,19 @@ class ListViewController: TickableViewController {
             maker.width.height.equalTo(150)
             maker.center.equalToSuperview()
         }
+        
+        self.view.addSubview(aboutView)
+        aboutView.snp.makeConstraints{ (maker) in
+            maker.leading.top.bottom.trailing.equalToSuperview()
+        }
+        aboutView.isHidden = true
     }
     
     func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true) {
         self.current = 0
         self.playList = nil
         self.type = type
-        if data.count == 0 {
+        if data.count == 0 && type != .About {
             //Mark - show empty view
             self.view.isHidden = false
             self.emptyView.isHidden = false
@@ -164,6 +172,10 @@ class ListViewController: TickableViewController {
                 items.append(MenuMeta(name: each, type: .Theme).setObject(obj: each))
             })
             items.first?.highLight = true
+            break
+        case .About:
+            items.removeAll()
+            aboutView.isHidden = false
             break
         default:
             self.type = .Undefined

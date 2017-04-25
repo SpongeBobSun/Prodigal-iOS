@@ -32,6 +32,8 @@
 		01B0F2341E56F7140081B237 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */; };
 		01B0F2351E56F7140081B237 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2301E56F7140081B237 /* MediaPlayer.framework */; };
 		01B0F2361E56F7140081B237 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2311E56F7140081B237 /* MediaToolbox.framework */; };
+		01B19E031EAF134E00EABB1F /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B19E021EAF134E00EABB1F /* AboutView.swift */; };
+		01B19E051EAF255F00EABB1F /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B19E041EAF255F00EABB1F /* AboutView.xib */; };
 		01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3021E5BF90F001B93C7 /* CardView.swift */; };
 		01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB30A1E5C0C2D001B93C7 /* Theme.swift */; };
 		01CAB3121E5C0F17001B93C7 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */; };
@@ -77,6 +79,8 @@
 		01B0F22F1E56F7140081B237 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		01B0F2301E56F7140081B237 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		01B0F2311E56F7140081B237 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
+		01B19E021EAF134E00EABB1F /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = Controllers/AboutView.swift; sourceTree = "<group>"; };
+		01B19E041EAF255F00EABB1F /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutView.xib; path = Views/AboutView.xib; sourceTree = "<group>"; };
 		01CAB3021E5BF90F001B93C7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
 		01CAB30A1E5C0C2D001B93C7 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Utils/Theme.swift; sourceTree = "<group>"; };
 		01CAB3111E5C0F17001B93C7 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = Utils/ThemeManager.swift; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 				01B0F2181E56E3840081B237 /* Main.storyboard */,
 				01B0F2291E56EFE80081B237 /* WheelView.swift */,
 				01CAB3021E5BF90F001B93C7 /* CardView.swift */,
+				01B19E041EAF255F00EABB1F /* AboutView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				015E4AA21E5ED4DC007A7C3F /* ListViewController.swift */,
 				011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */,
 				011BC8971E65537F004F94B7 /* AlbumGalleryViewController.swift */,
+				01B19E021EAF134E00EABB1F /* AboutView.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -324,6 +330,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B19E051EAF255F00EABB1F /* AboutView.xib in Resources */,
 				01CAB3161E5C13C6001B93C7 /* Configs in Resources */,
 				01B0F2221E56E3840081B237 /* LaunchScreen.storyboard in Resources */,
 				01B0F21F1E56E3840081B237 /* Assets.xcassets in Resources */,
@@ -406,6 +413,7 @@
 				015E4A9B1E5E9CC5007A7C3F /* TwoPanelListViewController.swift in Sources */,
 				01E7FE841E768FFB00B505C0 /* PubSub.swift in Sources */,
 				015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */,
+				01B19E031EAF134E00EABB1F /* AboutView.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
 				010732101EA9ED120005F664 /* MediaItem.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,

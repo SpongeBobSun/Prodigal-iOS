@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
-    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!, localListView: ListViewController!
+    var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!, localListView: ListViewController!, aboutView: ListViewController!
     var gallery: AlbumGalleryViewController!
     var stack: Array<TickableViewController> = Array<TickableViewController>()
     
@@ -138,6 +138,9 @@ class ViewController: UIViewController {
         
         localListView = ListViewController()
         localListView.attachTo(viewController: self, inView: cardView)
+        
+        aboutView = ListViewController()
+        aboutView.attachTo(viewController: self, inView: cardView)
     }
     
     func initPlayer() {
