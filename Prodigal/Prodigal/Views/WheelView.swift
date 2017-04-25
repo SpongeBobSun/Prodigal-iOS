@@ -133,7 +133,7 @@ class WheelView: UIView {
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
-        innerLayer.shadowColor = UIColor.lightGray.cgColor
+        innerLayer.shadowColor = UIColor.gray.cgColor
         innerLayer.shadowRadius = 4
         innerLayer.shadowOpacity = 0.8
         
@@ -161,7 +161,7 @@ class WheelView: UIView {
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
-        innerLayer.shadowColor = UIColor.lightGray.cgColor
+        innerLayer.shadowColor = UIColor.gray.cgColor
         innerLayer.shadowRadius = 4
         innerLayer.shadowOpacity = 0.8
         
@@ -191,8 +191,8 @@ class WheelView: UIView {
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
-        innerLayer.shadowColor = UIColor.lightGray.cgColor
-        innerLayer.shadowRadius = 4
+        innerLayer.shadowColor = UIColor.gray.cgColor
+        innerLayer.shadowRadius = 5
         innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
