@@ -43,6 +43,8 @@ import UIKit
 
 class ThemeManager: NSObject {
     
+    static var currentTheme: Theme = Theme.defaultTheme()
+    
     var docPath = ""
     let fm = FileManager.default
     
@@ -118,12 +120,15 @@ class ThemeManager: NSObject {
     func loadLastTheme() -> Theme {
         let name = AppSettings.sharedInstance.userTheme()
         if name == nil {
-            return Theme.defaultTheme()
+            ThemeManager.currentTheme = Theme.defaultTheme()
+            return ThemeManager.currentTheme
         }
         let ret = loadThemeNamed(name: name!)
         if ret != nil {
+            ThemeManager.currentTheme = ret!
             return ret!
         }
-        return Theme.defaultTheme()
+        ThemeManager.currentTheme = Theme.defaultTheme()
+        return ThemeManager.currentTheme
     }
 }

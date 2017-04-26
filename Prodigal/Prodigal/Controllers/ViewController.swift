@@ -49,6 +49,7 @@ class ViewController: UIViewController {
         initPlayer()
         initTicker()
         
+        self.cardView.backgroundColor = theme.cardColor
         self.view.backgroundColor = theme.backgroundColor
         self.backgroundMask.backgroundColor = theme.backgroundColor
         self.view.setNeedsDisplay()
@@ -184,7 +185,7 @@ class ViewController: UIViewController {
                 nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
                 ticker.start()
-                renderCoverBackground(image: item.artwork?.image(at: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "ic_album"))
+                renderCoverBackground(image: item.artwork?.image(at: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "bg_empty"))
                 mainMenu.updateRightPanel(index: mainMenu.current)
             }
         } catch let e {
@@ -282,6 +283,7 @@ class ViewController: UIViewController {
         self.theme = theme
         self.view.backgroundColor = theme.backgroundColor
         self.backgroundMask.backgroundColor = theme.backgroundColor
+        self.cardView.backgroundColor = theme.cardColor
         self.view.setNeedsDisplay()
     }
 }

@@ -307,7 +307,7 @@ class WheelView: UIView {
     
     func loadTheme(named name:String) {
         self.theme = ThemeManager().loadThemeNamed(name:name) ?? Theme.defaultTheme()
-        if (self.layer.sublayers?.count ?? 0 > 0) {
+        if (self.layer.sublayers?.count ?? 0 > 5) {
             self.layer.sublayers?.first?.removeFromSuperlayer()
         }
         switch self.theme.shape {

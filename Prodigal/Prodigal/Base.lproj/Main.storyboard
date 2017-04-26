@@ -36,10 +36,10 @@
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-Wm-Zwp">
                                         <rect key="frame" x="0.0" y="0.0" width="326" height="285.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="fbD-Wm-Zwp" firstAttribute="top" secondItem="QL1-Yu-7h0" secondAttribute="top" id="4QL-c2-s0r"/>
                                     <constraint firstAttribute="bottom" secondItem="fbD-Wm-Zwp" secondAttribute="bottom" id="de2-vc-ZYW"/>

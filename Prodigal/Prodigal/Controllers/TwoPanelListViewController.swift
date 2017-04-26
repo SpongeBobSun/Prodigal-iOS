@@ -70,6 +70,7 @@ class TwoPanelListViewController: TickableViewController {
         stackCacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
         
         tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
         tableView.isUserInteractionEnabled = false
         tableView.register(TwoPanelListCell.self, forCellReuseIdentifier: TwoPanelListCell.reuseId)
@@ -292,6 +293,8 @@ class TwoPanelListCell: UITableViewCell {
     
     private func initViews() {
         self.contentView.addSubview(title)
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         title.backgroundColor = UIColor.clear
         title.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(self.contentView)
@@ -303,7 +306,7 @@ class TwoPanelListCell: UITableViewCell {
     func configure(meta: MenuMeta) {
         title.text = meta.itemName
         if meta.highLight {
-            contentView.backgroundColor = UIColor.lightGray
+            contentView.backgroundColor = ThemeManager.currentTheme.itemColor
         } else {
             contentView.backgroundColor = UIColor.clear
         }

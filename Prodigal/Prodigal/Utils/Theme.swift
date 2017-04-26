@@ -45,7 +45,7 @@ import UIKit
 class Theme: NSObject {
     private var icNext:String, icPrev:String, icPlay:String, icMenu:String;
     var outer:Double, inner: Double, buttonSize: Double
-    var wheelColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor
+    var wheelColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor, cardColor: UIColor, itemColor: UIColor
     var name: String!
     var shape: WheelViewShape
     var sides: Int = 6
@@ -87,9 +87,22 @@ class Theme: NSObject {
         }
         buttonSize = Double(dict["button_size"] as! String)!
         
-        wheelColor = UIColor.init(hexString: dict["wheel_color"] as! String)!
-        buttonColor = UIColor.init(hexString: dict["button_background"] as! String)!
-        backgroundColor = UIColor.init(hexString: dict["background_color"] as! String)!
+        wheelColor = UIColor(hexString: dict["wheel_color"] as! String)!
+        buttonColor = UIColor(hexString: dict["button_background"] as! String)!
+        backgroundColor = UIColor(hexString: dict["background_color"] as! String)!
+        
+        if (dict["card_color"] as! String?) != nil {
+            cardColor = UIColor(hexString: dict["card_color"] as! String)!
+        } else {
+            cardColor = UIColor.white
+        }
+        
+        if (dict["item_color"] as! String?) != nil {
+            itemColor = UIColor(hexString: dict["item_color"] as! String)!
+        } else {
+            itemColor = UIColor.lightGray
+        }
+        
         switch dict["wheel_shape"] as! String! {
         case "rect":
             shape = .Rect

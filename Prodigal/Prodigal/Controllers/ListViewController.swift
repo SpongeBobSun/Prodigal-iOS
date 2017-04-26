@@ -76,6 +76,7 @@ class ListViewController: TickableViewController {
             maker.center.equalTo(view)
         }
         tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
         tableView.isUserInteractionEnabled = false
         tableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
@@ -200,6 +201,7 @@ class ListViewController: TickableViewController {
                 tableView.scrollToRow(at: IndexPath(row: 1, section:0), at: .top, animated: false)
             }
         }
+        self.view.backgroundColor = ThemeManager().loadLastTheme().cardColor
     }
     
     private func insertShuffleAll() {
@@ -392,6 +394,10 @@ class ListCell: UITableViewCell {
         self.contentView.addSubview(title)
         self.contentView.addSubview(icon)
         self.contentView.addSubview(value)
+        
+        self.backgroundColor = UIColor.clear
+        icon.backgroundColor = UIColor.clear
+        value.backgroundColor = UIColor.clear
         title.backgroundColor = UIColor.clear
         
         icon.snp.makeConstraints { (maker) in
@@ -460,7 +466,7 @@ class ListCell: UITableViewCell {
         
         
         if meta.highLight {
-            contentView.backgroundColor = UIColor.lightGray
+            contentView.backgroundColor = ThemeManager.currentTheme.itemColor
         } else {
             contentView.backgroundColor = UIColor.clear
         }
