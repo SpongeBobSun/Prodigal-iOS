@@ -201,7 +201,6 @@ class ListViewController: TickableViewController {
                 tableView.scrollToRow(at: IndexPath(row: 1, section:0), at: .top, animated: false)
             }
         }
-        self.view.backgroundColor = ThemeManager().loadLastTheme().cardColor
     }
     
     private func insertShuffleAll() {
