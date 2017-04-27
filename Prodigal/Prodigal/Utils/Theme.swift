@@ -45,7 +45,7 @@ import UIKit
 class Theme: NSObject {
     private var icNext:String, icPrev:String, icPlay:String, icMenu:String;
     var outer:Double, inner: Double, buttonSize: Double
-    var wheelColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor, cardColor: UIColor, itemColor: UIColor
+    var wheelColor:UIColor, buttonColor:UIColor, backgroundColor: UIColor, cardColor: UIColor, itemColor: UIColor, textColor: UIColor
     var name: String!
     var shape: WheelViewShape
     var sides: Int = 6
@@ -117,6 +117,12 @@ class Theme: NSObject {
         default:
             shape = .Rect
             break
+        }
+        
+        if dict["text_color"] as! String! != nil {
+            textColor = UIColor(hexString: dict["text_color"] as! String) ?? UIColor.black
+        } else {
+            textColor = UIColor.black
         }
         
         self.name = name

@@ -420,6 +420,10 @@ class ListCell: UITableViewCell {
     
     func configure(meta: MenuMeta, type: MenuMeta.MenuType) {
         title.text = meta.itemName
+        
+        title.textColor = ThemeManager.currentTheme.textColor
+        value.textColor = ThemeManager.currentTheme.textColor
+        
         switch type {
         case .Albums:
             if meta.type != .ShuffleCurrent {

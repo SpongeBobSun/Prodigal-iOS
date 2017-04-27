@@ -283,6 +283,9 @@ class NowPlayingView: UIView {
         
         current.text = "\(String(format:"%02d", minNow)):\(String(format:"%02d", secNow))"
         total.text = "\(String(format:"%02d", minAll)):\(String(format:"%02d", secAll))"
+        
+        total.textColor = ThemeManager.currentTheme.textColor
+        current.textColor = ThemeManager.currentTheme.textColor
     }
 }
 

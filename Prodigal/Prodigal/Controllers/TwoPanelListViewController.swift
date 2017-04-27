@@ -305,6 +305,7 @@ class TwoPanelListCell: UITableViewCell {
 
     func configure(meta: MenuMeta) {
         title.text = meta.itemName
+        title.textColor = ThemeManager.currentTheme.textColor
         if meta.highLight {
             contentView.backgroundColor = ThemeManager.currentTheme.itemColor
         } else {

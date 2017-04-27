@@ -160,6 +160,7 @@ class AlbumCell: UICollectionViewCell {
         let album = menu.object as! MPMediaItemCollection!
         image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
         name.text = album?.representativeItem?.albumTitle
+        name.textColor = ThemeManager.currentTheme.textColor
     }
 }
 
