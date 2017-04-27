@@ -26,7 +26,7 @@ extension UIColor {
                     b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
                     a = CGFloat(hexNumber & 0x000000ff) / 255
                     
-                    self.init(red: r, green: g, blue: b, alpha: a)
+                    self.init(red: r, green: g, blue: b, alpha: 1.0 - a)
                     return
                 } else if hexColor.characters.count == 6 {
                     r = CGFloat((hexNumber & 0xff0000) >> 16) / 255

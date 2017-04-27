@@ -114,6 +114,7 @@ class ThemeManager: NSObject {
         } else {
             AppSettings.sharedInstance.setTheme(theme: name)
         }
+        ThemeManager.currentTheme = ret!
         return ret
     }
     

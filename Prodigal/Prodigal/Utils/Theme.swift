@@ -98,7 +98,7 @@ class Theme: NSObject {
         }
         
         if (dict["item_color"] as! String?) != nil {
-            itemColor = UIColor(hexString: dict["item_color"] as! String)!
+            itemColor = UIColor(hexString: dict["item_color"] as! String) ?? UIColor.lightGray
         } else {
             itemColor = UIColor.lightGray
         }
