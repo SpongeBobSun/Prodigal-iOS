@@ -25,7 +25,7 @@ class AlbumGalleryViewController: TickableViewController {
         collection.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.reuseId)
         collection.dataSource = self
         collection.delegate = self
-        collection.backgroundColor = UIColor.white
+        collection.backgroundColor = UIColor.clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +59,7 @@ class AlbumGalleryViewController: TickableViewController {
         let size = view.bounds.height / 2
         stackLayout.itemSize = CGSize(width: size, height: size)
         collection.reloadData()
-        self.view.backgroundColor = UIColor.lightGray
+        self.view.backgroundColor = UIColor.clear
         current = albums.count / 2
     }
 

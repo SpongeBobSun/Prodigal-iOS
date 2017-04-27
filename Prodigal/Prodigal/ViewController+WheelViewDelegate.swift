@@ -234,19 +234,20 @@ extension ViewController: WheelViewDelegate {
             break
         case .NowPlaying:
             current.hide {
-            }
-            if source == .iTunes {
-                if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
-                    self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
+                if self.source == .iTunes {
+                    if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
+                        self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
+                    } else {
+                        self.nowPlaying.show(withSong: nil)
+                    }
                 } else {
-                    self.nowPlaying.show(withSong: nil)
+                    if self.playingIndex <= self.fileList.count && self.fileList.count > 0 {
+                        self.nowPlaying.show(withFile: self.fileList[self.playingIndex])
+                    } else {
+                        self.nowPlaying.show(withSong: nil)
+                    }
                 }
-            } else {
-                if self.playingIndex <= self.fileList.count && self.fileList.count > 0 {
-                    self.nowPlaying.show(withFile: self.fileList[self.playingIndex])
-                } else {
-                    self.nowPlaying.show(withSong: nil)
-                }
+
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying

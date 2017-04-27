@@ -65,6 +65,8 @@ class WheelView: UIView {
     var wheelGesture: WheelRecognizer?
     var size: CGFloat = CGFloat(0)
     
+    var currentLayer: CAShapeLayer!
+    
     var theme = ThemeManager().loadLastTheme()
     
     override init(frame: CGRect) {
@@ -138,6 +140,7 @@ class WheelView: UIView {
         innerLayer.shadowOpacity = 0.8
         
         self.layer.insertSublayer(innerLayer, at: 0)
+        currentLayer = innerLayer
     }
     
     private func drawWheel(forRect rect:CGRect) {
@@ -167,6 +170,8 @@ class WheelView: UIView {
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
+        
+        currentLayer = innerLayer
     }
     
     private func drawWheel(forPolygon rect:CGRect) {
@@ -197,6 +202,8 @@ class WheelView: UIView {
         
         self.layer.insertSublayer(innerLayer, at: 0)
         self.layer.cornerRadius = 0
+        
+        currentLayer = innerLayer
     }
     
     private func addButtons() {
@@ -307,9 +314,7 @@ class WheelView: UIView {
     
     func loadTheme(named name:String) {
         self.theme = ThemeManager().loadThemeNamed(name:name) ?? Theme.defaultTheme()
-        if (self.layer.sublayers?.count ?? 0 > 5) {
-            self.layer.sublayers?.first?.removeFromSuperlayer()
-        }
+        currentLayer.removeFromSuperlayer()
         switch self.theme.shape {
         case .Oval:
             select.layer.cornerRadius = select.bounds.height / 2

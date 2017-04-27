@@ -207,7 +207,7 @@ class NowPlayingView: UIView {
     
     convenience init() {
         self.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         addSubview(image)
         addSubview(title)
         addSubview(artist)
