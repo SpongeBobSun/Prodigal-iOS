@@ -7,11 +7,13 @@
     },
     "wheel_outer":"0.95",
     "wheel_inner":"0.3",
-    "wheel_color":"#CCCCCCAA",
+    "wheel_color":"#F3423599",
     "button_size":"0.2",
     "button_background": "#000000FF",
-    "background_color": "#59A5C6",
-    "wheel_shape": "rect",
-    "card_color": "#CCCCCCAA",
-    "item_color": "#4D93C6"
+    "background_color": "#EE6E73",
+    "wheel_shape": "polygon",
+    "polygon_sides": "8",
+    "card_color": "#000000FF",
+    "item_color": "#F3423599",
+    "text_color": "#EEEEEE"
 }

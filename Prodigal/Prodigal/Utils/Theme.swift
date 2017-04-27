@@ -56,14 +56,16 @@ class Theme: NSObject {
             "prev":"prev.png",
             "play":"play.png",
             "menu":"menu.png",
-        ],
-        "wheel_outer":"1.0",
+            ],
+        "wheel_outer":"0.95",
         "wheel_inner":"0.3",
-        "wheel_color":"#EEEEEE",
+        "wheel_color":"#CCCCCCAA",
         "button_size":"0.2",
-        "button_background": "#FFFF0000",
-        "background_color" : "#FFFFFF",
+        "button_background": "#000000FF",
+        "background_color": "#59A5C6",
         "wheel_shape": "rect",
+        "card_color": "#CCCCCCAA",
+        "item_color": "#4D93C6",
         ]
     
     override convenience init() {
@@ -170,7 +172,6 @@ class Theme: NSObject {
     
     //TL;DR
     static func validate(dict: Dictionary<String, Any>) -> Bool {
-        //TODO: Drop center color option in theme.
         guard let icons = dict["icons"] as! Dictionary<String, String>! else {
             return false
         }

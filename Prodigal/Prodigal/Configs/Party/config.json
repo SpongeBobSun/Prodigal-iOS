@@ -1,17 +1,18 @@
 {
     "icons": {
-              "next":"next.png",
-              "prev":"prev.png",
-              "play":"play.png",
+              "next":"right.png",
+              "prev":"left.png",
+              "play":"go.png",
               "menu":"menu.png"
     },
-    "wheel_outer":"0.95",
-    "wheel_inner":"0.3",
+    "wheel_outer":"1.0",
+    "wheel_inner":"0.5",
     "wheel_color":"#CCCCCCAA",
     "button_size":"0.2",
     "button_background": "#000000FF",
     "background_color": "#59A5C6",
-    "wheel_shape": "rect",
+    "wheel_shape": "polygon",
+    "polygon_sides": "8",
     "card_color": "#CCCCCCAA",
     "item_color": "#4D93C6"
 }
