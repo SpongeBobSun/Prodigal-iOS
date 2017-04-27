@@ -57,6 +57,8 @@ class AboutView: UIView {
         super.awakeFromNib()
         icons8Text.isEditable = false
         icons8Text.dataDetectorTypes = .link
+        self.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        self.scrollView.backgroundColor = UIColor.clear
     }
     
     func scrollDown() {
@@ -75,6 +77,10 @@ class AboutView: UIView {
             to = 0
         }
         scrollView.scrollRectToVisible(CGRect.init(x: 0, y: to, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height), animated: true)
+    }
+    @IBAction func goTheme(_ sender: Any) {
+        let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/Theme.md")
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     @IBAction func sendMail(_ sender: Any) {
         let url = URL(string: "mailto:bobsun@outlook.com")
