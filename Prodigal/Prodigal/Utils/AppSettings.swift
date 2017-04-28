@@ -66,6 +66,10 @@ class AppSettings: NSObject {
     
     func newInstall() -> Bool {
         let key = String.init(format: AppSettings.kNewInstallWithVer, Bundle.main.infoDictionary?["CFBundleVersion"] as! String!)
+        let value = ud.object(forKey: key)
+        if (value == nil) {
+            return true
+        }
         return ud.bool(forKey: key)
     }
     

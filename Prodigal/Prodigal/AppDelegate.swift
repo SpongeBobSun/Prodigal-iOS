@@ -67,11 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if MediaLibrary.sharedInstance.authorized {
             restoreLastState()
         }
-        
-        //DebugCode
-        #if DEBUG
-        MediaLibrary.sharedInstance.fetchLocalFiles()
-        #endif
+        if AppSettings.sharedInstance.newInstall() {
+            let introVC = UIStoryboard(name: "Intro", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController()
+            main.present(introVC!, animated: true, completion: nil)
+        }
+
         return true
     }
 
