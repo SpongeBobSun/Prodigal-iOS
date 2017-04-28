@@ -132,9 +132,9 @@ class TwoPanelListViewController: TickableViewController {
         items = Array<MenuMeta>()
         items.append(MenuMeta(name: NSLocalizedString("Artists", comment: ""), type: .Artists))
         items.append(MenuMeta(name: NSLocalizedString("Albums", comment: ""), type: .Albums))
-        items.append(MenuMeta(name: NSLocalizedString("Cover Flow", comment: ""), type: MenuMeta.MenuType.CoverGallery))
+        items.append(MenuMeta(name: NSLocalizedString("Album Gallery", comment: ""), type: MenuMeta.MenuType.CoverGallery))
         items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
-        items.append(MenuMeta(name: NSLocalizedString("Playlists", comment: ""), type: MenuMeta.MenuType.Playlist))
+        items.append(MenuMeta(name: NSLocalizedString("Playing List", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
         items.append(MenuMeta(name: NSLocalizedString("Local Files", comment: ""), type: MenuMeta.MenuType.LocalSongs))
         items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))
@@ -374,6 +374,7 @@ class PanelView: UIView {
         imageView.isHidden = true
         stackView.isHidden = true
         nowPlaying.isHidden = false
+        nowPlaying.loadTheme()
         if (fetcherDelegate == nil) {
             nowPlaying.config(media: nil)
         } else {
@@ -382,7 +383,7 @@ class PanelView: UIView {
                 nowPlaying.config(media:item as! MPMediaItem?)
             }
             if item is MediaItem {
-                
+                nowPlaying.config(file: item as! MediaItem?)
             }
         }
     }
@@ -448,6 +449,13 @@ class NowPlayingWidget: UIView {
         artist.text = ""
         album.text = ""
         title.text = file?.name
+    }
+    
+    func loadTheme() {
+        let color = ThemeManager.currentTheme.textColor
+        title.textColor = color
+        artist.textColor = color
+        album.textColor = color
     }
     
 }

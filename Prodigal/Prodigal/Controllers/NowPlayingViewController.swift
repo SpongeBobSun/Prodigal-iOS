@@ -125,6 +125,7 @@ class NowPlayingViewController: TickableViewController {
     
     override func show(type: AnimType) {
         self.view.isHidden = false
+        self.playingView.loadTheme()
         PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
             let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
             let progress = Float(current) / Float(duration)
@@ -161,6 +162,7 @@ class NowPlayingViewController: TickableViewController {
             //Mark - TODO: Empty view
             return
         }
+        playingView.loadTheme()
         self.song = song!
         PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
             let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
@@ -277,15 +279,22 @@ class NowPlayingView: UIView {
         
     }
     
+    func loadTheme() {
+        let color = ThemeManager.currentTheme.textColor
+        
+        title.textColor = color
+        album.textColor = color
+        artist.textColor = color
+        total.textColor = color
+        current.textColor = color
+    }
+    
     func updateLabels(now: TimeInterval, all: TimeInterval) {
         let (minNow, secNow) = (Int(now / 60), Int(now.truncatingRemainder(dividingBy:60)))
         let (minAll, secAll) = (Int(all / 60), Int(all.truncatingRemainder(dividingBy:60)))
         
         current.text = "\(String(format:"%02d", minNow)):\(String(format:"%02d", secNow))"
         total.text = "\(String(format:"%02d", minAll)):\(String(format:"%02d", secAll))"
-        
-        total.textColor = ThemeManager.currentTheme.textColor
-        current.textColor = ThemeManager.currentTheme.textColor
     }
 }
 
