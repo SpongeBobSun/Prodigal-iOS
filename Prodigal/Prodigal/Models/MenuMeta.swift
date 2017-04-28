@@ -73,6 +73,7 @@ class MenuMeta: NSObject {
         case Themes
         case Theme
         case ContactUs
+        case MoreTheme
         case Undefined
     }
     

@@ -172,6 +172,7 @@ class ListViewController: TickableViewController {
             data.forEach({ (each) in
                 items.append(MenuMeta(name: each, type: .Theme).setObject(obj: each))
             })
+            items.append(MenuMeta(name: "Get More Themes!", type: .MoreTheme))
             items.first?.highLight = true
             break
         case .About:

@@ -281,6 +281,9 @@ extension ViewController: WheelViewDelegate {
         case .ShuffleSettings:
             AppSettings.sharedInstance.rollShuffle()
             return
+        case .MoreTheme:
+            getMoreTheme()
+            return
         case .ThemeSettings:
             current.hide {
                 self.themeListView.show(withType: .Themes, andData: ThemeManager().fetchAllThemes(), animate: false)
@@ -313,6 +316,11 @@ extension ViewController: WheelViewDelegate {
                 self.fileList = MediaLibrary.shuffle(array: self.fileList, highlight: highlight) as! [MediaItem]
             }
         }
+    }
+    
+    fileprivate func getMoreTheme() {
+        let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.md")
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
 }
 
