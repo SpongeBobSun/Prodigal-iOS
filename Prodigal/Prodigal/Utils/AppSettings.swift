@@ -60,8 +60,8 @@ class AppSettings: NSObject {
     }()
     
     fileprivate func writeDefaultValue() {
-        ud.set(RepeatMode.None, forKey: AppSettings.kRepeat)
-        ud.set(ShuffleMode.No, forKey: AppSettings.kShuffle)
+        ud.set(RepeatMode.None.rawValue, forKey: AppSettings.kRepeat)
+        ud.set(ShuffleMode.No.rawValue, forKey: AppSettings.kShuffle)
     }
     
     func newInstall() -> Bool {
@@ -75,7 +75,7 @@ class AppSettings: NSObject {
     
     func installed() {
         let key = String.init(format: AppSettings.kNewInstallWithVer, Bundle.main.infoDictionary?["CFBundleVersion"] as! String!)
-        ud.set(true, forKey: key)
+        ud.set(false, forKey: key)
         writeDefaultValue()
         ud.synchronize()
     }

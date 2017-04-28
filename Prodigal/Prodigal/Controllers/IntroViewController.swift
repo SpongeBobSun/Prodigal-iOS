@@ -98,8 +98,7 @@ class IntroViewController: UIViewController {
     }
     
     @IBAction func onClose(_ sender: Any) {
-        //TODO: For Debug
-//        AppSettings.sharedInstance.installed()
+        AppSettings.sharedInstance.installed()
         self.dismiss(animated: true, completion: nil)
     }
 }
