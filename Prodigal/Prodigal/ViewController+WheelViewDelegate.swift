@@ -215,7 +215,9 @@ extension ViewController: WheelViewDelegate {
             self.wheelView.tickDelegate = artistsList
             break
         case .Playlist:
-            playListView.show(withType: (source == .iTunes ? .Songs : .LocalSongs), andData: (source == .iTunes ? self.playlist : self.fileList))
+            current.hide {
+                self.playListView.show(withType: (self.source == .iTunes ? .Songs : .LocalSongs), andData: (self.source == .iTunes ? self.playlist : self.fileList))
+            }
             current = playListView
             wheelView.tickDelegate = playListView
             break
@@ -292,8 +294,8 @@ extension ViewController: WheelViewDelegate {
             wheelView.tickDelegate = themeListView
             break
         case .Theme:
-            wheelView.loadTheme(named: select.object as! String!)
             loadTheme(named: select.object as! String?)
+            wheelView.loadTheme()
             return
         case .About:
             current.hide {

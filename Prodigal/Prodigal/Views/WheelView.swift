@@ -312,8 +312,8 @@ class WheelView: UIView {
         }
     }
     
-    func loadTheme(named name:String) {
-        self.theme = ThemeManager().loadThemeNamed(name:name) ?? Theme.defaultTheme()
+    func loadTheme() {
+        self.theme = ThemeManager.currentTheme
         currentLayer.removeFromSuperlayer()
         switch self.theme.shape {
         case .Oval:
@@ -330,6 +330,10 @@ class WheelView: UIView {
         for b in buttons {
             b.backgroundColor = theme.buttonColor
         }
+        menu.setImage(theme.menuIcon(), for: .normal)
+        play.setImage(theme.playIcon(), for: .normal)
+        nextButton.setImage(theme.nextIcon(), for: .normal)
+        prev.setImage(theme.prevIcon(), for: .normal)
         
         select.backgroundColor = UIColor.clear
         setNeedsDisplay()

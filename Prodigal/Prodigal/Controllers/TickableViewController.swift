@@ -73,6 +73,10 @@ class TickableViewController: UIViewController {
     }
     
     func getSelection() -> MenuMeta {
+        let list = tickableDelegate.getData()
+        if list.count == 0 {
+            return MenuMeta(name: "", type: .Undefined)
+        }
         return tickableDelegate.getData()[current]
     }
     

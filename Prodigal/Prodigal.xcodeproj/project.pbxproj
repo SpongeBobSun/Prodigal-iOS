@@ -566,7 +566,7 @@
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = bob.sun.bender;
+				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -583,7 +583,7 @@
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = bob.sun.bender;
+				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
