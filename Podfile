@@ -7,8 +7,6 @@ target 'Prodigal' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-POD_DEV_ROOT = '/Users/bob.sun/XCodeWorkspace/PodDev'
-
   # Pods for Prodigal
     pod 'SnapKit', '~> 3.2.0'
     pod 'Koloda', '~> 4.0'
@@ -16,5 +14,4 @@ POD_DEV_ROOT = '/Users/bob.sun/XCodeWorkspace/PodDev'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'MarqueeLabel/Swift'
-    # pod 'ComposerKit', :path => "#{POD_DEV_ROOT}/ComposerKit"
 end
