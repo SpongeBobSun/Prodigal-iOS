@@ -5,7 +5,7 @@
 
 Preview
 
-| ![grey](Themes/Screenshots-provided-by-developer/grey.png) | ![red wheel](Themes/Screenshots-provided-by-developer/red wheel.png) | ![sunset](Themes/Screenshots-provided-by-developer/sunset.png) |
+| ![grey](Themes/Screenshots-provided-by-developer/grey.png) | ![red wheel](Themes/Screenshots-provided-by-developer/redwheel.png) | ![sunset](Themes/Screenshots-provided-by-developer/sunset.png) |
 | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 |                                          |                                          |                                          |
 
