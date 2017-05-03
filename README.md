@@ -14,6 +14,10 @@ Bring back the good old player to life.
 
 # Themes
 
+**If app's appearance doesn't looks right after applying theme, please kill app and re-open it. **
+
+**Also, themes may cause app crash. If that happens you need to connect your phone to computer and delete that theme. **
+
 * See this [link](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/Theme.md) for how to create & using themes.
 
 * See this [link](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.md) for more themes.
