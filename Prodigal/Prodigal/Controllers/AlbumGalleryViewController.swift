@@ -56,7 +56,7 @@ class AlbumGalleryViewController: TickableViewController {
                 albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
             })
         }
-        let size = view.bounds.height / 2
+        let size = view.bounds.height * 3 / 5
         stackLayout.itemSize = CGSize(width: size, height: size)
         collection.reloadData()
         self.view.backgroundColor = UIColor.clear
