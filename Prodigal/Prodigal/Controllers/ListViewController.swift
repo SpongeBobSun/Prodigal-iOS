@@ -86,6 +86,13 @@ class ListViewController: TickableViewController {
         tableView.snp.makeConstraints { (maker) in
             maker.leading.top.bottom.trailing.equalToSuperview()
         }
+        //Disable self-sizing.
+        tableView.estimatedRowHeight = 0;
+        tableView.estimatedSectionHeaderHeight = 0;
+        tableView.estimatedSectionFooterHeight = 0;
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
         self.view.addSubview(emptyView)
         emptyView.isHidden = true
         emptyView.image = #imageLiteral(resourceName: "ic_empty")
@@ -93,6 +100,7 @@ class ListViewController: TickableViewController {
             maker.width.height.equalTo(150)
             maker.center.equalToSuperview()
         }
+        
         
         self.view.addSubview(aboutView)
         aboutView.snp.makeConstraints{ (maker) in

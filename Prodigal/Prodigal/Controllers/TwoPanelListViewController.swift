@@ -68,7 +68,6 @@ class TwoPanelListViewController: TickableViewController {
         initMenu()
         albums = MediaLibrary.sharedInstance.fetchAllAlbums()
         stackCacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
-        
         tableView = UITableView()
         tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
@@ -77,6 +76,14 @@ class TwoPanelListViewController: TickableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        
+        tableView.estimatedRowHeight = 0;
+        tableView.estimatedSectionFooterHeight = 0;
+        tableView.estimatedSectionHeaderHeight = 0;
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
+      
         tableView.snp.makeConstraints { (maker) in
             maker.leading.top.bottom.equalToSuperview()
             maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
