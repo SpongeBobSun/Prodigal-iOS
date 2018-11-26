@@ -308,7 +308,7 @@ class ListViewController: TickableViewController {
                 guard let collection = each.object as? MPMediaItemCollection! else {
                     return
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection?.representativeItem?.albumPersistentID)!))
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
@@ -323,7 +323,7 @@ class ListViewController: TickableViewController {
                 guard let collection = each.object as? MPMediaItemCollection! else {
                     return
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection?.representativeItem?.artistPersistentID)!))
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
@@ -338,7 +338,7 @@ class ListViewController: TickableViewController {
                 guard let collection = each.object as? MPMediaItemCollection! else {
                     return
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
+                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection?.representativeItem?.genrePersistentID)!))
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
