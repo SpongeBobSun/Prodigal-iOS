@@ -142,7 +142,7 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let artist = select.object as! MPMediaItemCollection!
+            let artist = select.object as? MPMediaItemCollection
             self.albumsList.show(withType: .Albums, andData: MediaLibrary.sharedInstance.fetchAlbums(byArtist: (artist?.representativeItem?.artistPersistentID)!))
             current = albumsList
             self.wheelView.tickDelegate = self.albumsList
@@ -151,22 +151,22 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let album = select.object as! MPMediaItemCollection!
+            let album = select.object as? MPMediaItemCollection
             self.songsList.show(withType: .Songs, andData: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (album?.representativeItem?.albumPersistentID)!))
             current = songsList
             self.wheelView.tickDelegate = self.songsList
             break
         case .Song:
             current.hide {
-                self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
+                self.nowPlaying.show(withSong: select.object as? MPMediaItem)
             }
             self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
-            self.checkShuffle(highlight: select.object)
+            self.checkShuffle(highlight: select.object!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
-            self.play(item: select.object as! MPMediaItem!)
+            self.play(item: select.object as! MPMediaItem)
             break
             
         case .LocalSongs:
@@ -178,25 +178,25 @@ extension ViewController: WheelViewDelegate {
             break
         case .LocalSong:
             current.hide {
-                self.nowPlaying.show(withFile: select.object as! MediaItem!)
+                self.nowPlaying.show(withFile: select.object as? MediaItem)
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.source = .Local
             self.resumeTime = 0
             self.fileList = MediaLibrary.sharedInstance.fetchLocalFiles()
-            self.play(item: select.object as! MediaItem!)
+            self.play(item: (select.object as? MediaItem)!)
             break
         case .ShuffleCurrent:
             current.hide {
-                self.nowPlaying.show(withSong: select.object as! MPMediaItem!)
+                self.nowPlaying.show(withSong: select.object as? MPMediaItem)
             }
             self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
-            self.play(item: select.object as! MPMediaItem!)
+            self.play(item: (select.object as? MPMediaItem)!)
             break
         case .Genres:
             current.hide {
@@ -209,7 +209,7 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let genre = select.object as! MPMediaItemCollection!
+            let genre = select.object as? MPMediaItemCollection
             self.artistsList.show(withType: .Artists, andData: MediaLibrary.sharedInstance.fetchArtists(byGenre: (genre?.representativeItem?.genrePersistentID)!))
             current = self.artistsList
             self.wheelView.tickDelegate = artistsList
@@ -278,10 +278,10 @@ extension ViewController: WheelViewDelegate {
             wheelView.tickDelegate = settings
             break
         case .RepeatSettings:
-            AppSettings.sharedInstance.rollRepeat()
+            _ = AppSettings.sharedInstance.rollRepeat()
             return
         case .ShuffleSettings:
-            AppSettings.sharedInstance.rollShuffle()
+            _ = AppSettings.sharedInstance.rollShuffle()
             return
         case .MoreTheme:
             getMoreTheme()
@@ -322,7 +322,12 @@ extension ViewController: WheelViewDelegate {
     
     fileprivate func getMoreTheme() {
         let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.md")
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

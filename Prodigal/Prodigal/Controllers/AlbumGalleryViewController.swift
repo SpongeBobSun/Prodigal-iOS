@@ -39,7 +39,7 @@ class AlbumGalleryViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
@@ -82,6 +82,7 @@ class AlbumGalleryViewController: TickableViewController {
         current += 1
         collection.scrollToItem(at: IndexPath(row: current, section:0), at: .centeredHorizontally, animated: true)
     }
+
     override func onPreviousTick() {
         if current <= 0 {
             return
@@ -145,7 +146,7 @@ class AlbumCell: UICollectionViewCell {
             maker.top.left.right.equalToSuperview()
             maker.bottom.equalToSuperview().offset(-25)
         }
-        self.image.hnk_cacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
+        self.image.hnk_cacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
         self.image.contentMode = .scaleAspectFit
         
         self.name.textAlignment = .center
@@ -157,7 +158,7 @@ class AlbumCell: UICollectionViewCell {
     }
     
     func configure(withMenu menu: MenuMeta) {
-        let album = menu.object as! MPMediaItemCollection!
+        let album = menu.object as? MPMediaItemCollection
         image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
         name.text = album?.representativeItem?.albumTitle
         name.textColor = ThemeManager.currentTheme.textColor

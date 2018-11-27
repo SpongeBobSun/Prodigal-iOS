@@ -51,14 +51,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var main: ViewController!
-    var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self])
         ThemeManager().copyToDocuments()
         initCacheForList()
         let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))
-        main = mainStoryBoard.instantiateInitialViewController() as! ViewController!
+        main = mainStoryBoard.instantiateInitialViewController() as? ViewController
         if window == nil {
             window = UIWindow(frame: UIScreen.main.bounds)
         }
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        UIApplication.shared.endBackgroundTask(taskId)
+        UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(taskId.rawValue))
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -168,3 +168,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
+}

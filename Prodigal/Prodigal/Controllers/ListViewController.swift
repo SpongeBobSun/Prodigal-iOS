@@ -68,7 +68,7 @@ class ListViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
@@ -292,7 +292,7 @@ class ListViewController: TickableViewController {
         var list: [MPMediaItem] = []
         
         if type == .Songs {
-            _ = ret.setObject(obj: (playList?.first!))
+            _ = ret.setObject(obj: (playList?.first!)!)
             //TODO Shuffle playlist.
             //playList.shuffle()
             current += 1
@@ -305,10 +305,10 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MPMediaItemCollection {
+                    list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection?.representativeItem?.albumPersistentID)!))
+                
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
@@ -320,10 +320,10 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MPMediaItemCollection {
+                    list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection?.representativeItem?.artistPersistentID)!))
+                
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
@@ -335,10 +335,9 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MPMediaItemCollection {
+                    list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection?.representativeItem?.genrePersistentID)!))
             })
             if list.count > 0 {
                 self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
@@ -358,10 +357,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell!
+        let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell
         let menu = items[indexPath.row]
-        ret?.configure(meta: menu, type: self.type)
-        return ret!
+        ret.configure(meta: menu, type: self.type)
+        return ret
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -380,7 +379,7 @@ class ListCell: UITableViewCell {
     let title: UILabel = UILabel(), value: UILabel = UILabel()
     let icon: UIImageView = UIImageView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
     }
@@ -501,8 +500,8 @@ class ListCell: UITableViewCell {
     }
     
     private func loadImage(meta: MenuMeta) {
-        let album = (meta.object as! MPMediaItemCollection!).representativeItem
-        icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as! HNKCacheFormat!
+        let album = (meta.object as! MPMediaItemCollection).representativeItem
+        icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as? HNKCacheFormat
         icon.hnk_setImage(album?.artwork?.image(at: CGSize(width: 40, height: 40)), withKey: String(format:"%llu", (album?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"));
     }
 }

@@ -131,7 +131,7 @@ class WheelView: UIView {
         mutePath?.addPath(pathIn.cgPath)
         
         innerLayer.path = mutePath
-        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillRule = CAShapeLayerFillRule.evenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
@@ -160,7 +160,7 @@ class WheelView: UIView {
         mutePath?.addPath(pathIn.cgPath)
         
         innerLayer.path = mutePath
-        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillRule = CAShapeLayerFillRule.evenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
@@ -192,7 +192,7 @@ class WheelView: UIView {
         mutePath?.addPath(pathIn.cgPath)
         
         innerLayer.path = mutePath
-        innerLayer.fillRule = kCAFillRuleEvenOdd
+        innerLayer.fillRule = CAShapeLayerFillRule.evenOdd
         innerLayer.fillColor = theme.wheelColor.cgColor
         
         innerLayer.shadowOffset = CGSize(width: 0, height: 0)
@@ -227,7 +227,7 @@ class WheelView: UIView {
             b.snp.makeConstraints({ (maker) in
                 maker.width.height.equalTo(btnSize)
             })
-            b.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding)
+            b.contentEdgeInsets = UIEdgeInsets.init(top: padding, left: padding, bottom: padding, right: padding)
             b.backgroundColor = theme.buttonColor
             b.layer.cornerRadius = btnSize / 2
             b.layer.masksToBounds = true

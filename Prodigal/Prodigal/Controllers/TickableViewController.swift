@@ -89,7 +89,7 @@ class TickableViewController: UIViewController {
     }
 }
 
-extension TickableViewController: WheelViewTickDelegate {
+@objc extension TickableViewController: WheelViewTickDelegate {
     func onNextTick() {
         let items = tickableDelegate.getData()
         if current >= items.count - 1 {

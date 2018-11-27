@@ -51,7 +51,7 @@ class AboutView: UIView {
     @IBOutlet weak var buttonSource: UIButton!
     static func viewFromNib() -> AboutView {
         let bundle = Bundle.init(for: self)
-        return bundle.loadNibNamed("AboutView", owner: self, options: nil)?.first as! AboutView!
+        return (bundle.loadNibNamed("AboutView", owner: self, options: nil)?.first as? AboutView)!
     }
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -80,15 +80,15 @@ class AboutView: UIView {
     }
     @IBAction func goTheme(_ sender: Any) {
         let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/Theme.md")
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     @IBAction func sendMail(_ sender: Any) {
         let url = URL(string: "mailto:bobsun@outlook.com")
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     @IBAction func goGitHub(_ sender: Any) {
         let url = URL(string: "https://github.com/SpongeBobSun/Prodigal-iOS")
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
 }
 
@@ -102,3 +102,8 @@ extension AboutView: WheelViewTickDelegate {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

@@ -74,7 +74,7 @@ class ViewController: UIViewController {
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
-        if event?.type != UIEventType.remoteControl {
+        if event?.type != UIEvent.EventType.remoteControl {
             return
         }
         switch event!.subtype {
@@ -147,9 +147,9 @@ class ViewController: UIViewController {
     func initPlayer() {
         session = AVAudioSession.sharedInstance()
         do {
-            try session.setCategory(AVAudioSessionCategoryPlayback)
+            try session.setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.moviePlayback)
             try session.setActive(true)
-            NotificationCenter.default.addObserver(self, selector: #selector(onAudioRouteChange), name:NSNotification.Name.AVAudioSessionRouteChange, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(onAudioRouteChange), name:AVAudioSession.routeChangeNotification, object: nil)
         } catch let e {
             print(e)
             Crashlytics.sharedInstance().recordError(e)
@@ -354,4 +354,3 @@ extension ViewController: NowPlayingFetcherDelegate {
         }
     }
 }
-
