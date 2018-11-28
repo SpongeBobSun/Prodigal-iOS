@@ -67,7 +67,7 @@ class TwoPanelListViewController: TickableViewController {
         super.viewDidLoad()
         initMenu()
         albums = MediaLibrary.sharedInstance.fetchAllAlbums()
-        stackCacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
+        stackCacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
         
         tableView = UITableView()
         tableView.backgroundColor = UIColor.clear
@@ -117,7 +117,7 @@ class TwoPanelListViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(view)
@@ -225,7 +225,7 @@ extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ret = tableView.dequeueReusableCell(withIdentifier: TwoPanelListCell.reuseId) as! TwoPanelListCell!
+        let ret = tableView.dequeueReusableCell(withIdentifier: TwoPanelListCell.reuseId) as? TwoPanelListCell
         let menu = items[indexPath.row]
         ret?.configure(meta: menu)
         return ret!
@@ -266,7 +266,7 @@ extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
         return ret
     }
     
-    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+    private func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
         return nil
     }
     
@@ -281,7 +281,7 @@ class TwoPanelListCell: UITableViewCell {
     
     let title: UILabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
     }
@@ -378,7 +378,7 @@ class PanelView: UIView {
         if (fetcherDelegate == nil) {
             nowPlaying.config(media: nil)
         } else {
-            var item = fetcherDelegate?.getNowPlaying()
+            let item = fetcherDelegate?.getNowPlaying()
             if item is MPMediaItem {
                 nowPlaying.config(media:item as! MPMediaItem?)
             }

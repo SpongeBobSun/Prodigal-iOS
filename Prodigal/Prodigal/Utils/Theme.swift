@@ -79,7 +79,7 @@ class Theme: NSObject {
         icPrev = path.appending(icons["prev"]!)
         icPlay = path.appending(icons["play"]!)
         icMenu = path.appending(icons["menu"]!)
-        outer = Double(dict["wheel_outer"] as! String!)!
+        outer = Double(dict["wheel_outer"] as! String)!
         if outer > 1 {
             outer = 1
         }
@@ -105,7 +105,7 @@ class Theme: NSObject {
             itemColor = UIColor.lightGray
         }
         
-        switch dict["wheel_shape"] as! String! {
+        switch dict["wheel_shape"] as? String {
         case "rect":
             shape = .Rect
             break
@@ -114,14 +114,14 @@ class Theme: NSObject {
             break
         case "polygon":
             shape = .Polygon
-            sides = Int(dict["polygon_sides"] as! String!)!
+            sides = Int(dict["polygon_sides"] as! String)!
             break
         default:
             shape = .Rect
             break
         }
         
-        if dict["text_color"] as! String! != nil {
+        if dict["text_color"] as? String != nil {
             textColor = UIColor(hexString: dict["text_color"] as! String) ?? UIColor.black
         } else {
             textColor = UIColor.black
@@ -172,58 +172,57 @@ class Theme: NSObject {
     
     //TL;DR
     static func validate(dict: Dictionary<String, Any>) -> Bool {
-        guard let icons = dict["icons"] as! Dictionary<String, String>! else {
-            return false
-        }
-        
-        guard (icons["next"] as String!) != nil else {
-            return false
-        }
-        
-        guard (icons["prev"] as String!) != nil else {
-            return false
-        }
-        
-        guard (icons["menu"] as String!) != nil else {
-            return false
-        }
-        
-        guard (icons["play"] as String!) != nil else {
-            return false
-        }
-        guard (dict["wheel_outer"] as! String!) != nil else {
-            return false
-        }
-        guard (dict["wheel_inner"] as! String!) != nil else {
-            return false
-        }
-        guard (dict["button_size"] as! String!) != nil else {
-            return false
-        }
-        
-        guard (UIColor.init(hexString: dict["wheel_color"] as! String)) != nil else {
-            return false
-        }
-        
-        guard (UIColor.init(hexString: dict["button_background"] as! String)) != nil else {
-            return false
-        }
-        guard (UIColor.init(hexString: dict["background_color"] as! String)) != nil else {
-            return false
-        }
-        guard let shape = dict["wheel_shape"] as! String! else {
-            return false
-        }
-        
-        if shape != "rect" && shape != "oval" && shape != "polygon" {
-            return false
-        }
-        if (shape == "polygon") {
-            guard (dict["polygon_sides"] as! String!) != nil else {
+        if let icons = dict["icons"] as? Dictionary<String, String> {
+            if icons["next"] == nil {
                 return false
             }
+            
+            if icons["prev"] == nil {
+                return false
+            }
+            
+            if icons["menu"] == nil {
+                return false
+            }
+            
+            if icons["play"] == nil {
+                return false
+            }
+            guard (dict["wheel_outer"] as? String) != nil else {
+                return false
+            }
+            guard (dict["wheel_inner"] as? String) != nil else {
+                return false
+            }
+            guard (dict["button_size"] as? String) != nil else {
+                return false
+            }
+            
+            guard (UIColor.init(hexString: dict["wheel_color"] as! String)) != nil else {
+                return false
+            }
+            
+            guard (UIColor.init(hexString: dict["button_background"] as! String)) != nil else {
+                return false
+            }
+            guard (UIColor.init(hexString: dict["background_color"] as! String)) != nil else {
+                return false
+            }
+            guard let shape = dict["wheel_shape"] as? String else {
+                return false
+            }
+            
+            if shape != "rect" && shape != "oval" && shape != "polygon" {
+                return false
+            }
+            if (shape == "polygon") {
+                guard (dict["polygon_sides"] as? String) != nil else {
+                    return false
+                }
+            }
+            return true
         }
-        return true
+        return false
     }
 }
 

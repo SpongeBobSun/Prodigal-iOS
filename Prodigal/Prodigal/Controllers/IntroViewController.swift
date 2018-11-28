@@ -68,8 +68,8 @@ class IntroViewController: UIViewController {
         pageViewController.dataSource = self;
         
         pageViewController.setViewControllers([vcs[0]], direction: .forward, animated: true, completion: nil)
-        self.addChildViewController(pageViewController)
-        pageViewController.didMove(toParentViewController: self)
+        self.addChild(pageViewController)
+        pageViewController.didMove(toParent: self)
         self.vcsWrapper.addSubview(pageViewController.view)
         pageViewController.view.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()

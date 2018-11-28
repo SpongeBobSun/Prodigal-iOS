@@ -97,7 +97,7 @@ class NowPlayingViewController: TickableViewController {
     }
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
