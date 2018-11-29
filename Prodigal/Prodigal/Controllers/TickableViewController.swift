@@ -99,9 +99,14 @@ class TickableViewController: UIViewController {
         
         items[current].highLight = false
         items[current + 1].highLight = true
-        tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current + 1, section: 0)], with: .none)
-        current += 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
+        UIView.animate(withDuration: 0, animations: {
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current + 1, section: 0)], with: .none)
+            self.current += 1
+        }) { (completed) in
+            if (completed) {
+                tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
+            }
+        }
     }
     
     func onPreviousTick() {
@@ -112,9 +117,14 @@ class TickableViewController: UIViewController {
         let tableView = tickableDelegate.getTickable()
         items[current].highLight = false
         items[current - 1].highLight = true
-        tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current - 1, section: 0)], with: .none)
-        current -= 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
+        UIView.animate(withDuration: 0, animations: {
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current - 1, section: 0)], with: .none)
+            self.current -= 1
+        }) { (completed) in
+            if (completed) {
+                tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
+            }
+        }
     }
 
 }

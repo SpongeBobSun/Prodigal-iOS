@@ -81,8 +81,6 @@ class TwoPanelListViewController: TickableViewController {
             maker.leading.top.bottom.equalToSuperview()
             maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
         }
-        
-
         panelView = PanelView()
         self.view.addSubview(panelView)
         panelView.snp.makeConstraints { (maker) in
@@ -232,7 +230,7 @@ extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return LIST_ITEM_VIEW_HEIGHT
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
