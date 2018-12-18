@@ -241,6 +241,9 @@ extension ViewController: WheelViewDelegate {
         case .ShuffleSettings:
             _ = AppSettings.sharedInstance.rollShuffle()
             return
+        case .RescanLibrary:
+            _ = Holophonor.instance.rescan(true, complition: {})
+            return
         case .MoreTheme:
             getMoreTheme()
             return

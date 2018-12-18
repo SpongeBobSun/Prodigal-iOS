@@ -67,12 +67,12 @@ class TwoPanelListViewController: TickableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initMenu()
-        albums = []
+        albums = Holophonor.instance.getAllAlbums()
         stackCacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
-        Holophonor.instance.observeRescan().subscribe { (event) in
+        let _ = Holophonor.instance.observeRescan().subscribe { (event) in
             if event.element ?? false {
                 self.albums = Holophonor.instance.getAllAlbums()
-                self.panelView.stackView.reloadData()
+                self.panelView.stackView?.reloadData()
             }
         }
 
@@ -101,9 +101,9 @@ class TwoPanelListViewController: TickableViewController {
         super.viewWillAppear(animated)
         panelView.layoutIfNeeded()
         panelView.initViews()
-        panelView.stackView.delegate = self
-        panelView.stackView.dataSource = self
-        panelView.stackView.reloadData()
+        panelView.stackView?.delegate = self
+        panelView.stackView?.dataSource = self
+        panelView.stackView?.reloadData()
         updateRightPanel(index: current)
         
         timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(swipe), userInfo: nil, repeats: true)
@@ -157,12 +157,12 @@ class TwoPanelListViewController: TickableViewController {
     }
     
     @objc public func swipe() {
-        if panelView.stackView.isHidden {
+        if panelView.stackView?.isHidden ?? true{
             return
         }
         let direction = swipeDir ? SwipeResultDirection.left : SwipeResultDirection.right
         swipeDir = !swipeDir
-        self.panelView.stackView.swipe(direction)
+        self.panelView.stackView?.swipe(direction)
     }
     
     override func hide(type:AnimType = .push, completion: @escaping () -> Void) {
@@ -319,7 +319,7 @@ class TwoPanelListCell: UITableViewCell {
 
 class PanelView: UIView {
     var imageView: UIImageView!
-    var stackView: KolodaView!
+    var stackView: KolodaView?
     var nowPlaying: NowPlayingWidget!
     
     var fetcherDelegate: NowPlayingFetcherDelegate?
@@ -338,15 +338,15 @@ class PanelView: UIView {
         let size = self.bounds.width - 32
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         stackView = KolodaView(frame: frame)
-        stackView.isUserInteractionEnabled = false
+        stackView!.isUserInteractionEnabled = false
         
-        addSubview(stackView)
-        stackView.snp.makeConstraints { (maker) in
+        addSubview(stackView!)
+        stackView!.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(size)
             maker.center.equalTo(self)
         }
-        stackView.countOfVisibleCards = 10
-
+        stackView!.countOfVisibleCards = 10
+        
         addSubview(imageView)
         
         imageView.snp.makeConstraints { (maker) in
@@ -360,14 +360,20 @@ class PanelView: UIView {
         }
     }
     
+    func reloadStackView(delegate: KolodaViewDelegate, dataSource: KolodaViewDataSource) {
+        stackView?.delegate = delegate
+        stackView?.dataSource = dataSource
+        stackView?.reloadData()
+    }
+    
     func showStack() {
-        stackView.isHidden = false
+        stackView?.isHidden = false
         imageView.isHidden = true
         nowPlaying.isHidden = true
     }
     
     func show(image: UIImage) {
-        stackView.isHidden = true
+        stackView?.isHidden = true
         imageView.isHidden = false
         imageView.image = image
         nowPlaying.isHidden = true
@@ -375,7 +381,7 @@ class PanelView: UIView {
     
     func showNowPlaying() {
         imageView.isHidden = true
-        stackView.isHidden = true
+        stackView?.isHidden = true
         nowPlaying.isHidden = false
         nowPlaying.loadTheme()
         if (fetcherDelegate == nil) {

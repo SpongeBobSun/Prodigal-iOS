@@ -58,22 +58,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         ThemeManager().copyToDocuments()
         initCacheForList()
-        // TODO: Observe rescan finish per view controller
-        Holophonor.instance.rescan(true) {
-            let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))
-            self.main = mainStoryBoard.instantiateInitialViewController() as? ViewController
-            if self.window == nil {
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-            }
-            self.window?.rootViewController = self.main
-            self.window?.makeKeyAndVisible()
-            if MediaLibrary.sharedInstance.authorized {
-                self.restoreLastState()
-            }
-            if AppSettings.sharedInstance.newInstall() {
-                let introVC = UIStoryboard(name: "Intro", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController()
-                self.main.present(introVC!, animated: true, completion: nil)
-            }
+        let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))
+        self.main = mainStoryBoard.instantiateInitialViewController() as? ViewController
+        if self.window == nil {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+        }
+        self.window?.rootViewController = self.main
+        self.window?.makeKeyAndVisible()
+        if MediaLibrary.sharedInstance.authorized {
+            self.restoreLastState()
+        }
+        if AppSettings.sharedInstance.newInstall() {
+            let introVC = UIStoryboard(name: "Intro", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController()
+            self.main.present(introVC!, animated: true, completion: nil)
         }
         return true
     }
