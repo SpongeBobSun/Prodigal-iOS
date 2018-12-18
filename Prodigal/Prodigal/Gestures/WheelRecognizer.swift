@@ -17,7 +17,16 @@ protocol WheelRecognizerDelegate: class {
 class WheelRecognizer: UIGestureRecognizer {
     
     var startDeg: Double
-    let degPerTick: Double = 72
+    var _caculatedTick: Double = -1
+    var degPerTick: Double {
+        get {
+            if _caculatedTick > 0 {
+                return _caculatedTick
+            }
+            let screenSize: Double = Double(UIScreen.main.bounds.width)
+            return (320 / screenSize ) * 0.2 * 360
+        }
+    }
     var ticked: Bool
     weak var wheelDelegate: WheelRecognizerDelegate?
     
