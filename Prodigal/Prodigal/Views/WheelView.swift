@@ -99,6 +99,9 @@ class WheelView: UIView {
     
 
     override func draw(_ rect: CGRect) {
+        if currentLayer != nil {
+            currentLayer.removeFromSuperlayer()
+        }
         switch theme.shape {
         case .Oval:
             drawWheel(forOval: rect)
