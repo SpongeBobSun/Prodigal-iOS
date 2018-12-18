@@ -301,7 +301,8 @@ class TwoPanelListCell: UITableViewCell {
         title.backgroundColor = UIColor.clear
         title.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(self.contentView)
-            maker.center.equalTo(self.contentView)
+            maker.centerY.equalTo(self.contentView)
+            maker.left.equalTo(self.contentView).inset(5)
         }
         title.contentMode = .left
     }
