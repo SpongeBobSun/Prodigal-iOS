@@ -3,19 +3,28 @@ PODS:
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
   - Haneke (1.0.2)
-  - Koloda (4.0):
+  - Holophonor (0.1.0):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - Koloda (4.5.1):
     - pop (~> 1.0)
-  - MarqueeLabel/Swift (3.0.1)
-  - pop (1.0.9)
-  - SnapKit (3.2.0)
+  - MarqueeLabel/Swift (3.2.0)
+  - pop (1.0.12)
+  - RxAtomic (4.4.0)
+  - RxCocoa (4.4.0):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.4.0):
+    - RxAtomic (~> 4.4)
+  - SnapKit (4.0.1)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Haneke
-  - Koloda (~> 4.0)
-  - MarqueeLabel/Swift
-  - SnapKit (~> 3.2.0)
+  - Holophonor (from `../holophonor`)
+  - Koloda (~> 4.5.1)
+  - MarqueeLabel/Swift (~> 3.2)
+  - SnapKit (~> 4.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -25,17 +34,28 @@ SPEC REPOS:
     - Koloda
     - MarqueeLabel
     - pop
+    - RxAtomic
+    - RxCocoa
+    - RxSwift
     - SnapKit
+
+EXTERNAL SOURCES:
+  Holophonor:
+    :path: "../holophonor"
 
 SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   Haneke: 01454a67322faa0dd9d81fc0f447885044e71521
-  Koloda: cb171633afc6182a77821b7951e38b2cb272ba7c
-  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
-  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Holophonor: 33f9c034de5f96d582e16e2a7e145ae101e57f5f
+  Koloda: fc08984dc013b4d5aff3bd7265a8874e6784b5ef
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
+  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: a5cefaacd2ff14ef5f33e4802be6f3a6fa729ce5
+PODFILE CHECKSUM: 57e6daf5c21757a1054badaf6a0dc8717b4fb834
 
 COCOAPODS: 1.5.3

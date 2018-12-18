@@ -44,9 +44,10 @@ import Koloda
 import MediaPlayer
 import Haneke
 import MarqueeLabel
+import Holophonor
 
 protocol NowPlayingFetcherDelegate: class {
-    func getNowPlaying() -> Any?
+    func getNowPlaying() -> MediaItem?
 }
 
 class TwoPanelListViewController: TickableViewController {
@@ -57,7 +58,7 @@ class TwoPanelListViewController: TickableViewController {
     var panelView: PanelView!
     
     var items: Array<MenuMeta>!
-    var albums: Array<MPMediaItemCollection>!
+    var albums: Array<MediaCollection>!
     var images: Dictionary<MenuMeta.MenuType, UIImage>!
     var stackCacheFormat: HNKCacheFormat!
     var timer: Timer!
@@ -66,9 +67,15 @@ class TwoPanelListViewController: TickableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initMenu()
-        albums = MediaLibrary.sharedInstance.fetchAllAlbums()
+        albums = []
         stackCacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
-        
+        Holophonor.instance.observeRescan().subscribe { (event) in
+            if event.element ?? false {
+                self.albums = Holophonor.instance.getAllAlbums()
+                self.panelView.stackView.reloadData()
+            }
+        }
+
         tableView = UITableView()
         tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
@@ -134,7 +141,6 @@ class TwoPanelListViewController: TickableViewController {
         items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
         items.append(MenuMeta(name: NSLocalizedString("Playing List", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
-        items.append(MenuMeta(name: NSLocalizedString("Local Files", comment: ""), type: MenuMeta.MenuType.LocalSongs))
         items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))
         items.append(MenuMeta(name: NSLocalizedString("Settings", comment: ""), type: MenuMeta.MenuType.Settings))
         items.append(MenuMeta(name: NSLocalizedString("Now Playing", comment: ""), type: MenuMeta.MenuType.NowPlaying))
@@ -145,7 +151,6 @@ class TwoPanelListViewController: TickableViewController {
                   MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
                   MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
                   MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),
-                  MenuMeta.MenuType.LocalSongs: #imageLiteral(resourceName: "ic_local"),
                   MenuMeta.MenuType.ShuffleSongs: #imageLiteral(resourceName: "ic_shuffle"),
                   MenuMeta.MenuType.Playlist: #imageLiteral(resourceName: "ic_playlist"),]
         
@@ -257,10 +262,10 @@ extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         let size = koloda.frame.width - 32
         let ret = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-        let item = albums[index].representativeItem
+        let item = albums[index]
         ret.contentMode = .scaleAspectFill
         ret.hnk_cacheFormat = stackCacheFormat
-        ret.hnk_setImage(item?.artwork?.image(at: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item?.albumArtistPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
+        ret.hnk_setImage(item.getArtworkWithSize(size: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item.representativeItem?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
         return ret
     }
     
@@ -377,12 +382,7 @@ class PanelView: UIView {
             nowPlaying.config(media: nil)
         } else {
             let item = fetcherDelegate?.getNowPlaying()
-            if item is MPMediaItem {
-                nowPlaying.config(media:item as! MPMediaItem?)
-            }
-            if item is MediaItem {
-                nowPlaying.config(file: item as! MediaItem?)
-            }
+            nowPlaying.config(media: item)
         }
     }
     
@@ -424,29 +424,17 @@ class NowPlayingWidget: UIView {
         
     }
     
-    func config(media: MPMediaItem?) {
+    func config(media: MediaItem?) {
         if media == nil {
             imageView.image = #imageLiteral(resourceName: "ic_album")
             title.text = NSLocalizedString("Nothing", comment: "")
             artist.text = NSLocalizedString("Nobody", comment: "")
             return
         }
-        imageView.image = media!.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+        imageView.image = media?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
         title.text = media!.title
         artist.text = media!.artist
         album.text = media!.albumTitle
-    }
-    
-    func config(file: MediaItem?) {
-        imageView.image = #imageLiteral(resourceName: "ic_album")
-        if file == nil {
-            title.text = NSLocalizedString("Nothing", comment: "")
-            artist.text = NSLocalizedString("Nobody", comment: "")
-            return
-        }
-        artist.text = ""
-        album.text = ""
-        title.text = file?.name
     }
     
     func loadTheme() {

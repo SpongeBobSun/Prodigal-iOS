@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		010732101EA9ED120005F664 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0107320F1EA9ED120005F664 /* MediaItem.swift */; };
+		010732101EA9ED120005F664 /* ProdigalMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0107320F1EA9ED120005F664 /* ProdigalMediaItem.swift */; };
 		0112CCA91E8B902E000F810D /* UIImage+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112CCA81E8B902E000F810D /* UIImage+Blur.swift */; };
 		011504761E63DE9600C4AC86 /* InfoCenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */; };
 		011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */; };
@@ -50,7 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0107320F1EA9ED120005F664 /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaItem.swift; path = Models/MediaItem.swift; sourceTree = "<group>"; };
+		0107320F1EA9ED120005F664 /* ProdigalMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProdigalMediaItem.swift; path = Models/ProdigalMediaItem.swift; sourceTree = "<group>"; };
 		0112CCA81E8B902E000F810D /* UIImage+Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Blur.swift"; path = "Extensions/UIImage+Blur.swift"; sourceTree = "<group>"; };
 		011504751E63DE9600C4AC86 /* InfoCenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCenterHelper.swift; path = Utils/InfoCenterHelper.swift; sourceTree = "<group>"; };
 		011A8A2A1E64135800D998C7 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Controllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 			children = (
 				015E4A981E5D7C1E007A7C3F /* MediaLibrary.swift */,
 				015E4A9E1E5E9E22007A7C3F /* MenuMeta.swift */,
-				0107320F1EA9ED120005F664 /* MediaItem.swift */,
+				0107320F1EA9ED120005F664 /* ProdigalMediaItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -390,16 +390,24 @@
 			inputPaths = (
 				"${SRCROOT}/../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Haneke/Haneke.framework",
+				"${BUILT_PRODUCTS_DIR}/Holophonor/Holophonor.framework",
 				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haneke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Holophonor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
@@ -423,7 +431,7 @@
 				015E4A9F1E5E9E22007A7C3F /* MenuMeta.swift in Sources */,
 				01B19E031EAF134E00EABB1F /* AboutView.swift in Sources */,
 				01D3DC801E5C2DBA00B425F9 /* UIColor+Hex.swift in Sources */,
-				010732101EA9ED120005F664 /* MediaItem.swift in Sources */,
+				010732101EA9ED120005F664 /* ProdigalMediaItem.swift in Sources */,
 				01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */,
 				011A8A2B1E64135800D998C7 /* NowPlayingViewController.swift in Sources */,
 				444632B721AD581A0030A26A /* Constants.swift in Sources */,
@@ -567,7 +575,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -583,8 +591,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender;
+				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -601,8 +610,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender;
+				PRODUCT_BUNDLE_IDENTIFIER = sun.bob.bender.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Prodigal/Prodigal-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import MediaPlayer
 import Haneke
+import Holophonor
 
 class AlbumGalleryViewController: TickableViewController {
 
@@ -51,10 +52,20 @@ class AlbumGalleryViewController: TickableViewController {
             maker.edges.equalToSuperview()
         }
         if albums.count == 0 {
-            let data = MediaLibrary.sharedInstance.fetchAllAlbums()
-            data.forEach({ (item) in
-                albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
-            })
+            let data = Holophonor.instance.getAllAlbums()
+            if data.count != 0 {
+                data.forEach({ (item) in
+                    albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
+                })
+            } else {
+                Holophonor.instance.observeRescan().subscribe(onNext: { (compeleted) in
+                    let data = Holophonor.instance.getAllAlbums()
+                    data.forEach({ (item) in
+                        self.albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
+                    })
+                    self.collection.reloadData()
+                }, onError: nil, onCompleted: nil, onDisposed: nil)
+            }
         }
         let size = view.bounds.height / 2
         stackLayout.itemSize = CGSize(width: size, height: size)
@@ -158,8 +169,8 @@ class AlbumCell: UICollectionViewCell {
     }
     
     func configure(withMenu menu: MenuMeta) {
-        let album = menu.object as? MPMediaItemCollection
-        image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
+        let album = menu.object as? MediaCollection
+        image.hnk_setImage(album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
         name.text = album?.representativeItem?.albumTitle
         name.textColor = ThemeManager.currentTheme.textColor
     }

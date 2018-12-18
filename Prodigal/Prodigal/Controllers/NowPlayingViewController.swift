@@ -45,40 +45,27 @@ import MediaPlayer
 import SnapKit
 import MarqueeLabel
 
+import Holophonor
+
 class NowPlayingViewController: TickableViewController {
     
     
     var playingView: NowPlayingView = NowPlayingView()
     let seekView: SeekView = SeekView()
-    private var _song: MPMediaItem!
-    private var _file: MediaItem!
-    private var source: MediaItem.MediaSource = .iTunes
+    private var _song: MediaItem!
+    private var source: ProdigalMediaItem.MediaSource = .iTunes
     private var currentSelectionType: MenuMeta.MenuType! = .NowPlayingPopSeek
-    var song: MPMediaItem {
+    var song: MediaItem {
         set {
             _song = newValue
             source = .iTunes
-            playingView.image.image = _song.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+            playingView.image.image = _song.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
             playingView.title.text = _song.title
             playingView.artist.text = _song.artist
             playingView.album.text = _song.albumTitle
         }
         get {
             return _song
-        }
-    }
-    
-    var file: MediaItem {
-        set {
-            _file = newValue
-            source = .Local
-            playingView.image.image = #imageLiteral(resourceName: "ic_album")
-            playingView.title.text = _file.name
-            playingView.artist.text = ""
-            playingView.album.text = ""
-        }
-        get {
-            return _file
         }
     }
 
@@ -156,7 +143,7 @@ class NowPlayingViewController: TickableViewController {
         seekView.onDecrease()
     }
     
-    func show(withSong song: MPMediaItem?, type: AnimType = .push) {
+    func show(withSong song: MediaItem?, type: AnimType = .push) {
         self.view.isHidden = false
         if song == nil {
             //Mark - TODO: Empty view
@@ -164,23 +151,6 @@ class NowPlayingViewController: TickableViewController {
         }
         playingView.loadTheme()
         self.song = song!
-        PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
-            let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
-            let progress = Float(current) / Float(duration)
-            DispatchQueue.main.async {
-                self.playingView.progress.setProgress(progress, animated:true)
-                self.playingView.updateLabels(now: current, all: duration)
-            }
-        })
-    }
-    
-    func show(withFile file:MediaItem?, type: AnimType = .push) {
-        self.view.isHidden = false
-        if file == nil {
-            //Mark - TODO: Empty view
-            return
-        }
-        self.file = file!
         PubSub.subscribe(target: self, name: PlayerTicker.kTickEvent, handler: {(notification:Notification) -> Void in
             let (current, duration) = (notification.userInfo?[PlayerTicker.kCurrent] as! Double , notification.userInfo?[PlayerTicker.kDuration] as! Double)
             let progress = Float(current) / Float(duration)

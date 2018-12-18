@@ -40,20 +40,17 @@
 
 import Foundation
 import MediaPlayer
+import Holophonor
 
 extension ViewController: WheelViewDelegate {
     
     func onNext() {
-        let total = source == .iTunes ? playlist.count - 1 : fileList.count - 1
-        if playingIndex == total || playingIndex < 0 {
+        let total = playlist.count - 1
+        if playingIndex == total || playingIndex < 0 || total <= 0 {
             return
         }
         player?.stop()
-        if (source == .iTunes) {
-            play(item: playlist[playingIndex + 1])
-        } else {
-            play(item: fileList[playingIndex + 1])
-        }
+        play(item: playlist[playingIndex + 1])
         
     }
     func onMenu() {
@@ -73,7 +70,7 @@ extension ViewController: WheelViewDelegate {
             return
         }
         var index = playingIndex
-        let total = source == .iTunes ? playlist.count - 1 : fileList.count - 1
+        let total = playlist.count - 1
 
         if playingIndex == 0 || playingIndex < 0 {
             if playingIndex == 0 && (player?.isPlaying)! {
@@ -91,11 +88,7 @@ extension ViewController: WheelViewDelegate {
             }
         }
         player?.stop()
-        if (source == .iTunes) {
-            play(item: playlist[index])
-        } else {
-            play(item: fileList[index])
-        }
+        play(item: playlist[index])
     }
     func onPlay() {
         if player != nil {
@@ -103,11 +96,7 @@ extension ViewController: WheelViewDelegate {
                 player?.pause()
             } else {
                 player?.play()
-                if (source == .iTunes) {
-                    InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
-                } else {
-                    InfoCenterHelper.helper.update(withFile: fileList[playingIndex], elapsed: player?.currentTime ?? 0)
-                }
+                InfoCenterHelper.helper.update(withItem: playlist[playingIndex], elapsed: player?.currentTime ?? 0)
             }
             return
         }
@@ -119,21 +108,21 @@ extension ViewController: WheelViewDelegate {
         switch select.type {
         case .Artists:
             current.hide {
-                self.artistsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllArtists(), animate: false)
+                self.artistsList?.show(withType: select.type, andData: self.holo.getAllArtists(), animate: false)
             }
             self.current = self.artistsList
             self.wheelView.tickDelegate = self.artistsList
             break
         case .Albums:
             current.hide {
-                self.albumsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllAlbums(), animate: false)
+                self.albumsList?.show(withType: select.type, andData: self.holo.getAllAlbums(), animate: false)
             }
             current = self.albumsList
             self.wheelView.tickDelegate = self.albumsList
             break
         case .Songs:
             current.hide {
-                self.songsList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllSongs() , animate: false)
+                self.songsList?.show(withType: select.type, andData: self.holo.getAllSongs() , animate: false)
             }
             current = self.songsList
             self.wheelView.tickDelegate = self.songsList
@@ -142,8 +131,8 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let artist = select.object as? MPMediaItemCollection
-            self.albumsList.show(withType: .Albums, andData: MediaLibrary.sharedInstance.fetchAlbums(byArtist: (artist?.representativeItem?.artistPersistentID)!))
+            let artist = select.object as? MediaCollection
+            self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? ""))
             current = albumsList
             self.wheelView.tickDelegate = self.albumsList
             break
@@ -151,56 +140,35 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let album = select.object as? MPMediaItemCollection
-            self.songsList.show(withType: .Songs, andData: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (album?.representativeItem?.albumPersistentID)!))
+            let album = select.object as? MediaCollection
+            self.songsList.show(withType: .Songs, andData: album?.items ?? [], animate: true)
             current = songsList
             self.wheelView.tickDelegate = self.songsList
             break
         case .Song:
             current.hide {
-                self.nowPlaying.show(withSong: select.object as? MPMediaItem)
+                self.nowPlaying.show(withSong: select.object as? MediaItem)
             }
-            self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             self.checkShuffle(highlight: select.object!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
-            self.play(item: select.object as! MPMediaItem)
-            break
-            
-        case .LocalSongs:
-            current.hide {
-                self.localListView.show(withType: .LocalSongs, andData: MediaLibrary.sharedInstance.fetchLocalFiles())
-            }
-            current = localListView
-            self.wheelView.tickDelegate = localListView
-            break
-        case .LocalSong:
-            current.hide {
-                self.nowPlaying.show(withFile: select.object as? MediaItem)
-            }
-            current = nowPlaying
-            wheelView.tickDelegate = nowPlaying
-            self.source = .Local
-            self.resumeTime = 0
-            self.fileList = MediaLibrary.sharedInstance.fetchLocalFiles()
-            self.play(item: (select.object as? MediaItem)!)
+            self.play(item: select.object as! MediaItem)
             break
         case .ShuffleCurrent:
             current.hide {
-                self.nowPlaying.show(withSong: select.object as? MPMediaItem)
+                self.nowPlaying.show(withSong: select.object as? MediaItem)
             }
-            self.source = .iTunes
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
-            self.play(item: (select.object as? MPMediaItem)!)
+            self.play(item: (select.object as? MediaItem)!)
             break
         case .Genres:
             current.hide {
-                self.genresList?.show(withType: select.type, andData: MediaLibrary.sharedInstance.fetchAllGenres() , animate: false)
+                self.genresList?.show(withType: select.type, andData: self.holo.getAllGenres() , animate: false)
             }
             current = genresList
             self.wheelView.tickDelegate = self.genresList
@@ -209,14 +177,14 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 
             })
-            let genre = select.object as? MPMediaItemCollection
-            self.artistsList.show(withType: .Artists, andData: MediaLibrary.sharedInstance.fetchArtists(byGenre: (genre?.representativeItem?.genrePersistentID)!))
+            let genre = select.object as? MediaCollection
+            self.artistsList.show(withType: .Artists, andData: self.holo.getArtistsBy(genre: genre?.representativeItem?.genre ?? ""))
             current = self.artistsList
             self.wheelView.tickDelegate = artistsList
             break
         case .Playlist:
             current.hide {
-                self.playListView.show(withType: (self.source == .iTunes ? .Songs : .LocalSongs), andData: (self.source == .iTunes ? self.playlist : self.fileList))
+                self.playListView.show(withType: .Songs, andData: self.playlist)
             }
             current = playListView
             wheelView.tickDelegate = playListView
@@ -225,8 +193,7 @@ extension ViewController: WheelViewDelegate {
             current.hide(completion: {
                 self.nowPlaying.show(type: .push)
             })
-            self.source = .iTunes
-            self.playlist = MediaLibrary.shuffle(array: MediaLibrary.sharedInstance.fetchAllSongs()) as! Array<MPMediaItem>
+            self.playlist = MediaLibrary.shuffle(array: self.holo.getAllSongs()) as! Array<MediaItem>
             self.resumeTime = 0;
             if self.playlist.count > 0 {
                 self.play(item: self.playlist[0])
@@ -236,20 +203,11 @@ extension ViewController: WheelViewDelegate {
             break
         case .NowPlaying:
             current.hide {
-                if self.source == .iTunes {
-                    if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
-                        self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
-                    } else {
-                        self.nowPlaying.show(withSong: nil)
-                    }
+                if self.playingIndex <= self.playlist.count && self.playlist.count > 0 {
+                    self.nowPlaying.show(withSong: self.playlist[self.playingIndex])
                 } else {
-                    if self.playingIndex <= self.fileList.count && self.fileList.count > 0 {
-                        self.nowPlaying.show(withFile: self.fileList[self.playingIndex])
-                    } else {
-                        self.nowPlaying.show(withSong: nil)
-                    }
+                    self.nowPlaying.show(withSong: nil)
                 }
-
             }
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
@@ -312,11 +270,7 @@ extension ViewController: WheelViewDelegate {
     
     fileprivate func checkShuffle(highlight: Any) {
         if AppSettings.sharedInstance.getShuffle() == .Yes {
-            if source == .iTunes {
-                self.playlist = MediaLibrary.shuffle(array: self.playlist, highlight: highlight) as! [MPMediaItem]
-            } else {
-                self.fileList = MediaLibrary.shuffle(array: self.fileList, highlight: highlight) as! [MediaItem]
-            }
+            self.fileList = MediaLibrary.shuffle(array: self.fileList, highlight: highlight) as! [MediaItem]
         }
     }
     

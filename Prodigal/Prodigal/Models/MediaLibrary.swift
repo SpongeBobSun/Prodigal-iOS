@@ -41,6 +41,7 @@
 
 import UIKit
 import MediaPlayer
+import Holophonor
 
 class MediaLibrary: NSObject {
     
@@ -62,138 +63,10 @@ class MediaLibrary: NSObject {
         }
     }
     
-    func fetchAllSongs() -> Array<MPMediaItem> {
-        if !authorized {
-            return []
-        }
-        return MPMediaQuery.songs().items ?? []
-    }
-    
-    func fetchAllAlbums() -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        let query = MPMediaQuery.albums()
-        query.groupingType = .album
-        return query.collections ?? []
-    }
-    
-    func fetchAllArtists() -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        let ret = MPMediaQuery.artists().collections ?? []
-        return ret
-    }
-    
-    func fetchAllGenres() -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        return MPMediaQuery.genres().collections ?? []
-    }
-    
-    func fetchSong(byId identifier: MPMediaEntityPersistentID) -> MPMediaItem? {
-        if !authorized {
-            return nil
-        }
-        var ret:MPMediaItem? = nil
-        let filter = MPMediaPropertyPredicate(value: identifier, forProperty: MPMediaItemPropertyPersistentID, comparisonType: .equalTo)
-        let query = MPMediaQuery.songs()
-        query.addFilterPredicate(filter)
-        ret = query.items?.first
-        return ret
-    }
-    
-    func fetchAlbums(byArtist artist: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: artist, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: .contains)
-        let query = MPMediaQuery.albums()
-        query.addFilterPredicate(filter)
-        let albums = query.collections ?? []
-        return albums
-    }
-    
-    func fetchSongs(byAlbum album: MPMediaEntityPersistentID) -> Array<MPMediaItem> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: album, forProperty: MPMediaItemPropertyAlbumPersistentID, comparisonType: .equalTo)
-        let query = MPMediaQuery.songs()
-        query.addFilterPredicate(filter)
-        return query.items ?? []
-    }
-    
-    func fetchSongs(byArtist artist:MPMediaEntityPersistentID) -> Array<MPMediaItem> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: artist, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: .equalTo)
-        let query = MPMediaQuery.songs()
-        query.addFilterPredicate(filter)
-        return query.items ?? []
-    }
-    
-    func fetchSongs(byGenre genre:MPMediaEntityPersistentID) -> Array<MPMediaItem> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
-        let query = MPMediaQuery.songs()
-        query.addFilterPredicate(filter)
-        return query.items ?? []
-    }
-    
-    func fetchAlbums(byGenre genre: MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
-        
-        let query = MPMediaQuery.albums()
-        query.addFilterPredicate(filter)
-        let albums = query.collections ?? []
-        return albums
-    }
-    
-    func fetchArtists(byGenre genre:MPMediaEntityPersistentID) -> Array<MPMediaItemCollection> {
-        if !authorized {
-            return []
-        }
-        let filter = MPMediaPropertyPredicate.init(value: genre, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: .equalTo)
-        
-        let query = MPMediaQuery.artists()
-        query.addFilterPredicate(filter)
-        let artists = query.collections ?? []
-        return artists
-    }
-    
-    func fetchLocalFiles() -> Array<MediaItem> {
-        let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let fm = FileManager.default
+    func validateList(list: Array<String>) -> Array<MediaItem> {
         var ret: Array<MediaItem> = []
-        var files: Array<String> = []
-        do {
-            files = try fm.contentsOfDirectory(atPath: docPath)
-        } catch let err {
-            print(err)
-        }
-        
-        for each in files {
-            if each.hasSuffix(".mp3") || each.hasSuffix(".m4a") || each.hasSuffix("wav") {
-                ret.append(MediaItem(name: each, fileName: docPath + "/" + each))
-            }
-        }
-        
-        return ret
-    }
-    
-    func validateList(list: Array<UInt64>) -> Array<MPMediaItem> {
-        var ret: Array<MPMediaItem> = []
         for each in list {
-            let toAdd = fetchSong(byId: each)
+            let toAdd = Holophonor.instance.getSongBy(id: each)
             if toAdd != nil {
                 ret.append(toAdd!)
             }
@@ -217,11 +90,7 @@ class MediaLibrary: NSObject {
     static func shuffle(array: [Any], highlight:Any) -> [Any] {
         var ret = shuffle(array: array)
         var idx = 0
-        if highlight is MPMediaItem {
-            idx = ret.index(where: {($0 as! MPMediaItem).persistentID == (highlight as! MPMediaItem).persistentID}) ?? -1
-        } else if highlight is MediaItem {
-            idx = ret.index(where: {($0 as! MediaItem).fileName == (highlight as! MediaItem).fileName}) ?? -1
-        }
+        idx = ret.index(where: {($0 as! MediaItem).persistentID == (highlight as! MediaItem).persistentID}) ?? -1
         if idx >= 0 {
             ret.remove(at: idx)
             ret.insert(highlight, at: 0)
