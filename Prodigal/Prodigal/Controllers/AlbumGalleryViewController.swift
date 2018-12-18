@@ -67,7 +67,7 @@ class AlbumGalleryViewController: TickableViewController {
                 }, onError: nil, onCompleted: nil, onDisposed: nil)
             }
         }
-        let size = view.bounds.height / 2
+        let size = view.bounds.height / 3 * 2
         stackLayout.itemSize = CGSize(width: size, height: size)
         collection.reloadData()
         self.view.backgroundColor = UIColor.clear

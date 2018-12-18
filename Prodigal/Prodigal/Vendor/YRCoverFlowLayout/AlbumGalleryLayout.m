@@ -27,21 +27,22 @@
     CGFloat centerX = self.collectionView.contentOffset.x + self.collectionView.bounds.size.width * 0.5;
     
     NSArray *arrayAttrs = [super layoutAttributesForElementsInRect:rect];
-    
+    NSMutableArray *ret = [@[] mutableCopy];
+    UICollectionViewLayoutAttributes * change;
     for (UICollectionViewLayoutAttributes *attr in arrayAttrs) {
-        
+        change = [attr copy];
         CGFloat cell_centerX = attr.center.x;
         CGFloat distance = ABS(cell_centerX - centerX);
         CGFloat factor = 0.003;
         CGFloat scale = 1 / (1 + distance * factor);
         
         
-        attr.size = CGSizeMake(self.itemSize.width * 1.2, self.itemSize.height * 1.2);
-        attr.transform = CGAffineTransformMakeScale(scale, scale);
-        
+        change.size = CGSizeMake(self.itemSize.width * 1.2, self.itemSize.height * 1.2);
+        change.transform = CGAffineTransformMakeScale(scale, scale);
+        [ret addObject:change];
     }
     
-    return arrayAttrs;
+    return ret;
     
 }
 
