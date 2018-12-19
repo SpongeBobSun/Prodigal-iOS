@@ -100,7 +100,7 @@ class TickableViewController: UIViewController {
         items[current].highLight = false
         items[current + 1].highLight = true
         UIView.animate(withDuration: 0, animations: {
-            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current + 1, section: 0)], with: .none)
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current + 1, section: 0)], with: .right)
             self.current += 1
         }) { (completed) in
             if (completed) {
@@ -118,7 +118,7 @@ class TickableViewController: UIViewController {
         items[current].highLight = false
         items[current - 1].highLight = true
         UIView.animate(withDuration: 0, animations: {
-            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current - 1, section: 0)], with: .none)
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current - 1, section: 0)], with: .left)
             self.current -= 1
         }) { (completed) in
             if (completed) {

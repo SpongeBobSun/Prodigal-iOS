@@ -203,7 +203,7 @@ class ViewController: UIViewController {
             #if DEBUG
             print(e)
             #endif
-            self.view.makeToast("Go to 'Settings' and rescan your music library.", duration: 2.0, point: self.view.center, title: "File not found", image: nil, style: ToastStyle.init(), completion: nil)
+            self.view.makeToast(NSLocalizedString("Go to 'Settings' and rescan your music library.", comment: ""), duration: 2.0, point: self.view.center, title: NSLocalizedString("File not found", comment: ""), image: nil, style: ToastStyle.init(), completion: nil)
             Crashlytics.sharedInstance().recordError(e)
         }
     }
