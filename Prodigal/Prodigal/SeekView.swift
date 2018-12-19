@@ -25,7 +25,7 @@ class SeekView: UIView {
     
     convenience init() {
         self.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.7)
+        self.backgroundColor = UIColor.init(hexString: "#666666AA")
         self.addSubview(seekBar)
         self.addSubview(label)
         self.addSubview(volumeView)
@@ -37,6 +37,7 @@ class SeekView: UIView {
             maker.bottom.equalTo(self.snp.centerY).offset(-20)
         }
         label.textAlignment = .center
+        label.textColor = UIColor.white
         
         seekBar.snp.makeConstraints { (maker) in
             maker.height.equalTo(10)

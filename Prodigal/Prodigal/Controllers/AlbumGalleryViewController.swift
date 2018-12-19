@@ -70,6 +70,7 @@ class AlbumGalleryViewController: TickableViewController {
         }
         let size = view.bounds.height / 3 * 2
         stackLayout.itemSize = CGSize(width: size, height: size)
+        collection.contentInset = UIEdgeInsets(top: 0, left: size / 2, bottom: 0, right: size / 2)
         collection.reloadData()
         self.view.backgroundColor = UIColor.clear
         current = albums.count / 2
