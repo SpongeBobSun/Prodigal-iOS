@@ -14,5 +14,6 @@ target 'Prodigal' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'MarqueeLabel/Swift', '~> 3.2'
+    pod 'Toast-Swift', '~> 4.0.0'
     pod 'Holophonor', :path => '../holophonor'
 end

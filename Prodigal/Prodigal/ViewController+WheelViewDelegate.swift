@@ -152,7 +152,6 @@ extension ViewController: WheelViewDelegate {
             }
             self.resumeTime = 0
             self.playlist = (current as! ListViewController).playList ?? []
-            self.checkShuffle(highlight: select.object!)
             current = nowPlaying
             wheelView.tickDelegate = nowPlaying
             self.play(item: select.object as! MediaItem)
@@ -243,6 +242,9 @@ extension ViewController: WheelViewDelegate {
             _ = AppSettings.sharedInstance.rollShuffle()
             return
         case .RescanLibrary:
+            if Holophonor.instance.isRescanning() {
+                return
+            }
             self.seekView.showMode = .Progress
             self.seekView.toggle()
             _ = Holophonor.instance.rescan(true, complition: {
@@ -279,12 +281,6 @@ extension ViewController: WheelViewDelegate {
             return
         }
         stack.append(current)
-    }
-    
-    fileprivate func checkShuffle(highlight: Any) {
-        if AppSettings.sharedInstance.getShuffle() == .Yes {
-            self.fileList = MediaLibrary.shuffle(array: self.fileList, highlight: highlight) as! [MediaItem]
-        }
     }
     
     fileprivate func getMoreTheme() {

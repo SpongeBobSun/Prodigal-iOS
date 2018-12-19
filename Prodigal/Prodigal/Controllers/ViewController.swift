@@ -12,6 +12,7 @@ import AVFoundation
 import Haneke
 import Crashlytics
 import Holophonor
+import Toast_Swift
 
 class ViewController: UIViewController {
 
@@ -34,11 +35,9 @@ class ViewController: UIViewController {
     var playingIndex: Int = -1
     var resumeTime: Double = -1
     var playlist: Array<MediaItem> = []
-    var fileList: Array<MediaItem> = []
     var ticker: PlayerTicker!
     var theme = ThemeManager().loadLastTheme()    
     
-    // ? ? ?
     override var canBecomeFirstResponder: Bool { return true }
     
     override func viewDidLoad() {
@@ -201,7 +200,10 @@ class ViewController: UIViewController {
                 mainMenu.updateRightPanel(index: mainMenu.current)
             }
         } catch let e {
+            #if DEBUG
             print(e)
+            #endif
+            self.view.makeToast("Go to 'Settings' and rescan your music library.", duration: 2.0, point: self.view.center, title: "File not found", image: nil, style: ToastStyle.init(), completion: nil)
             Crashlytics.sharedInstance().recordError(e)
         }
     }
