@@ -89,7 +89,13 @@ class ViewController: UIViewController {
             }
             break
         case .remoteControlTogglePlayPause:
-            play()
+            if player?.isPlaying ?? false {
+                player?.pause()
+            } else if player == nil {
+                play()
+            } else {
+                player?.play()
+            }
             break
         case .remoteControlNextTrack:
             self.onNext()
@@ -229,7 +235,9 @@ class ViewController: UIViewController {
         do {
             try session.setActive(false)
         } catch let e {
+#if DEBUG
             print(e)
+#endif
             Crashlytics.sharedInstance().recordError(e)
         }
     }

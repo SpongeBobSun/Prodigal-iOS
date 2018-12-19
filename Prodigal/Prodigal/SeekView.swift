@@ -61,7 +61,7 @@ class SeekView: UIView {
             timer = nil
             return
         }
-        if self.showMode == .Progress {
+        if self.showMode != .Progress {
             timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
                 if (Date().timeIntervalSince1970 - self.lastTicked < 3 || self.lastTicked == 0) {
                     return
