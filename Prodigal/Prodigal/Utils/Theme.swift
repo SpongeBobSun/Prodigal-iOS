@@ -49,6 +49,7 @@ class Theme: NSObject {
     var name: String!
     var shape: WheelViewShape
     var sides: Int = 6
+    var backgroundCover: Bool = true
     
     private static var defaultDict :Dictionary<String, Any> = [
         "icons": [
@@ -66,6 +67,7 @@ class Theme: NSObject {
         "wheel_shape": "rect",
         "card_color": "#CCCCCCAA",
         "item_color": "#4D93C6",
+        "background_cover" : true,
         ]
     
     override convenience init() {
@@ -128,6 +130,7 @@ class Theme: NSObject {
         }
         
         self.name = name
+        self.backgroundCover = dict["background_cover"] as? Bool ?? true
         super.init()
     }
     

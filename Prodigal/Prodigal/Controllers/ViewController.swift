@@ -196,7 +196,7 @@ class ViewController: UIViewController {
                 nowPlaying.song = item
                 InfoCenterHelper.helper.update(withItem: item)
                 ticker.start()
-                renderCoverBackground(image: item.getArtworkWithSize(size: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)) ?? #imageLiteral(resourceName: "bg_empty"))
+                renderCoverBackground(image: item.getArtworkWithSize(size: CGSize(width: coverBackground.bounds.height, height: coverBackground.bounds.height)))
                 mainMenu.updateRightPanel(index: mainMenu.current)
             }
         } catch let e {
@@ -208,8 +208,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func renderCoverBackground(image: UIImage) {
-        coverBackground.image = UIImage.getBlured(image: image)
+    func renderCoverBackground(image: UIImage?) {
+        if image == nil || !ThemeManager.currentTheme.backgroundCover {
+            coverBackground.image = nil
+            return
+        }
+        coverBackground.image = UIImage.getBlured(image: image!)
     }
     
     func play() {
@@ -255,6 +259,9 @@ class ViewController: UIViewController {
         self.view.backgroundColor = theme.backgroundColor
         self.backgroundMask.backgroundColor = theme.backgroundColor
         self.cardView.backgroundColor = theme.cardColor
+        if !theme.backgroundCover {
+            self.coverBackground = nil
+        }
         self.view.setNeedsDisplay()
     }
 }
