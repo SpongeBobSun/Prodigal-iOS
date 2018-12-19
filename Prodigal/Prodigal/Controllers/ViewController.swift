@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var wheelView: WheelView!
     @IBOutlet weak var cardView: UIView!
     
-    
+    var seekView: SeekView!
     var current: TickableViewController!
     var mainMenu: TwoPanelListViewController!
     var artistsList: ListViewController!, albumsList: ListViewController!, songsList: ListViewController!, genresList: ListViewController!, playListView: ListViewController!, nowPlaying: NowPlayingViewController!, settings: ListViewController!, themeListView: ListViewController!, localListView: ListViewController!, aboutView: ListViewController!
@@ -141,6 +141,13 @@ class ViewController: UIViewController {
         
         aboutView = ListViewController()
         aboutView.attachTo(viewController: self, inView: cardView)
+        
+        seekView = SeekView()
+        cardView.addSubview(seekView)
+        seekView.snp.makeConstraints { (maker) in
+            maker.left.trailing.top.bottom.equalToSuperview()
+        }
+        seekView.isHidden = true
     }
     
     func initPlayer() {
@@ -171,7 +178,7 @@ class ViewController: UIViewController {
         }
         playingIndex = playlist.index(of: item)!
         do {
-            try player = AVAudioPlayer.init(contentsOf: URL(string: item.fileURL!)!)
+            try player = AVAudioPlayer.init(contentsOf: item.fileURL!)
             player?.delegate = self
             player?.volume = 1.0
             let result: Bool = (player?.prepareToPlay())!

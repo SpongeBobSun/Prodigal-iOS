@@ -96,7 +96,7 @@ class WheelView: UIView {
         
         super.layoutSubviews()
     }
-    
+
 
     override func draw(_ rect: CGRect) {
         if currentLayer != nil {

@@ -405,8 +405,9 @@ class ListCell: UITableViewCell {
         title.contentMode = .left
         
         value.snp.makeConstraints { (maker) in
-            maker.trailing.top.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
             maker.width.equalTo(100)
+            maker.trailing.equalToSuperview().inset(5)
         }
         value.textAlignment = .right
         value.text = "SettingsValue"

@@ -40,6 +40,7 @@
 
 import Foundation
 import MediaPlayer
+import RxSwift
 import Holophonor
 
 extension ViewController: WheelViewDelegate {
@@ -242,7 +243,16 @@ extension ViewController: WheelViewDelegate {
             _ = AppSettings.sharedInstance.rollShuffle()
             return
         case .RescanLibrary:
-            _ = Holophonor.instance.rescan(true, complition: {})
+            self.seekView.showMode = .Progress
+            self.seekView.toggle()
+            _ = Holophonor.instance.rescan(true, complition: {
+                self.seekView.toggle()
+            })
+            _ = Holophonor.instance.observeProgress()
+                .observeOn(MainScheduler.instance)
+                .subscribe({ (progress) in
+                self.seekView.updateProgress(progress.element!)
+            })
             return
         case .MoreTheme:
             getMoreTheme()

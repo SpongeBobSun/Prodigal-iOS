@@ -58,11 +58,12 @@ class AlbumGalleryViewController: TickableViewController {
                     albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
                 })
             } else {
-                Holophonor.instance.observeRescan().subscribe(onNext: { (compeleted) in
+                _ = Holophonor.instance.observeRescan().subscribe(onNext: { (compeleted) in
                     let data = Holophonor.instance.getAllAlbums()
                     data.forEach({ (item) in
                         self.albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
                     })
+                    self.current = self.albums.count / 2
                     self.collection.reloadData()
                 }, onError: nil, onCompleted: nil, onDisposed: nil)
             }
@@ -170,7 +171,8 @@ class AlbumCell: UICollectionViewCell {
     
     func configure(withMenu menu: MenuMeta) {
         let album = menu.object as? MediaCollection
-        image.hnk_setImage(album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
+        let img = album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? UIImage(imageLiteralResourceName: "ic_album")
+        image.hnk_setImage(img, withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
         name.text = album?.representativeItem?.albumTitle
         name.textColor = ThemeManager.currentTheme.textColor
     }
