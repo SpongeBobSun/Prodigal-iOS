@@ -103,9 +103,7 @@ class TickableViewController: UIViewController {
             tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current + 1, section: 0)], with: .right)
             self.current += 1
         }) { (completed) in
-            if (completed) {
-                tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
-            }
+            tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
         }
     }
     
@@ -121,9 +119,7 @@ class TickableViewController: UIViewController {
             tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current - 1, section: 0)], with: .left)
             self.current -= 1
         }) { (completed) in
-            if (completed) {
-                tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
-            }
+            tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
         }
     }
 
