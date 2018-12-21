@@ -80,6 +80,7 @@ class MenuMeta: NSObject {
     var highLight: Bool = false
     var type: MenuMeta.MenuType = .Undefined
     var object: Any?
+    var context: Any?
     
     convenience init(name: String, type: MenuType) {
         self.init()
@@ -90,6 +91,11 @@ class MenuMeta: NSObject {
     
     func setObject(obj: Any) -> MenuMeta {
         object = obj
+        return self
+    }
+    
+    func setContext(obj: Any?) -> MenuMeta {
+        context = obj
         return self
     }
     

@@ -102,7 +102,7 @@ class ListViewController: TickableViewController {
         aboutView.isHidden = true
     }
     
-    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true) {
+    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true, context: Any? = nil) {
         self.current = 0
         self.playList = nil
         self.type = type
@@ -119,7 +119,11 @@ class ListViewController: TickableViewController {
         case .Artists:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MediaCollection).representativeItem?.artist)!, type: .Artist).setObject(obj: each))
+                items.append(
+                    MenuMeta(name: ((each as! MediaCollection).representativeItem?.artist)!, type: .Artist)
+                        .setObject(obj: each)
+                        .setContext(obj: context)
+                )
             })
             items.first?.highLight = true
             insertShuffleAll()
@@ -147,7 +151,10 @@ class ListViewController: TickableViewController {
         case .Genres:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MediaCollection).representativeItem?.genre)!, type: .Genre).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MediaCollection).representativeItem?.genre)!, type: .Genre)
+                    .setObject(obj: each)
+                    .setContext(obj: each)
+                )
             })
             items.first?.highLight = true
             break

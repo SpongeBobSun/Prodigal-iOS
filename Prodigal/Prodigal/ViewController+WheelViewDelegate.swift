@@ -133,7 +133,9 @@ extension ViewController: WheelViewDelegate {
                 
             })
             let artist = select.object as? MediaCollection
-            self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? ""))
+//            self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? ""))
+            let genreid = (select.context as? MediaCollection)?.persistentID
+            self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? "", andGenre: genreid))
             current = albumsList
             self.wheelView.tickDelegate = self.albumsList
             break
@@ -178,7 +180,8 @@ extension ViewController: WheelViewDelegate {
                 
             })
             let genre = select.object as? MediaCollection
-            self.artistsList.show(withType: .Artists, andData: self.holo.getArtistsBy(genre: genre?.representativeItem?.genre ?? ""))
+//            self.artistsList.show(withType: .Artists, andData: self.holo.getArtistsBy(genre: genre?.representativeItem?.genre ?? ""))
+            self.artistsList.show(withType: .Artists, andData: self.holo.getArtistsBy(genreId: genre?.persistentID ?? ""), animate: true, context: genre)
             current = self.artistsList
             self.wheelView.tickDelegate = artistsList
             break
