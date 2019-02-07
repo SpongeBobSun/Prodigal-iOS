@@ -504,7 +504,12 @@ class ListCell: UITableViewCell {
     private func loadImage(meta: MenuMeta) {
         let album = (meta.object as! MediaCollection)
         icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as? HNKCacheFormat
-        icon.hnk_setImage(album.getArtworkWithSize(size:   CGSize(width: 40, height: 40)), withKey: String(format:"%llu", (album.representativeItem?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"));
+        let key = String(format:"%llu_w40_h40", (album.representativeItem?.albumPersistentID)!)
+        HNKCache.shared()?.fetchImage(forKey: key, formatName: "list_cover", success: { (img) in
+            self.icon.image = img
+        }, failure: { (err) in
+            self.icon.hnk_setImage(album.getArtworkWithSize(size:   CGSize(width: 40, height: 40)), withKey: key, placeholder: #imageLiteral(resourceName: "ic_album"));
+        })
     }
 }
 

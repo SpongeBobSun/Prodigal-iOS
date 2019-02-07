@@ -265,7 +265,12 @@ extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
         let item = albums[index]
         ret.contentMode = .scaleAspectFill
         ret.hnk_cacheFormat = stackCacheFormat
-        ret.hnk_setImage(item.getArtworkWithSize(size: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item.representativeItem?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
+        let key = String(format:"%llu_w%d_h%d", (item.representativeItem?.albumPersistentID)!, size, size)
+        HNKCache.shared()?.fetchImage(forKey: key, formatName: "stack", success: { (img) in
+            ret.image = img
+        }, failure: { (err) in
+            ret.hnk_setImage(item.getArtworkWithSize(size: CGSize(width: size, height: size)), withKey: key, placeholder: #imageLiteral(resourceName: "ic_album"))
+        })
         return ret
     }
     
@@ -340,6 +345,7 @@ class PanelView: UIView {
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         stackView = KolodaView(frame: frame)
         stackView!.isUserInteractionEnabled = false
+        stackView!.isLoop = true
         
         addSubview(stackView!)
         stackView!.snp.makeConstraints { (maker) in

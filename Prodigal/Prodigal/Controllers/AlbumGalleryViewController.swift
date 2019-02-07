@@ -135,6 +135,7 @@ extension AlbumGalleryViewController: TickableViewControllerDelegate {
 class AlbumCell: UICollectionViewCell {
     
     static let reuseId =            "ReuseIdAlbumCollectionCell"
+    static let hnkCacheFormat =     "stack"
     
     let image = UIImageView(frame:CGRect.zero)
     let name = UILabel(frame: CGRect.zero)
@@ -159,7 +160,7 @@ class AlbumCell: UICollectionViewCell {
             maker.top.left.right.equalToSuperview()
             maker.bottom.equalToSuperview().offset(-25)
         }
-        self.image.hnk_cacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
+        self.image.hnk_cacheFormat = HNKCache.shared().formats[AlbumCell.hnkCacheFormat] as? HNKCacheFormat
         self.image.contentMode = .scaleAspectFit
         
         self.name.textAlignment = .center
@@ -172,8 +173,12 @@ class AlbumCell: UICollectionViewCell {
     
     func configure(withMenu menu: MenuMeta) {
         let album = menu.object as? MediaCollection
-        let img = album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? UIImage(imageLiteralResourceName: "ic_album")
-        image.hnk_setImage(img, withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
+        HNKCache.shared()?.fetchImage(forKey: String.init(format: "%llu_w200_h200", album?.representativeItem?.albumPersistentID ?? -1), formatName: AlbumCell.hnkCacheFormat, success: { (img) in
+            self.image.image = img
+        }, failure: { (err) in
+            let img = album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? UIImage(imageLiteralResourceName: "ic_album")
+            self.image.hnk_setImage(img, withKey: String.init(format: "%llu_w200_h200", album?.representativeItem?.albumPersistentID ?? -1))
+        })
         name.text = album?.representativeItem?.albumTitle
         name.textColor = ThemeManager.currentTheme.textColor
     }

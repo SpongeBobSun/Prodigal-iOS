@@ -9,11 +9,12 @@ target 'Prodigal' do
 
   # Pods for Prodigal
     pod 'SnapKit', '~> 4.0.0'
-    pod 'Koloda', '~> 4.5.1'
+    pod 'Koloda', '~> 4.6.0'
     pod 'Haneke'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'MarqueeLabel/Swift', '~> 3.2'
     pod 'Toast-Swift', '~> 4.0.0'
-    pod 'Holophonor', :path => '../holophonor'
+#    pod 'Holophonor', :path => '../holophonor'
+    pod 'Holophonor', '~> 0.1.1'
 end
