@@ -133,7 +133,6 @@ extension ViewController: WheelViewDelegate {
                 
             })
             let artist = select.object as? MediaCollection
-//            self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? ""))
             let genreid = (select.context as? MediaCollection)?.persistentID
             self.albumsList.show(withType: .Albums, andData: holo.getAlbumsBy(artistId: artist?.persistentID ?? "", andGenre: genreid))
             current = albumsList

@@ -293,10 +293,8 @@ class ListViewController: TickableViewController {
         var list: [MediaItem] = []
         
         if type == .Songs {
+            self.playList = MediaLibrary.shuffle(array: playList ?? []) as? Array<MediaItem>
             _ = ret.setObject(obj: (playList?.first!)!)
-            //TODO Shuffle playlist.
-            //playList.shuffle()
-            current += 1
             return ret
         }
         
