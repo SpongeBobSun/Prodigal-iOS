@@ -53,12 +53,10 @@ class NowPlayingViewController: TickableViewController {
     var playingView: NowPlayingView = NowPlayingView()
     let seekView: SeekView = SeekView()
     private var _song: MediaItem!
-    private var source: ProdigalMediaItem.MediaSource = .iTunes
     private var currentSelectionType: MenuMeta.MenuType! = .NowPlayingPopSeek
     var song: MediaItem {
         set {
             _song = newValue
-            source = .iTunes
             playingView.image.image = _song.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
             playingView.title.text = _song.title
             playingView.artist.text = _song.artist
