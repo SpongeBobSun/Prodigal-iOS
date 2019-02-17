@@ -67,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if MediaLibrary.sharedInstance.authorized {
             self.restoreLastState()
         }
+        if Holophonor.instance.getAllSongs().count == 0 {
+            Holophonor.instance.rescan(true, complition: {})
+        }
         if AppSettings.sharedInstance.newInstall() {
             let introVC = UIStoryboard(name: "Intro", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController()
             self.main.present(introVC!, animated: true, completion: nil)

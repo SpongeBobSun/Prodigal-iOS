@@ -59,6 +59,8 @@ class MediaLibrary: NSObject {
         if !authorized {
             MPMediaLibrary.requestAuthorization({ (result) in
                 self.authorized = result == .authorized || result == .restricted
+                Holophonor.instance.rescan(true, complition: {
+                })
             })
         }
     }

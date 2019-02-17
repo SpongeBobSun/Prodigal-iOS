@@ -42,6 +42,8 @@
 
 import UIKit
 import MediaPlayer
+import StoreKit
+
 import SnapKit
 import MarqueeLabel
 
@@ -119,6 +121,12 @@ class NowPlayingViewController: TickableViewController {
                 self.playingView.updateLabels(now: current, all: duration)
             }
         })
+        if #available(iOS 10.3, *) {
+            let rand = Int.random(in: 0...10)
+            if (rand >= 5) {
+                SKStoreReviewController.requestReview()
+            }
+        }
     }
     
     override func getSelection() -> MenuMeta {
