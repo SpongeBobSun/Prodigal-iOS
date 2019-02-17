@@ -76,9 +76,9 @@ class SeekView: UIView {
         if showMode == .Volume {
             self.label.text = "Volume"
         } else if showMode == .Seek {
-            self.label.text = "Seek"
+            self.label.text = NSLocalizedString("Seek", comment: "")
         } else {
-            self.label.text = "Rescanning"
+            self.label.text = NSLocalizedString("Rescanning", comment: "")
         }
         
     }

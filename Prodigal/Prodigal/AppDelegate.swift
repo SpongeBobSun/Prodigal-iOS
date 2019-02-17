@@ -40,8 +40,7 @@
 
 
 import UIKit
-import Fabric
-import Crashlytics
+import Firebase
 import MediaPlayer
 
 import Haneke
@@ -55,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
+        FirebaseApp.configure()
         ThemeManager().copyToDocuments()
         initCacheForList()
         let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))

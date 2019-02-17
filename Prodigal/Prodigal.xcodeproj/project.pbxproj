@@ -48,6 +48,8 @@
 		35570E087BF9195A91302EFD /* Pods_Prodigal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AE8643FAB11221327F290B /* Pods_Prodigal.framework */; };
 		444632B721AD581A0030A26A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444632B621AD581A0030A26A /* Constants.swift */; };
 		446F714921CA08F8008A0DC8 /* SeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446F714821CA08F8008A0DC8 /* SeekView.swift */; };
+		44A66F5E22198B4300ADE519 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44A66F6022198B4300ADE519 /* Localizable.strings */; };
+		44A66F64221993EF00ADE519 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44A66F63221993EF00ADE519 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +104,8 @@
 		446F714B21CA4DD8008A0DC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		446F714C21CA4EEF008A0DC8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		446F714D21CA4EF0008A0DC8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		44A66F5F22198B4300ADE519 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		44A66F63221993EF00ADE519 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		44DF25B542E00CA8714ADCAA /* Pods-Prodigal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.debug.xcconfig"; sourceTree = "<group>"; };
 		85143C72199005B173785D1A /* Pods-Prodigal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,6 +168,8 @@
 		01B0F2131E56E3840081B237 /* Prodigal */ = {
 			isa = PBXGroup;
 			children = (
+				44A66F63221993EF00ADE519 /* GoogleService-Info.plist */,
+				44A66F6022198B4300ADE519 /* Localizable.strings */,
 				015E4A951E5D7BFD007A7C3F /* Models */,
 				01D3DC7E1E5C2D9A00B425F9 /* Extensions */,
 				01B0F2141E56E3840081B237 /* AppDelegate.swift */,
@@ -287,7 +293,6 @@
 				01B0F20E1E56E3840081B237 /* Frameworks */,
 				01B0F20F1E56E3840081B237 /* Resources */,
 				7B61B19D00B45FFB8132F15F /* [CP] Embed Pods Frameworks */,
-				011BC8911E654FCF004F94B7 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -345,10 +350,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				01B19E051EAF255F00EABB1F /* AboutView.xib in Resources */,
+				44A66F64221993EF00ADE519 /* GoogleService-Info.plist in Resources */,
 				01CAB3161E5C13C6001B93C7 /* Configs in Resources */,
 				01B0F2221E56E3840081B237 /* LaunchScreen.storyboard in Resources */,
 				01B0F21F1E56E3840081B237 /* Assets.xcassets in Resources */,
 				01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */,
+				44A66F5E22198B4300ADE519 /* Localizable.strings in Resources */,
 				01BE71F01EB2ED4500902CB1 /* Intro.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,20 +363,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		011BC8911E654FCF004F94B7 /* Fabric */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Fabric;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 8e19b2f9462d4928f267906b4f96d4ac60741643 7054bdc64ead1b41914719b8f3f108e7564e91f89ddca23c03c6790d334acd74";
-		};
 		68BBF80DBCB2C06C23487EB8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +388,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Haneke/Haneke.framework",
 				"${BUILT_PRODUCTS_DIR}/Holophonor/Holophonor.framework",
 				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
@@ -404,10 +398,12 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haneke.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Holophonor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
@@ -417,6 +413,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +480,14 @@
 				446F714C21CA4EEF008A0DC8 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		44A66F6022198B4300ADE519 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				44A66F5F22198B4300ADE519 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -603,6 +608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UMW2HP56AU;
 				INFOPLIST_FILE = Prodigal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
