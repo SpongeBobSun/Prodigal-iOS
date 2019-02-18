@@ -128,7 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let lastList = ud.array(forKey: "last_playing_list") else {
             return
         }
-        let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as! Array<String>)
+        let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as? Array<String> ?? [])
         main.playlist = validateList
         main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
         main.resumeTime = lastCurrent
