@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,21 +18,21 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i5U-Es-V7g">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C94-CW-EiS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QL1-Yu-7h0" customClass="CardView" customModule="Prodigal" customModuleProvider="target">
-                                <rect key="frame" x="25" y="52" width="326" height="275.5"/>
+                                <rect key="frame" x="25" y="76" width="326" height="319"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-Wm-Zwp">
-                                        <rect key="frame" x="0.0" y="0.0" width="326" height="275.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="319"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -50,7 +50,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIy-fS-kXA" customClass="WheelView" customModule="Prodigal" customModuleProvider="target">
-                                <rect key="frame" x="42" y="359.5" width="291.5" height="291.5"/>
+                                <rect key="frame" x="20" y="427" width="335" height="335"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gIy-fS-kXA" secondAttribute="height" multiplier="1:1" id="TuR-ht-DZT"/>
@@ -60,19 +60,19 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="C94-CW-EiS" firstAttribute="bottom" secondItem="i5U-Es-V7g" secondAttribute="bottom" id="AmL-a1-taA"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="i5U-Es-V7g" secondAttribute="bottom" id="Eai-hV-frz"/>
                             <constraint firstAttribute="centerYWithinMargins" secondItem="QL1-Yu-7h0" secondAttribute="bottom" constant="16" id="FgQ-X7-Vt0"/>
                             <constraint firstItem="QL1-Yu-7h0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="32" id="GrS-QR-BWz"/>
+                            <constraint firstAttribute="bottom" secondItem="C94-CW-EiS" secondAttribute="bottom" id="Icy-hQ-7S2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QL1-Yu-7h0" secondAttribute="trailing" constant="8" id="Jux-sD-TnL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gIy-fS-kXA" secondAttribute="bottom" constant="16" id="P9z-3X-L6V"/>
                             <constraint firstItem="C94-CW-EiS" firstAttribute="top" secondItem="i5U-Es-V7g" secondAttribute="top" id="VBp-yp-qQM"/>
                             <constraint firstItem="C94-CW-EiS" firstAttribute="trailing" secondItem="i5U-Es-V7g" secondAttribute="trailing" id="WPF-VT-90S"/>
+                            <constraint firstItem="i5U-Es-V7g" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="X3W-ma-gVp"/>
                             <constraint firstItem="C94-CW-EiS" firstAttribute="leading" secondItem="i5U-Es-V7g" secondAttribute="leading" id="eZx-Am-dYs"/>
                             <constraint firstItem="gIy-fS-kXA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" constant="16" id="iVC-Jd-2U0"/>
                             <constraint firstAttribute="trailing" secondItem="i5U-Es-V7g" secondAttribute="trailing" id="j6i-jb-dqw"/>
                             <constraint firstItem="gIy-fS-kXA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="miG-lh-NPE"/>
                             <constraint firstItem="i5U-Es-V7g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vBu-Jh-Cs2"/>
-                            <constraint firstItem="i5U-Es-V7g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="w6W-ci-qyn"/>
                             <constraint firstItem="QL1-Yu-7h0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="9" id="xsF-uo-a4G"/>
                         </constraints>
                     </view>

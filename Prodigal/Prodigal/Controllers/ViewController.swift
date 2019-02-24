@@ -262,6 +262,7 @@ class ViewController: UIViewController {
         if !theme.backgroundCover {
             self.coverBackground = nil
         }
+        self.backgroundMask.isHidden = !theme.backgroundCover
         self.view.setNeedsDisplay()
     }
 }
