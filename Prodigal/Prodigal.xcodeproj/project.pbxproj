@@ -34,7 +34,6 @@
 		01B0F2361E56F7140081B237 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B0F2311E56F7140081B237 /* MediaToolbox.framework */; };
 		01B19E031EAF134E00EABB1F /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B19E021EAF134E00EABB1F /* AboutView.swift */; };
 		01B19E051EAF255F00EABB1F /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B19E041EAF255F00EABB1F /* AboutView.xib */; };
-		01BE71F01EB2ED4500902CB1 /* Intro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01BE71EF1EB2ED4500902CB1 /* Intro.storyboard */; };
 		01BE71F21EB2EDBF00902CB1 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE71F11EB2EDBF00902CB1 /* IntroViewController.swift */; };
 		01CAB3031E5BF90F001B93C7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB3021E5BF90F001B93C7 /* CardView.swift */; };
 		01CAB30B1E5C0C2D001B93C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAB30A1E5C0C2D001B93C7 /* Theme.swift */; };
@@ -50,6 +49,7 @@
 		446F714921CA08F8008A0DC8 /* SeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446F714821CA08F8008A0DC8 /* SeekView.swift */; };
 		44A66F5E22198B4300ADE519 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44A66F6022198B4300ADE519 /* Localizable.strings */; };
 		44A66F64221993EF00ADE519 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44A66F63221993EF00ADE519 /* GoogleService-Info.plist */; };
+		44CC422222227BF4004131F2 /* Intro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44CC422422227BF4004131F2 /* Intro.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,7 +87,6 @@
 		01B0F2311E56F7140081B237 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 		01B19E021EAF134E00EABB1F /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = Controllers/AboutView.swift; sourceTree = "<group>"; };
 		01B19E041EAF255F00EABB1F /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutView.xib; path = Views/AboutView.xib; sourceTree = "<group>"; };
-		01BE71EF1EB2ED4500902CB1 /* Intro.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Intro.storyboard; path = Views/Intro.storyboard; sourceTree = "<group>"; };
 		01BE71F11EB2EDBF00902CB1 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntroViewController.swift; path = Controllers/IntroViewController.swift; sourceTree = "<group>"; };
 		01CAB3021E5BF90F001B93C7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
 		01CAB30A1E5C0C2D001B93C7 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Utils/Theme.swift; sourceTree = "<group>"; };
@@ -106,6 +105,8 @@
 		446F714D21CA4EF0008A0DC8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		44A66F5F22198B4300ADE519 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		44A66F63221993EF00ADE519 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		44CC422522227C10004131F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Intro.storyboard; sourceTree = "<group>"; };
+		44CC422622227C18004131F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Intro.strings"; sourceTree = "<group>"; };
 		44DF25B542E00CA8714ADCAA /* Pods-Prodigal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.debug.xcconfig"; sourceTree = "<group>"; };
 		85143C72199005B173785D1A /* Pods-Prodigal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prodigal.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Prodigal/Pods-Prodigal.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,7 +191,7 @@
 				01B0F2291E56EFE80081B237 /* WheelView.swift */,
 				01CAB3021E5BF90F001B93C7 /* CardView.swift */,
 				01B19E041EAF255F00EABB1F /* AboutView.xib */,
-				01BE71EF1EB2ED4500902CB1 /* Intro.storyboard */,
+				44CC422422227BF4004131F2 /* Intro.storyboard */,
 				446F714821CA08F8008A0DC8 /* SeekView.swift */,
 			);
 			name = Views;
@@ -356,7 +357,7 @@
 				01B0F21F1E56E3840081B237 /* Assets.xcassets in Resources */,
 				01B0F21A1E56E3840081B237 /* Main.storyboard in Resources */,
 				44A66F5E22198B4300ADE519 /* Localizable.strings in Resources */,
-				01BE71F01EB2ED4500902CB1 /* Intro.storyboard in Resources */,
+				44CC422222227BF4004131F2 /* Intro.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +489,16 @@
 				44A66F5F22198B4300ADE519 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		44CC422422227BF4004131F2 /* Intro.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				44CC422522227C10004131F2 /* Base */,
+				44CC422622227C18004131F2 /* zh-Hans */,
+			);
+			name = Intro.storyboard;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
