@@ -260,7 +260,9 @@ class ViewController: UIViewController {
         self.backgroundMask.backgroundColor = theme.backgroundColor
         self.cardView.backgroundColor = theme.cardColor
         if !theme.backgroundCover {
-            self.coverBackground = nil
+            self.coverBackground.isHidden = true
+        } else {
+            self.coverBackground.isHidden = false
         }
         self.backgroundMask.isHidden = !theme.backgroundCover
         self.view.setNeedsDisplay()
