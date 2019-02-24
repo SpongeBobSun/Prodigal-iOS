@@ -44,9 +44,10 @@ import Koloda
 import MediaPlayer
 import Haneke
 import MarqueeLabel
+import Holophonor
 
 protocol NowPlayingFetcherDelegate: class {
-    func getNowPlaying() -> Any?
+    func getNowPlaying() -> MediaItem?
 }
 
 class TwoPanelListViewController: TickableViewController {
@@ -57,7 +58,7 @@ class TwoPanelListViewController: TickableViewController {
     var panelView: PanelView!
     
     var items: Array<MenuMeta>!
-    var albums: Array<MPMediaItemCollection>!
+    var albums: Array<MediaCollection>!
     var images: Dictionary<MenuMeta.MenuType, UIImage>!
     var stackCacheFormat: HNKCacheFormat!
     var timer: Timer!
@@ -66,9 +67,15 @@ class TwoPanelListViewController: TickableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initMenu()
-        albums = MediaLibrary.sharedInstance.fetchAllAlbums()
-        stackCacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
-        
+        albums = Holophonor.instance.getAllAlbums()
+        stackCacheFormat = HNKCache.shared().formats["stack"] as? HNKCacheFormat
+        let _ = Holophonor.instance.observeRescan().subscribe { (event) in
+            if event.element ?? false {
+                self.albums = Holophonor.instance.getAllAlbums()
+                self.panelView.stackView?.reloadData()
+            }
+        }
+
         tableView = UITableView()
         tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
@@ -81,8 +88,6 @@ class TwoPanelListViewController: TickableViewController {
             maker.leading.top.bottom.equalToSuperview()
             maker.trailing.equalTo(self.view.snp.centerXWithinMargins)
         }
-        
-
         panelView = PanelView()
         self.view.addSubview(panelView)
         panelView.snp.makeConstraints { (maker) in
@@ -96,9 +101,9 @@ class TwoPanelListViewController: TickableViewController {
         super.viewWillAppear(animated)
         panelView.layoutIfNeeded()
         panelView.initViews()
-        panelView.stackView.delegate = self
-        panelView.stackView.dataSource = self
-        panelView.stackView.reloadData()
+        panelView.stackView?.delegate = self
+        panelView.stackView?.dataSource = self
+        panelView.stackView?.reloadData()
         updateRightPanel(index: current)
         
         timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(swipe), userInfo: nil, repeats: true)
@@ -117,7 +122,7 @@ class TwoPanelListViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(view)
@@ -136,7 +141,6 @@ class TwoPanelListViewController: TickableViewController {
         items.append(MenuMeta(name: NSLocalizedString("Songs", comment: ""), type: .Songs))
         items.append(MenuMeta(name: NSLocalizedString("Playing List", comment: ""), type: MenuMeta.MenuType.Playlist))
         items.append(MenuMeta(name: NSLocalizedString("Genres", comment: ""), type: MenuMeta.MenuType.Genres))
-        items.append(MenuMeta(name: NSLocalizedString("Local Files", comment: ""), type: MenuMeta.MenuType.LocalSongs))
         items.append(MenuMeta(name: NSLocalizedString("Shuffle Songs", comment: ""), type: MenuMeta.MenuType.ShuffleSongs))
         items.append(MenuMeta(name: NSLocalizedString("Settings", comment: ""), type: MenuMeta.MenuType.Settings))
         items.append(MenuMeta(name: NSLocalizedString("Now Playing", comment: ""), type: MenuMeta.MenuType.NowPlaying))
@@ -147,19 +151,18 @@ class TwoPanelListViewController: TickableViewController {
                   MenuMeta.MenuType.Songs: #imageLiteral(resourceName: "ic_songs"),
                   MenuMeta.MenuType.Settings: #imageLiteral(resourceName: "ic_settings"),
                   MenuMeta.MenuType.Genres: #imageLiteral(resourceName: "ic_genre"),
-                  MenuMeta.MenuType.LocalSongs: #imageLiteral(resourceName: "ic_local"),
                   MenuMeta.MenuType.ShuffleSongs: #imageLiteral(resourceName: "ic_shuffle"),
                   MenuMeta.MenuType.Playlist: #imageLiteral(resourceName: "ic_playlist"),]
         
     }
     
     @objc public func swipe() {
-        if panelView.stackView.isHidden {
+        if panelView.stackView?.isHidden ?? true{
             return
         }
         let direction = swipeDir ? SwipeResultDirection.left : SwipeResultDirection.right
         swipeDir = !swipeDir
-        self.panelView.stackView.swipe(direction)
+        self.panelView.stackView?.swipe(direction)
     }
     
     override func hide(type:AnimType = .push, completion: @escaping () -> Void) {
@@ -225,14 +228,14 @@ extension TwoPanelListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ret = tableView.dequeueReusableCell(withIdentifier: TwoPanelListCell.reuseId) as! TwoPanelListCell!
+        let ret = tableView.dequeueReusableCell(withIdentifier: TwoPanelListCell.reuseId) as? TwoPanelListCell
         let menu = items[indexPath.row]
         ret?.configure(meta: menu)
         return ret!
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return LIST_ITEM_VIEW_HEIGHT
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -259,14 +262,19 @@ extension TwoPanelListViewController: KolodaViewDelegate, KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         let size = koloda.frame.width - 32
         let ret = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-        let item = albums[index].representativeItem
+        let item = albums[index]
         ret.contentMode = .scaleAspectFill
         ret.hnk_cacheFormat = stackCacheFormat
-        ret.hnk_setImage(item?.artwork?.image(at: CGSize(width: size, height: size)), withKey: String(format:"%llu", (item?.albumArtistPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"))
+        let key = String(format:"%llu_w%d_h%d", (item.representativeItem?.albumPersistentID)!, size, size)
+        HNKCache.shared()?.fetchImage(forKey: key, formatName: "stack", success: { (img) in
+            ret.image = img
+        }, failure: { (err) in
+            ret.hnk_setImage(item.getArtworkWithSize(size: CGSize(width: size, height: size)), withKey: key, placeholder: #imageLiteral(resourceName: "ic_album"))
+        })
         return ret
     }
     
-    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+    private func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
         return nil
     }
     
@@ -281,7 +289,7 @@ class TwoPanelListCell: UITableViewCell {
     
     let title: UILabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
     }
@@ -298,7 +306,8 @@ class TwoPanelListCell: UITableViewCell {
         title.backgroundColor = UIColor.clear
         title.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(self.contentView)
-            maker.center.equalTo(self.contentView)
+            maker.centerY.equalTo(self.contentView)
+            maker.left.equalTo(self.contentView).inset(5)
         }
         title.contentMode = .left
     }
@@ -316,7 +325,7 @@ class TwoPanelListCell: UITableViewCell {
 
 class PanelView: UIView {
     var imageView: UIImageView!
-    var stackView: KolodaView!
+    var stackView: KolodaView?
     var nowPlaying: NowPlayingWidget!
     
     var fetcherDelegate: NowPlayingFetcherDelegate?
@@ -335,15 +344,16 @@ class PanelView: UIView {
         let size = self.bounds.width - 32
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         stackView = KolodaView(frame: frame)
-        stackView.isUserInteractionEnabled = false
+        stackView!.isUserInteractionEnabled = false
+        stackView!.isLoop = true
         
-        addSubview(stackView)
-        stackView.snp.makeConstraints { (maker) in
+        addSubview(stackView!)
+        stackView!.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(size)
             maker.center.equalTo(self)
         }
-        stackView.countOfVisibleCards = 10
-
+        stackView!.countOfVisibleCards = 10
+        
         addSubview(imageView)
         
         imageView.snp.makeConstraints { (maker) in
@@ -357,14 +367,20 @@ class PanelView: UIView {
         }
     }
     
+    func reloadStackView(delegate: KolodaViewDelegate, dataSource: KolodaViewDataSource) {
+        stackView?.delegate = delegate
+        stackView?.dataSource = dataSource
+        stackView?.reloadData()
+    }
+    
     func showStack() {
-        stackView.isHidden = false
+        stackView?.isHidden = false
         imageView.isHidden = true
         nowPlaying.isHidden = true
     }
     
     func show(image: UIImage) {
-        stackView.isHidden = true
+        stackView?.isHidden = true
         imageView.isHidden = false
         imageView.image = image
         nowPlaying.isHidden = true
@@ -372,19 +388,14 @@ class PanelView: UIView {
     
     func showNowPlaying() {
         imageView.isHidden = true
-        stackView.isHidden = true
+        stackView?.isHidden = true
         nowPlaying.isHidden = false
         nowPlaying.loadTheme()
         if (fetcherDelegate == nil) {
             nowPlaying.config(media: nil)
         } else {
-            var item = fetcherDelegate?.getNowPlaying()
-            if item is MPMediaItem {
-                nowPlaying.config(media:item as! MPMediaItem?)
-            }
-            if item is MediaItem {
-                nowPlaying.config(file: item as! MediaItem?)
-            }
+            let item = fetcherDelegate?.getNowPlaying()
+            nowPlaying.config(media: item)
         }
     }
     
@@ -426,29 +437,17 @@ class NowPlayingWidget: UIView {
         
     }
     
-    func config(media: MPMediaItem?) {
+    func config(media: MediaItem?) {
         if media == nil {
             imageView.image = #imageLiteral(resourceName: "ic_album")
             title.text = NSLocalizedString("Nothing", comment: "")
             artist.text = NSLocalizedString("Nobody", comment: "")
             return
         }
-        imageView.image = media!.artwork?.image(at: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
+        imageView.image = media?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? #imageLiteral(resourceName: "ic_album")
         title.text = media!.title
         artist.text = media!.artist
         album.text = media!.albumTitle
-    }
-    
-    func config(file: MediaItem?) {
-        imageView.image = #imageLiteral(resourceName: "ic_album")
-        if file == nil {
-            title.text = NSLocalizedString("Nothing", comment: "")
-            artist.text = NSLocalizedString("Nobody", comment: "")
-            return
-        }
-        artist.text = ""
-        album.text = ""
-        title.text = file?.name
     }
     
     func loadTheme() {

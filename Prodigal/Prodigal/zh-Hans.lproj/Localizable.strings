@@ -1,0 +1,32 @@
+/* 
+  Localizable.strings
+  Prodigal
+
+  Created by Bob on 2019/2/17.
+  Copyright © 2019 bob.sun. All rights reserved.
+*/
+"Shuffle Songs" = "随机全部";
+"Artists" = "艺术家";
+"Albums" = "专辑";
+"Album Gallery" = "唱片架";
+"Songs" = "歌曲";
+"Playing List" = "当前列表";
+"Genres" = "流派";
+"Settings" = "设置";
+"Now Playing" = "正在播放";
+"Nothing" = "无";
+"Nobody" = "无";
+"Shuffle" = "随机";
+"Repeat" = "重复";
+"YES" = "是";
+"NO" = "否";
+"ALL" = "全部";
+"NONE" = "无";
+"ONE" = "单曲";
+"Rescan Library" = "重建媒体库";
+"Theme" = "主题";
+"About" = "关于";
+"Seek" = "跳转";
+"File not found" = "文件未找到";
+"Go to 'Settings' and rescan your music library." = "请到 '设置' 中选择重建媒体库";
+"Rescanning" = "查找文件中...";

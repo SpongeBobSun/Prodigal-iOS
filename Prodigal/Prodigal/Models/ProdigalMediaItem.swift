@@ -42,7 +42,7 @@
 import Foundation
 import AVFoundation
 
-class MediaItem {
+class ProdigalMediaItem {
     
     enum MediaSource: Int {
         case iTunes = 1
@@ -65,8 +65,8 @@ class MediaItem {
     }
 }
 
-extension MediaItem: Equatable {
-    static func == (first: MediaItem, second: MediaItem) -> Bool {
+extension ProdigalMediaItem: Equatable {
+    static func == (first: ProdigalMediaItem, second: ProdigalMediaItem) -> Bool {
         return first.fileName == second.fileName
     }
 }

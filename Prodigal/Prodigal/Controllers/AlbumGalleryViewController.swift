@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import MediaPlayer
 import Haneke
+import Holophonor
 
 class AlbumGalleryViewController: TickableViewController {
 
@@ -39,7 +40,7 @@ class AlbumGalleryViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
@@ -51,13 +52,25 @@ class AlbumGalleryViewController: TickableViewController {
             maker.edges.equalToSuperview()
         }
         if albums.count == 0 {
-            let data = MediaLibrary.sharedInstance.fetchAllAlbums()
-            data.forEach({ (item) in
-                albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
-            })
+            let data = Holophonor.instance.getAllAlbums()
+            if data.count != 0 {
+                data.forEach({ (item) in
+                    albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
+                })
+            } else {
+                _ = Holophonor.instance.observeRescan().subscribe(onNext: { (compeleted) in
+                    let data = Holophonor.instance.getAllAlbums()
+                    data.forEach({ (item) in
+                        self.albums.append(MenuMeta(name: item.representativeItem?.albumTitle ?? "Unkown Album", type: .Album).setObject(obj: item))
+                    })
+                    self.current = self.albums.count / 2
+                    self.collection.reloadData()
+                }, onError: nil, onCompleted: nil, onDisposed: nil)
+            }
         }
-        let size = view.bounds.height / 2
+        let size = view.bounds.height / 3 * 2
         stackLayout.itemSize = CGSize(width: size, height: size)
+        collection.contentInset = UIEdgeInsets(top: 0, left: size / 2, bottom: 0, right: size / 2)
         collection.reloadData()
         self.view.backgroundColor = UIColor.clear
         current = albums.count / 2
@@ -82,6 +95,7 @@ class AlbumGalleryViewController: TickableViewController {
         current += 1
         collection.scrollToItem(at: IndexPath(row: current, section:0), at: .centeredHorizontally, animated: true)
     }
+
     override func onPreviousTick() {
         if current <= 0 {
             return
@@ -121,6 +135,7 @@ extension AlbumGalleryViewController: TickableViewControllerDelegate {
 class AlbumCell: UICollectionViewCell {
     
     static let reuseId =            "ReuseIdAlbumCollectionCell"
+    static let hnkCacheFormat =     "stack"
     
     let image = UIImageView(frame:CGRect.zero)
     let name = UILabel(frame: CGRect.zero)
@@ -145,7 +160,7 @@ class AlbumCell: UICollectionViewCell {
             maker.top.left.right.equalToSuperview()
             maker.bottom.equalToSuperview().offset(-25)
         }
-        self.image.hnk_cacheFormat = HNKCache.shared().formats["stack"] as! HNKCacheFormat!
+        self.image.hnk_cacheFormat = HNKCache.shared().formats[AlbumCell.hnkCacheFormat] as? HNKCacheFormat
         self.image.contentMode = .scaleAspectFit
         
         self.name.textAlignment = .center
@@ -157,8 +172,13 @@ class AlbumCell: UICollectionViewCell {
     }
     
     func configure(withMenu menu: MenuMeta) {
-        let album = menu.object as! MPMediaItemCollection!
-        image.hnk_setImage(album?.representativeItem?.artwork?.image(at: CGSize(width: 200, height: 200)), withKey: String.init(format: "%llu", album?.representativeItem?.albumPersistentID ?? -1))
+        let album = menu.object as? MediaCollection
+        HNKCache.shared()?.fetchImage(forKey: String.init(format: "%llu_w200_h200", album?.representativeItem?.albumPersistentID ?? -1), formatName: AlbumCell.hnkCacheFormat, success: { (img) in
+            self.image.image = img
+        }, failure: { (err) in
+            let img = album?.getArtworkWithSize(size: CGSize(width: 200, height: 200)) ?? UIImage(imageLiteralResourceName: "ic_album")
+            self.image.hnk_setImage(img, withKey: String.init(format: "%llu_w200_h200", album?.representativeItem?.albumPersistentID ?? -1))
+        })
         name.text = album?.representativeItem?.albumTitle
         name.textColor = ThemeManager.currentTheme.textColor
     }

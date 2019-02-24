@@ -14,13 +14,13 @@ extension UIColor {
         
         if hexString.hasPrefix("#") {
             let start = hexString.index(hexString.startIndex, offsetBy: 1)
-            let hexColor = hexString.substring(from: start)
+            let hexColor = String(hexString[start...])
             
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             
             if scanner.scanHexInt64(&hexNumber) {
-                if hexColor.characters.count == 8 {
+                if hexColor.count == 8 {
                     r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
                     g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
                     b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
@@ -28,7 +28,7 @@ extension UIColor {
                     
                     self.init(red: r, green: g, blue: b, alpha: 1.0 - a)
                     return
-                } else if hexColor.characters.count == 6 {
+                } else if hexColor.count == 6 {
                     r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
                     g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
                     b = CGFloat(hexNumber & 0x0000ff) / 255
@@ -38,7 +38,7 @@ extension UIColor {
             } else {
                 self.init(red: 1, green: 1, blue: 1, alpha: 0.0)
             }
-        }//TODO - Fix this
+        }
         
         return nil
     }

@@ -9,6 +9,8 @@
 import UIKit
 import MediaPlayer
 
+import Holophonor
+
 class InfoCenterHelper: NSObject {
     static let helper: InfoCenterHelper = {
         let ret = InfoCenterHelper()
@@ -24,33 +26,23 @@ class InfoCenterHelper: NSObject {
         MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
     ]
     
-    func update(withItem item: MPMediaItem, elapsed: TimeInterval = 0) {
+    func update(withItem item: MediaItem, elapsed: TimeInterval = 0) {
         InfoCenterHelper.iTunesDict[MPMediaItemPropertyTitle] = item.title ?? ""
         InfoCenterHelper.iTunesDict[MPMediaItemPropertyArtist] = item.artist ?? ""
         InfoCenterHelper.iTunesDict[MPMediaItemPropertyAlbumTitle] = item.albumTitle ?? ""
         InfoCenterHelper.iTunesDict[MPNowPlayingInfoPropertyPlaybackRate] = 1.0
-        InfoCenterHelper.iTunesDict[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyPlaybackDuration] = item.duration
         InfoCenterHelper.iTunesDict[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsed
 
-        guard let img = item.artwork else {
+        guard let img = item.getArtworkWithSize(size: CGSize(width: 800, height: 800)) else {
             InfoCenterHelper.iTunesDict.removeValue(forKey: MPMediaItemPropertyArtwork)
             MPNowPlayingInfoCenter.default().nowPlayingInfo = InfoCenterHelper.iTunesDict
             return
         }
-        InfoCenterHelper.iTunesDict[MPMediaItemPropertyArtwork] = img
+        let artwork = MPMediaItemArtwork.init(boundsSize: CGSize(width: 800, height: 800)) { (size) -> UIImage in
+            return img
+        }
+        InfoCenterHelper.iTunesDict[MPMediaItemPropertyArtwork] = artwork
         MPNowPlayingInfoCenter.default().nowPlayingInfo = InfoCenterHelper.iTunesDict
-    }
-    
-    func update(withFile file: MediaItem, elapsed: TimeInterval = 0) {
-        let dict: [String: Any] = [
-            MPMediaItemPropertyTitle: file.name,
-            MPMediaItemPropertyArtist: "",
-            MPMediaItemPropertyAlbumTitle: "",
-            MPNowPlayingInfoPropertyPlaybackRate: 1.0,
-//            MPMediaItemPropertyPlaybackDuration: item.playbackDuration,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: elapsed,
-            ]
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = dict
-
     }
 }

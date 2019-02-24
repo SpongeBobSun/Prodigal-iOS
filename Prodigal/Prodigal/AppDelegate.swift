@@ -40,38 +40,40 @@
 
 
 import UIKit
-import Fabric
-import Crashlytics
+import Firebase
 import MediaPlayer
 
 import Haneke
+import Holophonor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var main: ViewController!
-    var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    var taskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
         ThemeManager().copyToDocuments()
         initCacheForList()
         let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: Bundle.init(for: AppDelegate.self))
-        main = mainStoryBoard.instantiateInitialViewController() as! ViewController!
-        if window == nil {
-            window = UIWindow(frame: UIScreen.main.bounds)
+        self.main = mainStoryBoard.instantiateInitialViewController() as? ViewController
+        if self.window == nil {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
         }
-        window?.rootViewController = main
-        window?.makeKeyAndVisible()
+        self.window?.rootViewController = self.main
+        self.window?.makeKeyAndVisible()
         if MediaLibrary.sharedInstance.authorized {
-            restoreLastState()
+            self.restoreLastState()
+        }
+        if Holophonor.instance.getAllSongs().count == 0 {
+            Holophonor.instance.rescan(true, complition: {})
         }
         if AppSettings.sharedInstance.newInstall() {
             let introVC = UIStoryboard(name: "Intro", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController()
-            main.present(introVC!, animated: true, completion: nil)
+            self.main.present(introVC!, animated: true, completion: nil)
         }
-
         return true
     }
 
@@ -94,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        UIApplication.shared.endBackgroundTask(taskId)
+        UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(taskId.rawValue))
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -109,11 +111,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let ud = UserDefaults.standard
         ud.set(main.player?.currentTime, forKey: "last_current_time")
         ud.set(main.playingIndex, forKey: "last_playing_index")
-        ud.set(main.source.rawValue, forKey:"last_media_source")
         
-        var list: Array<UInt64> = []
+        var list: Array<String> = []
         for each in main.playlist {
-            list.append(each.persistentID)
+            list.append(each.persistentID ?? "")
         }
         
         ud.set(list, forKey: "last_playing_list")
@@ -127,18 +128,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let lastList = ud.array(forKey: "last_playing_list") else {
             return
         }
-        let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as! Array<UInt64>)
-        main.source = MediaItem.MediaSource(rawValue: ud.integer(forKey: "last_media_source")) ?? .iTunes
-        if main.source == .iTunes {
-            //Only restor itunes media for now.
-            main.playlist = validateList
-            main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
-            main.resumeTime = lastCurrent
-        } else {
-            main.fileList = []
-            main.playingIndex = -1
-            main.resumeTime = 0
-        }
+        let validateList = MediaLibrary.sharedInstance.validateList(list: lastList as? Array<String> ?? [])
+        main.playlist = validateList
+        main.playingIndex = lastIndex >= validateList.count ? 0 : lastIndex
+        main.resumeTime = lastCurrent
     }
 
     private func initCacheForList() {
@@ -168,3 +161,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
+}

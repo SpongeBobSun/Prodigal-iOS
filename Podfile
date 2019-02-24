@@ -8,10 +8,14 @@ target 'Prodigal' do
   use_frameworks!
 
   # Pods for Prodigal
-    pod 'SnapKit', '~> 3.2.0'
-    pod 'Koloda', '~> 4.0'
+    pod 'SnapKit', '~> 4.0.0'
+    pod 'Koloda', '~> 4.6.0'
     pod 'Haneke'
-    pod 'Fabric'
-    pod 'Crashlytics'
-    pod 'MarqueeLabel/Swift'
+    pod 'Fabric', '~> 1.9.0'
+    pod 'Crashlytics', '~> 3.12.0'
+    pod 'Firebase/Core'
+    pod 'MarqueeLabel/Swift', '~> 3.2'
+    pod 'Toast-Swift', '~> 4.0.0'
+#    pod 'Holophonor', :path => '../holophonor'
+    pod 'Holophonor', '~> 0.1.1'
 end

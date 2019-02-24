@@ -89,7 +89,7 @@ class TickableViewController: UIViewController {
     }
 }
 
-extension TickableViewController: WheelViewTickDelegate {
+@objc extension TickableViewController: WheelViewTickDelegate {
     func onNextTick() {
         let items = tickableDelegate.getData()
         if current >= items.count - 1 {
@@ -99,9 +99,12 @@ extension TickableViewController: WheelViewTickDelegate {
         
         items[current].highLight = false
         items[current + 1].highLight = true
-        tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current + 1, section: 0)], with: .none)
-        current += 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
+        UIView.animate(withDuration: 0, animations: {
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current + 1, section: 0)], with: .right)
+            self.current += 1
+        }) { (completed) in
+            tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
+        }
     }
     
     func onPreviousTick() {
@@ -112,9 +115,12 @@ extension TickableViewController: WheelViewTickDelegate {
         let tableView = tickableDelegate.getTickable()
         items[current].highLight = false
         items[current - 1].highLight = true
-        tableView.reloadRows(at: [IndexPath(row: current, section: 0), IndexPath(row: current - 1, section: 0)], with: .none)
-        current -= 1
-        tableView.scrollToRow(at: IndexPath(row: current, section: 0), at: .none, animated: true)
+        UIView.animate(withDuration: 0, animations: {
+            tableView.reloadRows(at: [IndexPath(row: self.current, section: 0), IndexPath(row: self.current - 1, section: 0)], with: .left)
+            self.current -= 1
+        }) { (completed) in
+            tableView.scrollToRow(at: IndexPath(row: self.current, section: 0), at: .none, animated: true)
+        }
     }
 
 }

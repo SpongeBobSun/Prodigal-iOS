@@ -57,8 +57,6 @@ class MenuMeta: NSObject {
         case Playlist
         case Genres
         case Genre
-        case LocalSongs
-        case LocalSong
         case ShuffleSongs
         case ShuffleCurrent
         case Settings
@@ -71,6 +69,7 @@ class MenuMeta: NSObject {
         case ThemeSettings
         case GetSourceCode
         case Themes
+        case RescanLibrary
         case Theme
         case ContactUs
         case MoreTheme
@@ -81,6 +80,7 @@ class MenuMeta: NSObject {
     var highLight: Bool = false
     var type: MenuMeta.MenuType = .Undefined
     var object: Any?
+    var context: Any?
     
     convenience init(name: String, type: MenuType) {
         self.init()
@@ -94,10 +94,16 @@ class MenuMeta: NSObject {
         return self
     }
     
+    func setContext(obj: Any?) -> MenuMeta {
+        context = obj
+        return self
+    }
+    
     static func settingsMenu() -> Array<MenuMeta> {
         var ret:Array<MenuMeta> = []
         ret.append(MenuMeta(name: NSLocalizedString("Shuffle", comment: ""), type: .ShuffleSettings))
         ret.append(MenuMeta(name: NSLocalizedString("Repeat", comment: ""), type: .RepeatSettings))
+        ret.append(MenuMeta(name: NSLocalizedString("Rescan Library", comment: ""), type: .RescanLibrary))
         ret.append(MenuMeta(name: NSLocalizedString("Theme", comment: ""), type: .ThemeSettings))
         ret.append(MenuMeta(name: NSLocalizedString("About", comment: ""), type: .About))
         

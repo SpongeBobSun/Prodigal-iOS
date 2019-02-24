@@ -45,12 +45,13 @@
 import UIKit
 import MediaPlayer
 import Haneke
+import Holophonor
 
 class ListViewController: TickableViewController {
     
     var tableView: UITableView!
     var items: Array<MenuMeta> = []
-    var playList: Array<MPMediaItem>? = nil
+    var playList: Array<MediaItem>? = nil
     var type: MenuMeta.MenuType = .Undefined
     let emptyView = UIImageView()
     
@@ -68,7 +69,7 @@ class ListViewController: TickableViewController {
     
     func attachTo(viewController vc: UIViewController, inView view:UIView) {
         self.tickableDelegate = self
-        vc.addChildViewController(self)
+        vc.addChild(self)
         view.addSubview(self.view)
         self.view.isHidden = true
         self.view.snp.makeConstraints { (maker) in
@@ -101,7 +102,7 @@ class ListViewController: TickableViewController {
         aboutView.isHidden = true
     }
     
-    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true) {
+    func show(withType type: MenuMeta.MenuType, andData data:Array<Any>, animate:Bool = true, context: Any? = nil) {
         self.current = 0
         self.playList = nil
         self.type = type
@@ -118,7 +119,11 @@ class ListViewController: TickableViewController {
         case .Artists:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.artist)!, type: .Artist).setObject(obj: each))
+                items.append(
+                    MenuMeta(name: ((each as! MediaCollection).representativeItem?.artist)!, type: .Artist)
+                        .setObject(obj: each)
+                        .setContext(obj: context)
+                )
             })
             items.first?.highLight = true
             insertShuffleAll()
@@ -127,7 +132,7 @@ class ListViewController: TickableViewController {
         case .Albums:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.albumTitle)!, type: .Album).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MediaCollection).representativeItem?.albumTitle)!, type: .Album).setObject(obj: each))
             })
             items.first?.highLight = true
             insertShuffleAll()
@@ -136,9 +141,9 @@ class ListViewController: TickableViewController {
         case .Songs:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItem).title)!, type: .Song).setObject(obj: each).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MediaItem).title)!, type: .Song).setObject(obj: each).setObject(obj: each))
             })
-            playList = data as? Array<MPMediaItem>
+            playList = data as? Array<MediaItem>
             items.first?.highLight = true
             insertShuffleAll()
             hasShuffle = true
@@ -146,14 +151,10 @@ class ListViewController: TickableViewController {
         case .Genres:
             items.removeAll()
             data.forEach({ (each) in
-                items.append(MenuMeta(name: ((each as! MPMediaItemCollection).representativeItem?.genre)!, type: .Genre).setObject(obj: each))
-            })
-            items.first?.highLight = true
-            break
-        case .LocalSongs:
-            items.removeAll()
-            data.forEach({ (each) in
-                items.append(MenuMeta(name: (each as! MediaItem).name, type: .LocalSong).setObject(obj: each))
+                items.append(MenuMeta(name: ((each as! MediaCollection).representativeItem?.genre)!, type: .Genre)
+                    .setObject(obj: each)
+                    .setContext(obj: each)
+                )
             })
             items.first?.highLight = true
             break
@@ -209,7 +210,7 @@ class ListViewController: TickableViewController {
             return
         }
         let menu: MenuMeta? = MenuMeta(name: "Shuffle All", type: .ShuffleCurrent)
-        if type != .Songs && type != .Albums && type != .Artists && type != .Genres && type != .LocalSongs {
+        if type != .Songs && type != .Albums && type != .Artists && type != .Genres {
             return
         }
         items.insert(menu!, at: 0)
@@ -289,13 +290,11 @@ class ListViewController: TickableViewController {
         if ret.type != .ShuffleCurrent {
             return ret
         }
-        var list: [MPMediaItem] = []
+        var list: [MediaItem] = []
         
         if type == .Songs {
-            _ = ret.setObject(obj: (playList?.first!))
-            //TODO Shuffle playlist.
-            //playList.shuffle()
-            current += 1
+            self.playList = MediaLibrary.shuffle(array: playList ?? []) as? Array<MediaItem>
+            _ = ret.setObject(obj: (playList?.first!)!)
             return ret
         }
         
@@ -305,13 +304,13 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MediaCollection {
+                    list.append(contentsOf: collection.items ?? [])
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byAlbum: (collection.representativeItem?.albumPersistentID)!))
+                
             })
             if list.count > 0 {
-                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                self.playList = MediaLibrary.shuffle(array: list) as? [MediaItem]
                 _ = ret.setObject(obj: (playList?.first!)!)
             }
             break
@@ -320,13 +319,13 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MediaCollection {
+                    list.append(contentsOf: Holophonor.instance.getSongsBy(artistId: collection.persistentID ?? ""))
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byArtist: (collection.representativeItem?.artistPersistentID)!))
+                
             })
             if list.count > 0 {
-                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                self.playList = MediaLibrary.shuffle(array: list) as? Array<MediaItem>
                 _ = ret.setObject(obj: (playList?.first!)!)
             }
             break
@@ -335,13 +334,12 @@ class ListViewController: TickableViewController {
                 if each.type == .ShuffleCurrent {
                     return
                 }
-                guard let collection = each.object as? MPMediaItemCollection! else {
-                    return
+                if let collection = each.object as? MediaCollection {
+                    list.append(contentsOf: collection.items ?? [])
                 }
-                list.append(contentsOf: MediaLibrary.sharedInstance.fetchSongs(byGenre: (collection.representativeItem?.genrePersistentID)!))
             })
             if list.count > 0 {
-                self.playList = MediaLibrary.shuffle(array: list) as? Array<MPMediaItem>
+                self.playList = MediaLibrary.shuffle(array: list) as? Array<MediaItem>
                 _ = ret.setObject(obj: (playList?.first!)!)
             }
             break
@@ -358,14 +356,14 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell!
+        let ret = tableView.dequeueReusableCell(withIdentifier: ListCell.reuseId) as! ListCell
         let menu = items[indexPath.row]
-        ret?.configure(meta: menu, type: self.type)
-        return ret!
+        ret.configure(meta: menu, type: self.type)
+        return ret
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return LIST_ITEM_VIEW_HEIGHT
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -380,7 +378,7 @@ class ListCell: UITableViewCell {
     let title: UILabel = UILabel(), value: UILabel = UILabel()
     let icon: UIImageView = UIImageView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
     }
@@ -412,8 +410,9 @@ class ListCell: UITableViewCell {
         title.contentMode = .left
         
         value.snp.makeConstraints { (maker) in
-            maker.trailing.top.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
             maker.width.equalTo(100)
+            maker.trailing.equalToSuperview().inset(5)
         }
         value.textAlignment = .right
         value.text = "SettingsValue"
@@ -501,9 +500,14 @@ class ListCell: UITableViewCell {
     }
     
     private func loadImage(meta: MenuMeta) {
-        let album = (meta.object as! MPMediaItemCollection!).representativeItem
-        icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as! HNKCacheFormat!
-        icon.hnk_setImage(album?.artwork?.image(at: CGSize(width: 40, height: 40)), withKey: String(format:"%llu", (album?.albumPersistentID)!), placeholder: #imageLiteral(resourceName: "ic_album"));
+        let album = (meta.object as! MediaCollection)
+        icon.hnk_cacheFormat = HNKCache.shared().formats["list_cover"] as? HNKCacheFormat
+        let key = String(format:"%llu_w40_h40", (album.representativeItem?.albumPersistentID)!)
+        HNKCache.shared()?.fetchImage(forKey: key, formatName: "list_cover", success: { (img) in
+            self.icon.image = img
+        }, failure: { (err) in
+            self.icon.hnk_setImage(album.getArtworkWithSize(size:   CGSize(width: 40, height: 40)), withKey: key, placeholder: #imageLiteral(resourceName: "ic_album"));
+        })
     }
 }
 

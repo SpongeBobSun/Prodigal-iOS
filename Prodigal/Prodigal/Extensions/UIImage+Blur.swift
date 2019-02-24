@@ -51,17 +51,19 @@ extension UIImage {
         blur.setValue(CIImage(image: image), forKey: kCIInputImageKey)
         blur.setValue(radius, forKey: kCIInputRadiusKey)
         
-        let result = blur.value(forKey: kCIOutputImageKey) as! CIImage!
+        if let result = blur.value(forKey: kCIInputImageKey) as? CIImage {
+            let boundingRect = CGRect(x:0,
+                                      y: 0,
+                                      width: image.size.width,
+                                      height: image.size.height)
+            
+            let ciContext  = CIContext(options: nil)
+            let cgImage = ciContext.createCGImage(result, from: boundingRect)
+            
+            return UIImage(cgImage: cgImage!)
+        }
+        return image
         
-        let boundingRect = CGRect(x:0,
-                                  y: 0,
-                                  width: image.size.width,
-                                  height: image.size.height)
-        
-        let ciContext  = CIContext(options: nil)
-        let cgImage = ciContext.createCGImage(result!, from: boundingRect)
-        
-        return UIImage(cgImage: cgImage!)
     }
     
     static func getBlured(image: UIImage) -> UIImage {
