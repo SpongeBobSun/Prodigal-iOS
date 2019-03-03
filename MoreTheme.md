@@ -14,7 +14,7 @@ Preview
 
 * Download theme as `zip` file and extract it.
 * Connect your phone to computer, then open `iTunes` if it's not automatically opened.
-* Select your phone in `iTunes`, then click on `APPs` on side bar.
+* Select your phone in `iTunes`, then click on `File Sharing` on side bar.
 * Scroll down the list to find `Prodigal` and select it.
   ![img](artworks/iTunes.png)
 * Select `themes` folder, then click export.
