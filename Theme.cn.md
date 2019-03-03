@@ -66,7 +66,7 @@ Prodigal 播放器的主题文件本质上是一个文件夹，文件夹的名�
 
 ## 如何上传主题
 
-参考[这个链接](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.md)
+参考[这个链接](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.cn.md)
 
 ## 如何应用主题
 
