@@ -45,12 +45,12 @@ Prodigal 播放器的主题文件本质上是一个文件夹，文件夹的名�
 
 ```json
 {
-    "icons": [
+    "icons": {
         "next":"next.png",
         "prev":"prev.png",
         "play":"play.png",
         "menu":"menu.png"
-        ],
+    },
     "wheel_outer":"0.95",
     "wheel_inner":"0.3",
     "wheel_color":"#AAAAAAAA",

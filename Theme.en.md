@@ -46,12 +46,12 @@ For example, a valid theme configuration file's content should looks like below.
 
 ```json
 {
-    "icons": [
+    "icons": {
         "next":"next.png",
         "prev":"prev.png",
         "play":"play.png",
         "menu":"menu.png"
-        ],
+    },
     "wheel_outer":"0.95",
     "wheel_inner":"0.3",
     "wheel_color":"#AAAAAAAA",
