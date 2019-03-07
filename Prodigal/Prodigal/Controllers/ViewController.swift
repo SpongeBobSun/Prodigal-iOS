@@ -181,6 +181,11 @@ class ViewController: UIViewController {
             player?.delegate = nil
             player = nil
         }
+        if (item.fileURL == nil) {
+            self.view.makeToast(NSLocalizedString("Go to 'Settings' and rescan your music library.", comment: ""), duration: 2.0, point: self.view.center, title: NSLocalizedString("File not found", comment: ""), image: nil, style: ToastStyle.init(), completion: nil)
+            Crashlytics.sharedInstance().recordError(NSError(domain: "Prodigal File Not Found", code: -1, userInfo:nil), withAdditionalUserInfo: ["MediaItem": item.description])
+            return
+        }
         playingIndex = playlist.index(of: item)!
         do {
             try player = AVAudioPlayer.init(contentsOf: item.fileURL!)
@@ -204,7 +209,7 @@ class ViewController: UIViewController {
             print(e)
             #endif
             self.view.makeToast(NSLocalizedString("Go to 'Settings' and rescan your music library.", comment: ""), duration: 2.0, point: self.view.center, title: NSLocalizedString("File not found", comment: ""), image: nil, style: ToastStyle.init(), completion: nil)
-            Crashlytics.sharedInstance().recordError(e)
+            Crashlytics.sharedInstance().recordError(e, withAdditionalUserInfo: ["MediaItem": item.description])
         }
     }
     
