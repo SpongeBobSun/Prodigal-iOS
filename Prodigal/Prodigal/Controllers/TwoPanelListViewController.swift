@@ -407,6 +407,7 @@ class NowPlayingWidget: UIView {
     
     convenience init() {
         self.init(frame: CGRect.zero)
+        imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
         addSubview(title)
         addSubview(album)

@@ -6,21 +6,25 @@ Bring back the good old player to life.
 
 ### Screenshots
 
-| ![Home](artworks/home.png)      | ![Cover](artworks/cover.png)  | ![Home2](artworks/home2.png)  |
+| ![Home](artworks/home.jpg)      | ![Cover](artworks/cover.jpg)  | ![Home2](artworks/home2.jpg)  |
 | ------------------------------- | ----------------------------- | ----------------------------- |
 | Home Page                       | Album Gallery                 | Home Page                     |
-| ![Now](artworks/nowplaying.png) | ![Cover](artworks/theme1.png) | ![Cover](artworks/theme2.png) |
+| ![Now](artworks/nowplaying.jpg) | ![Cover](artworks/theme1.jpg) | ![Cover](artworks/theme2.jpg) |
 | Now Playing                     | Themes                        | Themes                        |
 
 # Themes
 
 **If app's appearance doesn't looks right after applying theme, please kill app and re-open it.**
 
-**Also, themes may cause app crash. If that happens you need to connect your phone to computer and delete that theme.**
+**Also, invalid themes may cause app crash. If that happens you need to connect your phone to computer and delete that theme.**
 
 * See this [link](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/Theme.md) for how to create & using themes.
 
 * See this [link](https://github.com/SpongeBobSun/Prodigal-iOS/blob/master/MoreTheme.md) for more themes.
+
+# Build
+
+
 
 # Contribute
 
@@ -34,6 +38,8 @@ If you want to add customized themes, please checkin zipped theme folder in `The
 
 Icons in this app are brought you by [Icons8.com](https://icons8.com) and [Freepik](http://www.freepik.com/)
 
+[Holophonor](https://github.com/SpongeBobSun/Holophonor/) which is a media library tool created by myself.
+
 [Marquee Label](https://github.com/cbpowell/MarqueeLabel)
 
 [SnapKit](https://github.com/SnapKit/SnapKit)
@@ -46,9 +52,9 @@ Icons in this app are brought you by [Icons8.com](https://icons8.com) and [Freep
 
 Since APP Store has already approved this APP, I'm going to re-write the media library part, which will centralize media items both from iTunes and local file.
 
-- [ ] Refactor Media Library
-- [ ] Update UI on Android version
-- [ ] Post bug fix
+- [x] Refactor Media Library
+- [x] Update UI on Android version
+- [x] Post bug fix
 
 # Naming in this APP
 
