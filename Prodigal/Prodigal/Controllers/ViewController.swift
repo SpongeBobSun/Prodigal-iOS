@@ -186,9 +186,10 @@ class ViewController: UIViewController {
             Crashlytics.sharedInstance().recordError(NSError(domain: "Prodigal File Not Found", code: -1, userInfo:nil), withAdditionalUserInfo: ["MediaItem": item.description])
             return
         }
+        // Check file exists
         playingIndex = playlist.index(of: item)!
         do {
-            try player = AVAudioPlayer.init(contentsOf: item.fileURL!)
+            player = try AVAudioPlayer.init(contentsOf: item.fileURL!)
             player?.delegate = self
             player?.volume = 1.0
             let result: Bool = (player?.prepareToPlay())!
