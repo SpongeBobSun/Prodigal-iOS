@@ -181,12 +181,12 @@ class ViewController: UIViewController {
             player?.delegate = nil
             player = nil
         }
+        // Check file exists
         if (item.fileURL == nil) {
             self.view.makeToast(NSLocalizedString("Go to 'Settings' and rescan your music library.", comment: ""), duration: 2.0, point: self.view.center, title: NSLocalizedString("File not found", comment: ""), image: nil, style: ToastStyle.init(), completion: nil)
             Crashlytics.sharedInstance().recordError(NSError(domain: "Prodigal File Not Found", code: -1, userInfo:nil), withAdditionalUserInfo: ["MediaItem": item.description])
             return
         }
-        // Check file exists
         playingIndex = playlist.index(of: item)!
         do {
             player = try AVAudioPlayer.init(contentsOf: item.fileURL!)
